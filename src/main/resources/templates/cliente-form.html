@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" th:object="${cliente}" th:action="@{/cliente/save}" >
+    <table>
+        <thead>
+        <tr>
+            <td colspan="2">
+                CLIENTE
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <label for="id">Id_Cliente</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{id}" id="id"/>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Enviar</button>
+            </td>
+        </tr>
+
+        </tbody>
+
+
+
+
+
+
+    </table>
+</form>
+</body>
+</html>
