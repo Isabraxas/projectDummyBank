@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="Transacciones")
+@Table(name="Transaccion")
 @Access(AccessType.FIELD)
 public class Transaccion implements Serializable {
     @Id
@@ -59,7 +59,7 @@ public class Transaccion implements Serializable {
     @Column(name = "beneficiario_id", nullable = false)
     private Long beneficiarioId;
 
-    @Column(name = "operador", nullable = false)
+    @Column(name = "operador_id", nullable = false)
     private Long operador;
 
     @Column(name = "regis_asfi", nullable = false)

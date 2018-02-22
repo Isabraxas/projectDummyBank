@@ -17,7 +17,7 @@ public class Operador implements Serializable {
     private String nombre;
 
     @Column(name = "usuario_id", nullable = false)
-    private String usuarioId;
+    private Long usuarioId;
 
 
     public Long getIdOperador() {
@@ -36,11 +36,11 @@ public class Operador implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getUsuarioId() {
+    public Long getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(String usuarioId) {
+    public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
     }
 }
