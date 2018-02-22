@@ -31,14 +31,31 @@ public class ClienteController {
         this.personaNaturalService = personaNaturalService;
     }
 
+    /**
+     * Solo mostrara las cuentas de clientes
+     */
     @GetMapping("cliente/all")
     public String getAllCuentas(Model model){
         model.addAttribute("clientes",clienteService.findAllClientes());
         return "cliente-all";
     }
 
+    /**
+     * Mostrara una cuenta en especifico, si es Persona Natural, o Juridica
+     */
     @GetMapping("cliente/show/{id}")
     public String getCliente(@PathVariable String id, Model model){
+        Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+        // determinar que clase de cliente es; natural o juridica
+        if(cliente.getTipo().equals(ClienteUtils.PERSONA_NATURAL)){
+            // buscar a esa PersonaNatural
+            model.addAttribute("personaN", personaNaturalService.findOneById(Long.valueOf(id)));
+            return "cliente-show-natural";
+        }else if(cliente.getTipo().equals(ClienteUtils.PERSONA_JURIDICA)){
+            // buscar a esa PersonaJuridica
+            model.addAttribute("personaJ",personaJuridicaService.findOneById(Long.valueOf(id)));
+            return "cliente-show-juridica";
+        }
         model.addAttribute("cliente",clienteService.findOneById(Long.valueOf(id)));
         return "cliente-show";
     }

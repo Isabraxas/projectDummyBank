@@ -13,7 +13,7 @@ public interface PersonaJuridicaService {
 
     PersonaJuridica findOneById(Long id);
 
-    void saveOrUpdatePersonaJuridica(PersonaJuridica cliente);
+    void saveOrUpdatePersonaJuridica(PersonaJuridica personaJuridica);
 
     void deletePersonaJuridica(Long id);
 }

@@ -20,7 +20,8 @@
     <tr th:each="cliente : ${clientes}">
         <td th:text="${cliente.id}">aaa</td>
         <td th:text="${cliente.tipo}">aaa</td>
-        <td><a th:href="${'/cliente/show/' + cliente.id+'/'+cliente.tipo}">Ver</a></td>
+        <!--<td><a th:href="${'/cliente/show/' + cliente.id+'/'+cliente.tipo}">Ver</a></td>-->
+        <td><a th:href="${'/cliente/show/' + cliente.id}">Ver</a></td>
         <td><a th:href="${'/cliente/update/'+cliente.id}">Actualizar</a></td>
         <td><a th:href="${'/cliente/delete/'+cliente.id}">Eliminar</a></td>
     </tr>

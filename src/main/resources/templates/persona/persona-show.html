@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td>ID</td>
+        <td th:text="${persona.id}"></td>
+    </tr>
+    <tr>
+        <td>Paterno</td>
+        <td th:text="${persona.apellidoPaterno}"></td>
+    </tr>
+    <tr>
+        <td>Materno</td>
+        <td th:text="${persona.apellidoMaterno}"></td>
+    </tr>
+    <tr>
+        <td>Ap. Casado</td>
+        <td th:text="${persona.apellidoCasado}"></td>
+    </tr>
+    <tr>
+        <td>Nombres</td>
+        <td th:text="${persona.nombres}"></td>
+    </tr>
+    <tr>
+        <td>Documento Identidad</td>
+        <td th:text="${persona.documentoIdentidad}"></td>
+    </tr>
+    <tr>
+        <td>Numero</td>
+        <td th:text="${persona.numeroDocumento}"></td>
+    </tr>
+    <tr>
+        <td>Fecha Nacimiento</td>
+        <td th:text="${persona.fechaNacimiento}"></td>
+    </tr>
+    <tr>
+        <td>Lugar Nacimiento</td>
+        <td th:text="${persona.lugarNacimiento}"></td>
+    </tr>
+    <tr>
+        <td>Nacionalidad</td>
+        <td th:text="${persona.nacionalidad}"></td>
+    </tr>
+    <tr>
+        <td>Domicilio</td>
+        <td th:text="${persona.domicilio}"></td>
+    </tr>
+    <tr>
+        <td>Domicilio Trabajo</td>
+        <td th:text="${persona.domicilioTrabajo}"></td>
+    </tr>
+    <tr>
+        <td>Telefono</td>
+        <td th:text="${persona.telefono}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="${persona.email}"></td>
+    </tr>
+    <tr>
+        <td>Estado Civil</td>
+        <td th:text="${persona.estadoCivil}"></td>
+    </tr>
+    <tr>
+        <td>Profesion</td>
+        <td th:text="${persona.profesion}"></td>
+    </tr>
+    <tr>
+        <td>Caracter Legal</td>
+        <td th:text="${persona.caracterLegal}"></td>
+    </tr>
+    <tr>
+        <td>Nombre Padre</td>
+        <td th:text="${persona.nombrePadre}"></td>
+    </tr>
+    <tr>
+        <td>Nombre Madre</td>
+        <td th:text="${persona.nombreMadre}"></td>
+    </tr>
+    <tr>
+        <td>Nombre Conyuge</td>
+        <td th:text="${persona.nombreConyuge}"></td>
+    </tr>
+</table>
+</body>
+</html>
