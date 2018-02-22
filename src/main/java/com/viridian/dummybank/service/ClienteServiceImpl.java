@@ -45,13 +45,13 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void saveOrUpdateCliente(Cliente cliente) {
-        log.info("Adicionando/Actualizando Usuario");
+        log.info("Adicionando/Actualizando Cliente");
         clienteRepository.save(cliente);
     }
 
     @Override
     public void deleteCliente(Long id) {
-        log.info("Eliminando Usuario Id: " + id);
+        log.info("Eliminando Cliente Id: " + id);
         clienteRepository.delete(id);
     }
 }
