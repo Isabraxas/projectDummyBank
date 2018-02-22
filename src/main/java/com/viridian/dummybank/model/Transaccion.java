@@ -1,9 +1,13 @@
 package com.viridian.dummybank.model;
 
+import com.viridian.dummybank.util.Util;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
+
 
 @Entity
 @Table(name="Transaccion")
@@ -84,28 +88,43 @@ public class Transaccion implements Serializable {
     public void setNumeroCuenta(Long numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
-
+/*
     public Timestamp getFechaInicio() {
         return fechaInicio;
     }
 
+    Set original de fecha inicio
     public void setFechaInicio(Timestamp fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
+    */
+    public String getFechaInicio() {
+         return fechaInicio.toString();
+    }
+    public void setFechaInicio(String str_date)  {
+            Timestamp nuevaFechaInicio;
+            nuevaFechaInicio= Util.convertStringToTimestamp(str_date);
+            this.fechaInicio = nuevaFechaInicio;
 
-    public Timestamp getFechaAprobacion() {
-        return fechaAprobacion;
     }
 
-    public void setFechaAprobacion(Timestamp fechaAprobacion) {
+    public String getFechaAprobacion() {
+        return fechaAprobacion.toString();
+    }
+
+    public void setFechaAprobacion(String str_date) {
+        Timestamp nuevaFechaAprobacion;
+        nuevaFechaAprobacion= Util.convertStringToTimestamp(str_date);
         this.fechaAprobacion = fechaAprobacion;
     }
 
-    public Timestamp getFechaEjecucion() {
-        return fechaEjecucion;
+    public String getFechaEjecucion() {
+        return fechaEjecucion.toString();
     }
 
-    public void setFechaEjecucion(Timestamp fechaEjecucion) {
+    public void setFechaEjecucion(String str_date) {
+        Timestamp nuevaFechaEjecucion;
+        nuevaFechaEjecucion= Util.convertStringToTimestamp(str_date);
         this.fechaEjecucion = fechaEjecucion;
     }
 

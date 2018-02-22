@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" th:object="${transaccion}" th:action="@{/transaccion/save}" >
+    <table>
+        <thead>
+        <tr>
+            <td colspan="2">
+                Transaccion
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <label for="id">Numero de cuenta</label>
+            </td>
+            <td>
+                <input type="hidden" th:field="*{idTransaccion}" />
+                <input type="text" th:field="*{numeroCuenta}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Fecha de inicio</label>
+            </td>
+            <td>
+                <input type="text" th:field="${transaccion.fechaInicio}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Fecha de aprobacion</label>
+            </td>
+            <td>
+                <input type="text" th:field="${transaccion.fechaAprobacion}"  />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Fecha de ejecucion</label>
+            </td>
+            <td>
+                <input type="text" th:field="${transaccion.fechaEjecucion}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Numero de orden</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{numeroOrden}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Metodo</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{metodoId}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Estatus</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{estatusId}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Autorizacion</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{autorizacionId}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Operacion</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{operacionId}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Monto</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{monto}" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label >Moneda</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{moneda}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Saldo</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{saldo}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Beneficiario</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{beneficiarioId}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Concepto/Glosa</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{conceptoGlosa}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Operador</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{operador}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Regitro ASFI</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{regisAsfi}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Regitro de facturacion</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{registroFacturacion}" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit">Enviar</button>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</form>
+
+</body>
+</html>

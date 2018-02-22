@@ -29,4 +29,12 @@ public interface TransaccionService {
      * @return Transaccion
      */
     Transaccion getTransaccionById(Long id);
+
+    List<Transaccion> getTransaccionGreaterTo(String fechaA, String fechaB);
+
+    List<Transaccion> getTransaccionByCuenta(Long numeroCuenta);
+
+    List<Transaccion> getTransaccionByCuentaAndMoneda(Long numeroCuenta, String moneda);
+
+    List<Transaccion> getTransaccionByCuentaAndPeriod(Long numeroCuenta, String fechaA, String fechaB);
 }
