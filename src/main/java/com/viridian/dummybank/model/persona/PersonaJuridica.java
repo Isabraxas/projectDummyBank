@@ -18,19 +18,22 @@ public class PersonaJuridica {
     @Column(name = "nit")
     private Long nit;
     @Column(name = "registro_fundaempresa")
-    private String registroFundaemesa;
+    private String registroFundaempresa;
 
     // todo persona (representante legal)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "representante_legal")
+    private Persona representanteLegal;
 
 
     public PersonaJuridica() {
     }
 
-    public PersonaJuridica(Long id, String nombreRazon, Long nit, String registroFundaemesa) {
+    public PersonaJuridica(Long id, String nombreRazon, Long nit, String registroFundaempresa) {
         Id = id;
         this.nombreRazon = nombreRazon;
         this.nit = nit;
-        this.registroFundaemesa = registroFundaemesa;
+        this.registroFundaempresa = registroFundaempresa;
     }
 
     public Long getId() {
@@ -57,11 +60,19 @@ public class PersonaJuridica {
         this.nit = nit;
     }
 
-    public String getRegistroFundaemesa() {
-        return registroFundaemesa;
+    public String getRegistroFundaempresa() {
+        return registroFundaempresa;
     }
 
-    public void setRegistroFundaemesa(String registroFundaemesa) {
-        this.registroFundaemesa = registroFundaemesa;
+    public void setRegistroFundaempresa(String registroFundaempresa) {
+        this.registroFundaempresa = registroFundaempresa;
+    }
+
+    public Persona getRepresentanteLegal() {
+        return representanteLegal;
+    }
+
+    public void setRepresentanteLegal(Persona representanteLegal) {
+        this.representanteLegal = representanteLegal;
     }
 }

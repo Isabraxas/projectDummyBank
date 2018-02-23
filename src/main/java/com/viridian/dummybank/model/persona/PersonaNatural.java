@@ -12,23 +12,36 @@ public class PersonaNatural {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
-    private Long Id;            // atributo directamente relacionado a Cliente en DB
+    private Long id;            // atributo directamente relacionado a Cliente en DB
 
-    // todo persona
+    // todo persona revisar union de tablas
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="persona_id")      // id de la tabla a la que une,
+    private Persona persona;
 
 
     public PersonaNatural() {
     }
 
-    public PersonaNatural(Long id) {
-        Id = id;
+    public PersonaNatural(Long id, Persona persona) {
+        this.id = id;
+        this.persona = persona;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
+    }
+
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 }

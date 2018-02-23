@@ -1,15 +1,20 @@
 package com.viridian.dummybank.controller;
 
 import com.viridian.dummybank.model.Cliente;
+import com.viridian.dummybank.model.ClienteAndPersonaNatural;
+import com.viridian.dummybank.model.persona.Persona;
+import com.viridian.dummybank.model.persona.PersonaJuridica;
 import com.viridian.dummybank.model.persona.PersonaNatural;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
+import com.viridian.dummybank.service.persona.PersonaService;
 import com.viridian.dummybank.utils.ClienteUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,12 +28,18 @@ public class ClienteController {
     private final ClienteService clienteService;
     private final PersonaJuridicaService personaJuridicaService;
     private final PersonaNaturalService personaNaturalService;
+    private final PersonaService personaService;
 
     @Autowired
-    public ClienteController(ClienteService clienteService, PersonaJuridicaService personaJuridicaService, PersonaNaturalService personaNaturalService) {
+    public ClienteController(ClienteService clienteService,
+                             PersonaJuridicaService personaJuridicaService,
+                             PersonaNaturalService personaNaturalService,
+                             PersonaService personaService) {
         this.clienteService = clienteService;
         this.personaJuridicaService = personaJuridicaService;
         this.personaNaturalService = personaNaturalService;
+
+        this.personaService = personaService;
     }
 
     /**
@@ -82,9 +93,43 @@ public class ClienteController {
         return "cliente-form";
     }
 
+    @GetMapping("cliente/new/{tipo}")
+    public String addNewClientEspecifico(@PathVariable String tipo,Model model){
+        Cliente cliente = new Cliente();
+        // determinar que clase de cliente es
+        if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            // nuevo cliente, con persona natural
+            ClienteAndPersonaNatural clienteAndPersonaNatural  = new ClienteAndPersonaNatural();
+            clienteAndPersonaNatural.setTipo(ClienteUtils.PERSONA_NATURAL);
+            model.addAttribute("clienteAndPerson",clienteAndPersonaNatural);
+            return "cliente-form-natural";
+        }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            // nuevo cliente, con persona juridica
+            cliente.setTipo(ClienteUtils.PERSONA_JURIDICA);
+            model.addAttribute("cliente", cliente);
+
+            model.addAttribute("personaJ",new PersonaJuridica());
+            return "cliente-form-juridica";
+        }
+        return "cliente-form";
+    }
+
     @PostMapping("cliente/save")
     public String saveCliente(Cliente cliente){
         clienteService.saveOrUpdateCliente(cliente);
+        return "redirect:/cliente/all";
+    }
+
+    @PostMapping("cliente/saveP")
+    public String saveClientePer(ClienteAndPersonaNatural clienteAndPersonaNatural){
+        Cliente cliente = clienteAndPersonaNatural.getCliente();
+        Persona persona = clienteAndPersonaNatural.getPersona();
+
+        clienteService.saveOrUpdateCliente(cliente);
+        personaService.saveOrUpdatePersona(persona);
+
+        personaNaturalService.saveOrUpdatePersonaNatural(new PersonaNatural(cliente.getId(),persona));
+        //clienteService.saveOrUpdateCliente(cliente);
         return "redirect:/cliente/all";
     }
 
