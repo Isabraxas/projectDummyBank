@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" th:src="@{/jquery-ui-1.8.13.custom.css}" />
+    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#fecha').datetimepicker();
+        });
+    </script>
 </head>
 <body>
 <form method="POST" th:object="${transaccion}" th:action="@{/transaccion/save}" >
@@ -30,7 +40,7 @@
                 <label >Fecha de inicio</label>
             </td>
             <td>
-                <input type="text" th:field="${transaccion.fechaInicio}" />
+                <input type="text"  th:field="${transaccion.fechaInicio}" />
             </td>
 
         </tr>
@@ -66,7 +76,12 @@
                 <label >Metodo</label>
             </td>
             <td>
-                <input type="text" th:field="*{metodoId}" />
+               <!-- <input type="text" th:field="*{metodoId}" /> -->
+                <select th:field="${transaccion.metodoId}">
+                    <option th:each="metodo :${metodos}"
+                            th:value="${metodo.idMetodo}" th:text="${metodo.descripcion}">Efectivo</option>
+                </select>
+
             </td>
 
         </tr>
@@ -75,7 +90,10 @@
                 <label >Estatus</label>
             </td>
             <td>
-                <input type="text" th:field="*{estatusId}" />
+                <select th:field="${transaccion.estatusId}">
+                    <option th:each="estatus :${estatuss}"
+                            th:value="${estatus.idEstatus}" th:text="${estatus.descripcion}">Efectivo</option>
+                </select>
             </td>
 
         </tr>
@@ -84,7 +102,10 @@
                 <label >Autorizacion</label>
             </td>
             <td>
-                <input type="text" th:field="*{autorizacionId}" />
+                <select th:field="${transaccion.autorizacionId}">
+                    <option th:each="autorizacion :${autorizaciones}"
+                            th:value="${autorizacion.idAutorizacion}" th:text="${autorizacion.tipo}">Efectivo</option>
+                </select>
             </td>
 
         </tr>
@@ -93,7 +114,10 @@
                 <label >Operacion</label>
             </td>
             <td>
-                <input type="text" th:field="*{operacionId}" />
+                <select th:field="${transaccion.operacionId}">
+                    <option th:each="operacion :${operaciones}"
+                            th:value="${operacion.idOperacion}" th:text="${operacion.descripcion}">Efectivo</option>
+                </select>
             </td>
 
         </tr>
@@ -130,7 +154,10 @@
                 <label >Beneficiario</label>
             </td>
             <td>
-                <input type="text" th:field="*{beneficiarioId}" />
+                <select th:field="${transaccion.beneficiarioId}">
+                    <option th:each="benficiario :${beneficiarios}"
+                            th:value="${benficiario.idBeneficiario}" th:text="${benficiario.nombreRs}">Efectivo</option>
+                </select>
             </td>
 
         </tr>
@@ -148,7 +175,10 @@
                 <label >Operador</label>
             </td>
             <td>
-                <input type="text" th:field="*{operador}" />
+                <select th:field="${transaccion.operador}">
+                    <option th:each="operador :${operadores}"
+                            th:value="${operador.idOperador}" th:text="${operador.nombre}">Efectivo</option>
+                </select>
             </td>
 
         </tr>

@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Entity
@@ -26,10 +28,10 @@ public class Transaccion implements Serializable {
     @Column(name = "fecha_inicio", nullable = false)
     private Timestamp fechaInicio ;
 
-    @Column(name = "fecha_aprobacion", nullable = false)
+    @Column(name = "fecha_aprobacion", nullable = true)
     private Timestamp fechaAprobacion;
 
-    @Column(name = "fecha_ejecucion", nullable = false)
+    @Column(name = "fecha_ejecucion", nullable = true)
     private Timestamp fechaEjecucion;
 
     @Column(name = "numero_orden", nullable = false)
@@ -64,7 +66,7 @@ public class Transaccion implements Serializable {
     private Long beneficiarioId;
 
     @Column(name = "operador_id", nullable = false)
-    private Long operador;
+    private Long operadorId;
 
     @Column(name = "regis_asfi", nullable = false)
     private Long regisAsfi;
@@ -72,6 +74,48 @@ public class Transaccion implements Serializable {
     @Column(name = "registro_facturacion", nullable = false)
     private Long registroFacturacion;
 
+
+
+    public Transaccion (){
+
+    }
+
+    public Transaccion(Long numeroCuenta, Timestamp fechaInicio, Timestamp fechaAprobacion, Timestamp fechaEjecucion, Long numeroOrden, Long metodoId, Long estatusId, Long autorizacionId, Long operacionId, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Long beneficiarioId, Long operadorId, Long regisAsfi, Long registroFacturacion) {
+        this.numeroCuenta = numeroCuenta;
+        this.fechaInicio = fechaInicio;
+        this.fechaAprobacion = fechaAprobacion;
+        this.fechaEjecucion = fechaEjecucion;
+        this.numeroOrden = numeroOrden;
+        this.metodoId = metodoId;
+        this.estatusId = estatusId;
+        this.autorizacionId = autorizacionId;
+        this.operacionId = operacionId;
+        this.conceptoGlosa = conceptoGlosa;
+        this.monto = monto;
+        this.moneda = moneda;
+        this.saldo = saldo;
+        this.beneficiarioId = beneficiarioId;
+        this.operadorId = operadorId;
+        this.regisAsfi = regisAsfi;
+        this.registroFacturacion = registroFacturacion;
+    }
+
+    public Transaccion(Long numeroCuenta, Long numeroOrden, Long metodoId, Long estatusId, Long autorizacionId, Long operacionId, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Long beneficiarioId, Long operadorId, Long regisAsfi, Long registroFacturacion) {
+        this.numeroCuenta = numeroCuenta;
+        this.numeroOrden = numeroOrden;
+        this.metodoId = metodoId;
+        this.estatusId = estatusId;
+        this.autorizacionId = autorizacionId;
+        this.operacionId = operacionId;
+        this.conceptoGlosa = conceptoGlosa;
+        this.monto = monto;
+        this.moneda = moneda;
+        this.saldo = saldo;
+        this.beneficiarioId = beneficiarioId;
+        this.operadorId = operadorId;
+        this.regisAsfi = regisAsfi;
+        this.registroFacturacion = registroFacturacion;
+    }
 
     public Long getIdTransaccion() {
         return idTransaccion;
@@ -88,6 +132,8 @@ public class Transaccion implements Serializable {
     public void setNumeroCuenta(Long numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
+
+
 /*
     public Timestamp getFechaInicio() {
         return fechaInicio;
@@ -99,7 +145,14 @@ public class Transaccion implements Serializable {
     }
     */
     public String getFechaInicio() {
-         return fechaInicio.toString();
+        if(fechaInicio == null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss.SSS");
+            String formattedDateTime = LocalDateTime.now().format(formatter);
+            return formattedDateTime;
+
+        }else {
+            return fechaInicio.toString();
+        }
     }
     public void setFechaInicio(String str_date)  {
             Timestamp nuevaFechaInicio;
@@ -109,17 +162,28 @@ public class Transaccion implements Serializable {
     }
 
     public String getFechaAprobacion() {
-        return fechaAprobacion.toString();
+        if(fechaAprobacion == null){
+            return "0000-00-00 00:00:00";
+        }else {
+            return fechaAprobacion.toString();
+        }
+
     }
 
     public void setFechaAprobacion(String str_date) {
         Timestamp nuevaFechaAprobacion;
         nuevaFechaAprobacion= Util.convertStringToTimestamp(str_date);
+
         this.fechaAprobacion = nuevaFechaAprobacion;
     }
 
     public String getFechaEjecucion() {
-        return fechaEjecucion.toString();
+        if(fechaEjecucion == null){
+            return "0000-00-00 00:00:00";
+        }else {
+            return fechaEjecucion.toString();
+        }
+
     }
 
     public void setFechaEjecucion(String str_date) {
@@ -170,11 +234,11 @@ public class Transaccion implements Serializable {
     }
 
     public Long getOperador() {
-        return operador;
+        return operadorId;
     }
 
-    public void setOperador(Long operador) {
-        this.operador = operador;
+    public void setOperador(Long operadorId) {
+        this.operadorId = operadorId;
     }
 
     public Long getRegisAsfi() {

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3 > Detalle de beneficiario </h3>
+<table border="1">
+    <tr>
+        <td>Id</td>
+        <td th:text="${beneficiario.idBeneficiario}">LOL</td>
+    </tr>
+    <tr>
+        <td>Nombre / Razon Social</td>
+        <td th:text="${beneficiario.nombreRs}">LOL</td>
+    </tr>
+    <tr>
+        <td>Nit / Cedula de identidad</td>
+        <td th:text="${beneficiario.nitCi}">LOL</td>
+    </tr>
+    <tr>
+        <td>Numero de cuenta</td>
+        <td th:text="${beneficiario.numeroCuenta}">LOL</td>
+    </tr>
+    <tr>
+        <td>Monto</td>
+        <td th:text="${beneficiario.monto}">LOL</td>
+    </tr>
+    <tr>
+        <td>Moneda</td>
+        <td th:text="${beneficiario.moneda}">LOL</td>
+    </tr>
+    <tr>
+        <td>Banco</td>
+        <td th:text="${beneficiario.banco}">LOL</td>
+    </tr>
+
+
+</table>
+</body>
+</html>

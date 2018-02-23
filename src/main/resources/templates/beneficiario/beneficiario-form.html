@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" th:src="@{/jquery-ui-1.8.13.custom.css}" />
+    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#fecha').datetimepicker();
+        });
+    </script>
+</head>
+<body>
+<form method="POST" th:object="${beneficiario}" th:action="@{/beneficiario/save}" >
+    <table>
+        <thead>
+        <tr>
+            <td colspan="2">
+                Beneficiario
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <label for="id">Nombre / Razon Social</label>
+            </td>
+            <td>
+                <input type="hidden" th:field="*{idBeneficiario}" />
+                <input type="text" th:field="*{nombreRs}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Nit / Cedula de identidad</label>
+            </td>
+            <td>
+                <input type="text"  th:field="*{nitCi}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Numero de cuenta</label>
+            </td>
+            <td>
+                <input type="text"  th:field="*{numeroCuenta}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Monto</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{monto}"  />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Moneda</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{moneda}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Banco</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{banco}" />
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td colspan="2">
+                <button type="submit">Enviar</button>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</form>
+
+</body>
+</html>

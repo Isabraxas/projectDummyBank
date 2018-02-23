@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Beneficiarios</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Nombre / Razon Social</th>
+        <th>Numero de cuenta</th>
+        <th>Banco</th>
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="beneficiario : ${beneficiarios}">
+        <td th:text="${beneficiario.idBeneficiario}">aaa</td>
+        <td th:text="${beneficiario.nombreRs}">aaa</td>
+        <td th:text="${beneficiario.numeroCuenta}">aaa</td>
+        <td th:text="${beneficiario.banco}">aaa</td>
+        <td><a th:href="${'/beneficiario/getBeneficiario/'+beneficiario.idBeneficiario}">Ver</a></td>
+        <td><a th:href="${'/beneficiario/update/'+beneficiario.idBeneficiario}">Modificar</a></td>
+        <td><a th:href="${'/beneficiario/delete/'+beneficiario.idBeneficiario}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<botton><a th:href="${'/beneficiario/new/'}">Agregar nuevo </a></botton>
+
+</body>
+</html>

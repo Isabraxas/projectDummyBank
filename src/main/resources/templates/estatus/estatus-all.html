@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Estatuses</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Descripcion </th>
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="estatus : ${estatuss}">
+        <td th:text="${estatus.idEstatus}">aaa</td>
+        <td th:text="${estatus.descripcion}">aaa</td>
+        <td><a th:href="${'/estatus/getEstatus/'+estatus.idEstatus}">Ver</a></td>
+        <td><a th:href="${'/estatus/update/'+estatus.idEstatus}">Modificar</a></td>
+        <td><a th:href="${'/estatus/delete/'+estatus.idEstatus}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<botton><a th:href="${'/estatus/new/'}">Agregar nuevo </a></botton>
+
+</body>
+</html>

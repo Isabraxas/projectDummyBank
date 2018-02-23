@@ -1,7 +1,7 @@
 package com.viridian.dummybank.controller;
 
 import com.viridian.dummybank.model.Transaccion;
-import com.viridian.dummybank.service.TransaccionService;
+import com.viridian.dummybank.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +14,24 @@ import java.util.List;
 public class TransaccionController {
     @Autowired
     protected TransaccionService transaccionService;
+
+    @Autowired
+    protected MetodoService metodoService;
+
+    @Autowired
+    protected BeneficiarioService beneficiarioService;
+
+    @Autowired
+    protected EstatusService estatusService;
+
+    @Autowired
+    protected OperadorService operadorService;
+
+    @Autowired
+    protected OperacionService operacionService;
+
+    @Autowired
+    protected AutorizacionService autorizacionService;
     /*
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
     public List<Transaccion> getAll(){
@@ -24,7 +42,7 @@ public class TransaccionController {
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
     public  String getAll(Model model){
         model.addAttribute("transacciones", this.transaccionService.getAll());
-        return "transaccion-all";
+        return "transaccion/transaccion-all";
     }
     
     /*
@@ -35,9 +53,16 @@ public class TransaccionController {
     */
 
     @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
-    public String update(@PathVariable Long id, Model model){
-        model.addAttribute("transaccion", transaccionService.getTransaccionById(id));
-        return "transaccion-form";
+    public String updateTransaccion(@PathVariable Long id, Model model){
+        Transaccion transaccion = transaccionService.getTransaccionById(id);
+        model.addAttribute("autorizaciones",autorizacionService.getAll());
+        model.addAttribute("operadores",operadorService.getAll());
+        model.addAttribute("operaciones",operacionService.getAll());
+        model.addAttribute("estatuss",estatusService.getAll());
+        model.addAttribute("beneficiarios",beneficiarioService.getAll());
+        model.addAttribute("metodos",metodoService.getAll());
+        model.addAttribute("transaccion", transaccion);
+        return "transaccion/transaccion-form";
     }
 
     @PostMapping("/save")
@@ -46,6 +71,17 @@ public class TransaccionController {
         return "redirect:/transaccion/getAll";
     }
 
+    @GetMapping("/new")
+    public String newTransaccion(Model model){
+        model.addAttribute("autorizaciones",autorizacionService.getAll());
+        model.addAttribute("operadores",operadorService.getAll());
+        model.addAttribute("operaciones",operacionService.getAll());
+        model.addAttribute("estatuss",estatusService.getAll());
+        model.addAttribute("beneficiarios",beneficiarioService.getAll());
+        model.addAttribute("metodos",metodoService.getAll());
+        model.addAttribute("transaccion", new Transaccion());
+        return "transaccion/transaccion-form";
+    }
 
     
     /*
@@ -70,7 +106,7 @@ public class TransaccionController {
     @RequestMapping(value = "/getTransaccion/{id}", method = RequestMethod.GET)
     public String getTransaccion(Model model, @PathVariable Long id){        
          model.addAttribute("transaccion",this.transaccionService.getTransaccionById(id));
-         return "transaccion-show";
+         return "transaccion/transaccion-show";
     }
 
     @RequestMapping(value = "/getTransaccionBetween/{fechaA}/{fechaB}", method = RequestMethod.GET)
