@@ -20,7 +20,6 @@ public class PersonaJuridica {
     @Column(name = "registro_fundaempresa")
     private String registroFundaempresa;
 
-    // todo persona (representante legal)
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "representante_legal")
     private Persona representanteLegal;

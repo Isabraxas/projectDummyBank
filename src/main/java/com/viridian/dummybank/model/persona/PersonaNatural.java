@@ -14,7 +14,6 @@ public class PersonaNatural {
     @Column(name = "id_cliente")
     private Long id;            // atributo directamente relacionado a Cliente en DB
 
-    // todo persona revisar union de tablas
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="persona_id")      // id de la tabla a la que une,
     private Persona persona;

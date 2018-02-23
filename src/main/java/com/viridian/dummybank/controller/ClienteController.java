@@ -206,6 +206,12 @@ public class ClienteController {
 
     @GetMapping("cliente/delete/{id}")
     public String deleteCliente(@PathVariable String id){
+        String tipo = clienteService.findOneById(Long.valueOf(id)).getTipo();
+        if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            personaNaturalService.deletePersonaNatural(Long.valueOf(id));
+        }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            personaJuridicaService.deletePersonaJuridica(Long.valueOf(id));
+        }
         clienteService.deleteCliente(Long.valueOf(id));
         return "redirect:/cliente/all";
     }
