@@ -98,6 +98,35 @@ public class ClienteAndPersonaJuridica {
         this.nombre_madre = nombre_madre;
     }
 
+    public ClienteAndPersonaJuridica(Cliente cliente, PersonaJuridica persona){
+        this.id_cliente = cliente.getId();
+        this.tipo = cliente.getTipo();
+
+        this.nombre_razon = persona.getNombreRazon();
+        this.nit = persona.getNit();
+        this.registro_fundaempresa = getRegistro_fundaempresa();
+
+        this.persona_id = persona.getRepresentanteLegal().getId();
+        this.apellido_paterno = persona.getRepresentanteLegal().getApellidoPaterno();
+        this.apellido_materno = persona.getRepresentanteLegal().getApellidoMaterno();
+        this.apellido_casado = persona.getRepresentanteLegal().getApellidoCasado();
+        this.nombres = persona.getRepresentanteLegal().getNombres();
+        this.documento_identidad = persona.getRepresentanteLegal().getDocumentoIdentidad();
+        this.numero_documento = persona.getRepresentanteLegal().getNumeroDocumento();
+        this.fecha_nacimiento = persona.getRepresentanteLegal().getFechaNacimiento();
+        this.lugar_nacimiento = persona.getRepresentanteLegal().getLugarNacimiento();
+        this.nacionalidad = persona.getRepresentanteLegal().getNacionalidad();
+        this.domicilio = persona.getRepresentanteLegal().getDomicilio();
+        this.domicilio_trabajo = persona.getRepresentanteLegal().getDomicilioTrabajo();
+        this.telefono = persona.getRepresentanteLegal().getTelefono();
+        this.email = persona.getRepresentanteLegal().getEmail();
+        this.estado_civil = persona.getRepresentanteLegal().getEstadoCivil();
+        this.profesion = persona.getRepresentanteLegal().getProfesion();
+        this.caracter_legal = persona.getRepresentanteLegal().getCaracterLegal();
+        this.nombre_padre = persona.getRepresentanteLegal().getNombrePadre();
+        this.nombre_madre = persona.getRepresentanteLegal().getNombreMadre();
+    }
+
     public Cliente getCliente(){
         Cliente cliente = new Cliente();
         cliente.setId(id_cliente);

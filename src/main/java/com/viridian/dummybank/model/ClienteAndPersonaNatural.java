@@ -39,6 +39,31 @@ public class ClienteAndPersonaNatural {
     public ClienteAndPersonaNatural() {
     }
 
+    public ClienteAndPersonaNatural(Cliente cliente, PersonaNatural persona){
+        this.id_cliente = cliente.getId();
+        this.tipo = cliente.getTipo();
+
+        this.persona_id = persona.getPersona().getId();
+        this.apellido_paterno = persona.getPersona().getApellidoPaterno();
+        this.apellido_materno = persona.getPersona().getApellidoMaterno();
+        this.apellido_casado = persona.getPersona().getApellidoCasado();
+        this.nombres = persona.getPersona().getNombres();
+        this.documento_identidad = persona.getPersona().getDocumentoIdentidad();
+        this.numero_documento = persona.getPersona().getNumeroDocumento();
+        this.fecha_nacimiento = persona.getPersona().getFechaNacimiento();
+        this.lugar_nacimiento = persona.getPersona().getLugarNacimiento();
+        this.nacionalidad = persona.getPersona().getNacionalidad();
+        this.domicilio = persona.getPersona().getDomicilio();
+        this.domicilio_trabajo = persona.getPersona().getDomicilioTrabajo();
+        this.telefono = persona.getPersona().getTelefono();
+        this.email = persona.getPersona().getEmail();
+        this.estado_civil = persona.getPersona().getEstadoCivil();
+        this.profesion = persona.getPersona().getProfesion();
+        this.caracter_legal = persona.getPersona().getCaracterLegal();
+        this.nombre_padre = persona.getPersona().getNombrePadre();
+        this.nombre_madre = persona.getPersona().getNombreMadre();
+    }
+
     public ClienteAndPersonaNatural(Long id_cliente, String tipo, Long persona_id, String apellido_paterno, String apellido_materno, String nombres, String documento_identidad, Long numero_documento, Date fecha_nacimiento, String lugar_nacimiento, String nacionalidad, String domicilio, String telefono, String email, String estado_civil, String profesion, String caracter_legal, String nombre_padre, String nombre_madre) {
         this.id_cliente = id_cliente;
         this.tipo = tipo;

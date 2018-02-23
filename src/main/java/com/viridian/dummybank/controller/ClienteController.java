@@ -153,6 +153,53 @@ public class ClienteController {
 
     @GetMapping("cliente/update/{id}")
     public String updateCliente(Model model,@PathVariable String id){
+        // buscar al cliente, y obtener su tipo
+        Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+        String tipo = cliente.getTipo();
+        // cargar el respectivo formulario de acuerdo al tipo
+        if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            // cliente es persona natural
+            PersonaNatural persona = personaNaturalService.findOneById(Long.valueOf(id));
+            ClienteAndPersonaNatural clienteAndPersonaNatural = new ClienteAndPersonaNatural(cliente, persona);
+
+            model.addAttribute("clienteAndPerson", clienteAndPersonaNatural);
+            return "cliente-form-natural";
+        }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            // cliente es persona juridica
+            PersonaJuridica persona = personaJuridicaService.findOneById(Long.valueOf(id));
+            ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica(cliente,persona);
+
+            model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
+            return "cliente-form-juridica";
+        }
+        // extremo caso (mal formato)
+        model.addAttribute("cliente", clienteService.findOneById(Long.valueOf(id)));
+        return "cliente-form";
+    }
+
+    @GetMapping("cliente/update/{id}/{tipo}")
+    public String updateClienteEspecifico(Model model,@PathVariable String id, @PathVariable String tipo){
+        // buscar al cliente que se actualizara
+        Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+        // usar el tipo proveido para determinar el tipo de cliente
+        if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            // cliente es persona juridica
+            //Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+            PersonaJuridica persona = personaJuridicaService.findOneById(Long.valueOf(id));
+            ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica(cliente,persona);
+
+            model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
+            return "cliente-form-juridica";
+        } else if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            // cliente es persona natural
+            //Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+            PersonaNatural persona = personaNaturalService.findOneById(Long.valueOf(id));
+            ClienteAndPersonaNatural clienteAndPersonaNatural = new ClienteAndPersonaNatural(cliente, persona);
+
+            model.addAttribute("clienteAndPerson", clienteAndPersonaNatural);
+            return "cliente-form-natural";
+        }else
+        // caso extremo
         model.addAttribute("cliente", clienteService.findOneById(Long.valueOf(id)));
         return "cliente-form";
     }
