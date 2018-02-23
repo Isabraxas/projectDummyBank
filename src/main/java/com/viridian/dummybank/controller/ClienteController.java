@@ -1,6 +1,7 @@
 package com.viridian.dummybank.controller;
 
 import com.viridian.dummybank.model.Cliente;
+import com.viridian.dummybank.model.ClienteAndPersonaJuridica;
 import com.viridian.dummybank.model.ClienteAndPersonaNatural;
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.model.persona.PersonaJuridica;
@@ -105,10 +106,9 @@ public class ClienteController {
             return "cliente-form-natural";
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
             // nuevo cliente, con persona juridica
-            cliente.setTipo(ClienteUtils.PERSONA_JURIDICA);
-            model.addAttribute("cliente", cliente);
-
-            model.addAttribute("personaJ",new PersonaJuridica());
+            ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica();
+            clienteAndPersonaJuridica.setTipo(ClienteUtils.PERSONA_JURIDICA);
+            model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
             return "cliente-form-juridica";
         }
         return "cliente-form";
@@ -120,8 +120,8 @@ public class ClienteController {
         return "redirect:/cliente/all";
     }
 
-    @PostMapping("cliente/saveP")
-    public String saveClientePer(ClienteAndPersonaNatural clienteAndPersonaNatural){
+    @PostMapping("cliente/savePerN")
+    public String saveClientePerN(ClienteAndPersonaNatural clienteAndPersonaNatural){
         Cliente cliente = clienteAndPersonaNatural.getCliente();
         Persona persona = clienteAndPersonaNatural.getPersona();
 
@@ -132,6 +132,24 @@ public class ClienteController {
         //clienteService.saveOrUpdateCliente(cliente);
         return "redirect:/cliente/all";
     }
+
+    @PostMapping("cliente/savePerJ")
+    public String saveClientePerJ(ClienteAndPersonaJuridica clienteAndPersonaJuridica){
+        Cliente cliente = clienteAndPersonaJuridica.getCliente();
+        Persona persona = clienteAndPersonaJuridica.getPersona();
+        //PersonaJuridica personaJuridica = clienteAndPersonaJuridica.getPersonaJuridica();
+
+        clienteService.saveOrUpdateCliente(cliente);
+        personaService.saveOrUpdatePersona(persona);
+        personaJuridicaService.saveOrUpdatePersonaJuridica(new PersonaJuridica(cliente.getId(),
+                                                                                clienteAndPersonaJuridica.getNombre_razon(),
+                                                                                clienteAndPersonaJuridica.getNit(),
+                                                                                clienteAndPersonaJuridica.getRegistro_fundaempresa(),
+                                                                                persona));
+        //clienteService.saveOrUpdateCliente(cliente);
+        return "redirect:/cliente/all";
+    }
+
 
     @GetMapping("cliente/update/{id}")
     public String updateCliente(Model model,@PathVariable String id){

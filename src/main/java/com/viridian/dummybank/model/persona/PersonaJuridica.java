@@ -29,11 +29,12 @@ public class PersonaJuridica {
     public PersonaJuridica() {
     }
 
-    public PersonaJuridica(Long id, String nombreRazon, Long nit, String registroFundaempresa) {
+    public PersonaJuridica(Long id, String nombreRazon, Long nit, String registroFundaempresa, Persona representanteLegal) {
         Id = id;
         this.nombreRazon = nombreRazon;
         this.nit = nit;
         this.registroFundaempresa = registroFundaempresa;
+        this.representanteLegal = representanteLegal;
     }
 
     public Long getId() {
