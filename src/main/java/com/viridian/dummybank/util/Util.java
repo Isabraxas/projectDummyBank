@@ -9,12 +9,11 @@ public class Util {
 
         public static Timestamp convertStringToTimestamp(String str_date) {
             try {
-                DateFormat formatter;
-                formatter = new SimpleDateFormat("dd-MM-yyyy");
-                Date date = (Date) formatter.parse(str_date);
-                java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+                Date parsedDate = dateFormat.parse(str_date);
+                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-                return timeStampDate;
+                return timestamp;
             } catch (ParseException e) {
                 System.out.println("Exception :" + e);
                 return null;

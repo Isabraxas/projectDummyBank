@@ -115,7 +115,7 @@ public class Transaccion implements Serializable {
     public void setFechaAprobacion(String str_date) {
         Timestamp nuevaFechaAprobacion;
         nuevaFechaAprobacion= Util.convertStringToTimestamp(str_date);
-        this.fechaAprobacion = fechaAprobacion;
+        this.fechaAprobacion = nuevaFechaAprobacion;
     }
 
     public String getFechaEjecucion() {
@@ -125,7 +125,7 @@ public class Transaccion implements Serializable {
     public void setFechaEjecucion(String str_date) {
         Timestamp nuevaFechaEjecucion;
         nuevaFechaEjecucion= Util.convertStringToTimestamp(str_date);
-        this.fechaEjecucion = fechaEjecucion;
+        this.fechaEjecucion = nuevaFechaEjecucion;
     }
 
     public Long getNumeroOrden() {
