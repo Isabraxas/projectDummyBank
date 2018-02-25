@@ -15,23 +15,25 @@
     </script>
 </head>
 <body>
-<form method="POST" th:object="${estatus}" th:action="@{/estatus/save}" >
+<form method="POST" th:object="${cuenta}" th:action="@{/cuenta/get}" >
     <table>
         <thead>
         <tr>
             <td colspan="2">
-               Estatus
+               Cuenta
             </td>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>
-                <label for="id">Descripcion</label>
+                <label for="id">Codigo de cuenta cliente</label>
             </td>
             <td>
-                <input type="hidden" th:field="*{idEstatus}" />
-                <input type="text" th:field="*{descripcion}" />
+                <select th:field="${cuenta.numeroCuenta}">
+                    <option th:each="cuenta :${cuentas}"
+                            th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}">Codigo de cuenta</option>
+                </select>
             </td>
 
         </tr>

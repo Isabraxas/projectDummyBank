@@ -32,25 +32,13 @@ public class TransaccionController {
 
     @Autowired
     protected AutorizacionService autorizacionService;
-    /*
-    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
-    public List<Transaccion> getAll(){
-        return this.transaccionService.getAll();
-    }
-    */
+
 
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
     public  String getAll(Model model){
         model.addAttribute("transacciones", this.transaccionService.getAll());
         return "transaccion/transaccion-all";
     }
-    
-    /*
-    @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
-    public void saveOrUpdate(@RequestBody Transaccion transaccion){
-        this.transaccionService.save(transaccion);
-    }
-    */
 
     @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
     public String updateTransaccion(@PathVariable Long id, Model model){
@@ -83,25 +71,13 @@ public class TransaccionController {
         return "transaccion/transaccion-form";
     }
 
-    
-    /*
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public List<Transaccion> delete(@PathVariable Long id){
-        this.transaccionService.delete(id);
-        return this.transaccionService.getAll();
-    }*/
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable Long id){
         this.transaccionService.delete(id);
         return "redirect:/transaccion/getAll";
     }
-    /*
-    @RequestMapping(value = "/getTransaccion/{id}", method = RequestMethod.GET)
-    public Transaccion getTransaccion(@PathVariable Long id){
-        return this.transaccionService.getTransaccionById(id);
-    }
-    */
+
 
     @RequestMapping(value = "/getTransaccion/{id}", method = RequestMethod.GET)
     public String getTransaccion(Model model, @PathVariable Long id){        
@@ -133,4 +109,32 @@ public class TransaccionController {
 
         return this.transaccionService.getTransaccionByCuentaAndMoneda(numeroCuenta, moneda);
     }
+
+        /*
+    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
+    public List<Transaccion> getAll(){
+        return this.transaccionService.getAll();
+    }
+    */
+
+        /*
+    @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
+    public void saveOrUpdate(@RequestBody Transaccion transaccion){
+        this.transaccionService.save(transaccion);
+    }
+    */
+
+        /*
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public List<Transaccion> delete(@PathVariable Long id){
+        this.transaccionService.delete(id);
+        return this.transaccionService.getAll();
+    }*/
+
+        /*
+    @RequestMapping(value = "/getTransaccion/{id}", method = RequestMethod.GET)
+    public Transaccion getTransaccion(@PathVariable Long id){
+        return this.transaccionService.getTransaccionById(id);
+    }
+    */
 }

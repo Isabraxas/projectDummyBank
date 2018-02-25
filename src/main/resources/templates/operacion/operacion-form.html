@@ -15,12 +15,12 @@
     </script>
 </head>
 <body>
-<form method="POST" th:object="${estatus}" th:action="@{/estatus/save}" >
+<form method="POST" th:object="${operacion}" th:action="@{/operacion/save}" >
     <table>
         <thead>
         <tr>
             <td colspan="2">
-               Estatus
+               Operacion
             </td>
         </tr>
         </thead>
@@ -30,7 +30,7 @@
                 <label for="id">Descripcion</label>
             </td>
             <td>
-                <input type="hidden" th:field="*{idEstatus}" />
+                <input type="hidden" th:field="*{idOperacion}" />
                 <input type="text" th:field="*{descripcion}" />
             </td>
 

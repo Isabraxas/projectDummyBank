@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Autorizaciones</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Detalle</th>
+
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="autorizacion : ${autorizaciones}">
+        <td th:text="${autorizacion.idAutorizacion}">aaa</td>
+        <td th:text="${autorizacion.tipo}">aaa</td>
+        <td th:text="${autorizacion.detalle}">aaa</td>
+        <td><a th:href="${'/autorizacion/getAutorizacion/'+autorizacion.idAutorizacion}">Ver</a></td>
+        <td><a th:href="${'/autorizacion/update/'+autorizacion.idAutorizacion}">Modificar</a></td>
+        <td><a th:href="${'/autorizacion/delete/'+autorizacion.idAutorizacion}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<botton><a th:href="${'/autorizacion/new/'}">Agregar nuevo </a></botton>
+
+</body>
+</html>

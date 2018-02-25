@@ -15,23 +15,29 @@
     </script>
 </head>
 <body>
-<form method="POST" th:object="${estatus}" th:action="@{/estatus/save}" >
+
+<form method="POST" th:object="${movimiento}" th:action="@{/consulta/listaMovimientos}" >
     <table>
         <thead>
         <tr>
             <td colspan="2">
-               Estatus
+                Movimientos
             </td>
         </tr>
         </thead>
         <tbody>
+             <input type="hidden" th:value='${numeroCuenta}' name="numeroCuenta" />
         <tr>
             <td>
-                <label for="id">Descripcion</label>
+                <label for="id">Fecha de inicio</label>
             </td>
             <td>
-                <input type="hidden" th:field="*{idEstatus}" />
-                <input type="text" th:field="*{descripcion}" />
+                <label >Desde: </label>
+                <input type="text" th:field="${movimiento.fechaInicioDesde}" />
+            </td>
+            <td>
+                <label >Hasta: </label>
+                <input type="text" th:field="${movimiento.fechaInicioHasta}" />
             </td>
 
         </tr>

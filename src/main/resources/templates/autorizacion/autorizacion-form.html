@@ -15,26 +15,36 @@
     </script>
 </head>
 <body>
-<form method="POST" th:object="${estatus}" th:action="@{/estatus/save}" >
+<form method="POST" th:object="${autorizacion}" th:action="@{/autorizacion/save}" >
     <table>
         <thead>
         <tr>
             <td colspan="2">
-               Estatus
+               Autorizacion
             </td>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>
-                <label for="id">Descripcion</label>
+                <label for="id">Tipo</label>
             </td>
             <td>
-                <input type="hidden" th:field="*{idEstatus}" />
-                <input type="text" th:field="*{descripcion}" />
+                <input type="hidden" th:field="*{idAutorizacion}" />
+                <input type="text" th:field="*{tipo}" />
             </td>
 
         </tr>
+        <tr>
+            <td>
+                <label >Detalle</label>
+            </td>
+            <td>
+                <input type="text"  th:field="*{detalle}" />
+            </td>
+
+        </tr>
+
 
         <tr>
             <td colspan="2">

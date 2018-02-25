@@ -174,7 +174,7 @@ public class Transaccion implements Serializable {
         Timestamp nuevaFechaAprobacion;
         nuevaFechaAprobacion= Util.convertStringToTimestamp(str_date);
 
-        this.fechaAprobacion = nuevaFechaAprobacion;
+         this.fechaAprobacion = nuevaFechaAprobacion;
     }
 
     public String getFechaEjecucion() {

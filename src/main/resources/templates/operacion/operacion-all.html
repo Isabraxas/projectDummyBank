@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Operaciones</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Descripcion </th>
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="operacion : ${operaciones}">
+        <td th:text="${operacion.idOperacion}">aaa</td>
+        <td th:text="${operacion.descripcion}">aaa</td>
+        <td><a th:href="${'/operacion/getOperacion/'+operacion.idOperacion}">Ver</a></td>
+        <td><a th:href="${'/operacion/update/'+operacion.idOperacion}">Modificar</a></td>
+        <td><a th:href="${'/operacion/delete/'+operacion.idOperacion}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<botton><a th:href="${'/operacion/new/'}">Agregar nuevo </a></botton>
+
+</body>
+</html>
