@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 
 public class Movimiento {
     private Long numeroCuenta;
+    private int opcion;
     private Timestamp fechaInicioDesde;
     private Timestamp fechaInicioHasta;
+
 
     public Long getNumeroCuenta() {
         return numeroCuenta;
@@ -15,7 +17,18 @@ public class Movimiento {
         this.numeroCuenta = numeroCuenta;
     }
 
+    public int getOpcion() {
+        return opcion;
+    }
+
+    public void setOpcion(int opcion) {
+        this.opcion = opcion;
+    }
+
     public Timestamp getFechaInicioDesde() {
+       // if (fechaInicioDesde.toString() == ""){
+         //   return Timestamp.valueOf("0000-00-00 00:00:00");
+       // }
         return fechaInicioDesde;
     }
 
@@ -24,6 +37,9 @@ public class Movimiento {
     }
 
     public Timestamp getFechaInicioHasta() {
+      //  if (fechaInicioHasta.toString() == ""){
+        //    return Timestamp.valueOf("0000-00-00 00:00:00");
+       // }
         return fechaInicioHasta;
     }
 

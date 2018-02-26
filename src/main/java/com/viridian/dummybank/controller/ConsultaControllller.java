@@ -43,11 +43,18 @@ public class ConsultaControllller {
 
     @RequestMapping(value = "/listaMovimientos", method = RequestMethod.POST)
     public String getListaMovimientos(Model model, Movimiento movimiento){
-        model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndCurrentMonth(movimiento.getNumeroCuenta()));
-        //model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndLastMonth(movimiento.getNumeroCuenta()));
-        //model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndLastMonths(movimiento.getNumeroCuenta(),3));
+        if(movimiento.getOpcion() == 1) {
+            model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndCurrentMonth(movimiento.getNumeroCuenta()));
+        }else if(movimiento.getOpcion() == 2) {
+            model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndLastMonth(movimiento.getNumeroCuenta()));
+        }else if (movimiento.getOpcion() > 2){
+            model.addAttribute("transacciones", this.transaccionRepository.finByNumeroCuentaAndLastMonths(movimiento.getNumeroCuenta(),movimiento.getOpcion()));
+        }else{
+            model.addAttribute("transacciones",  this.transaccionController.getTransaccionByCuentaAndPeriod(movimiento.getNumeroCuenta(),movimiento.getFechaInicioDesde().toString(),movimiento.getFechaInicioHasta().toString()));
+        }
+        //
         //model.addAttribute("transacciones", this.transaccionRepository.finTopNumberByNumeroCuenta(movimiento.getNumeroCuenta(),5));
-        //model.addAttribute("transacciones",  this.transaccionController.getTransaccionByCuentaAndPeriod(movimiento.getNumeroCuenta(),movimiento.getFechaInicioDesde().toString(),movimiento.getFechaInicioHasta().toString()));
+        //
         return "consulta/consulta-form3";
     }
 }

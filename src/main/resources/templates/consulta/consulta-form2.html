@@ -27,10 +27,31 @@
         </thead>
         <tbody>
              <input type="hidden" th:value='${numeroCuenta}' name="numeroCuenta" />
+
+         <tr>
+             <td>
+                 <label for="id">Desde: </label>
+             </td>
+             <td>
+
+                 <select  th:field="${movimiento.opcion}" >
+                     <option value="0" >Selecciona una opcion</option>
+                     <option value="1" >Presente mes</option>
+                     <option value="2" >Pasado mes</option>
+                     <option value="3" >Hace tres meses</option>
+                     <option value="4" >Hace cuatro meses</option>
+                     <option value="5" >Hace cinco meses</option>
+                     <option value="12" >Hace doce meses</option>
+                 </select>
+             </td>
+
+         </tr>
+
         <tr>
             <td>
-                <label for="id">Fecha de inicio</label>
+                <label for="id">Por rango:</label>
             </td>
+
             <td>
                 <label >Desde: </label>
                 <input type="text" th:field="${movimiento.fechaInicioDesde}" />
@@ -44,7 +65,7 @@
 
         <tr>
             <td colspan="2">
-                <button type="submit">Enviar</button>
+                <button type="submit">Consultar movimientos</button>
             </td>
         </tr>
 
