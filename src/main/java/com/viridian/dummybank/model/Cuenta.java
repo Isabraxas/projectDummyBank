@@ -2,19 +2,27 @@ package com.viridian.dummybank.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
-/**
- * Created by marcelo on 20-02-18
- */
+@Table(name="Cuenta")
 @Entity
-@Table(name = "Cuenta")
-public class Cuenta {
-
+@Access(AccessType.FIELD)
+public class Cuenta implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "numero_cuenta")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_cuenta", nullable = false)
+    private Long idCuenta;
+
+    @Column(name = "numero_cuenta", nullable = false)
     private Long numeroCuenta;
 
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
+
+    @Column(name = "saldo", nullable = false)
+    private BigDecimal saldo ;
+    
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="cliente_id")
     private Cliente cliente;
@@ -22,8 +30,12 @@ public class Cuenta {
     public Cuenta() {
     }
 
-    public Cuenta(Cliente cliente) {
-        this.cliente = cliente;
+    public Long getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(Long idCuenta) {
+        this.idCuenta = idCuenta;
     }
 
     public Long getNumeroCuenta() {
@@ -33,12 +45,27 @@ public class Cuenta {
     public void setNumeroCuenta(Long numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
-
+  
     public Cliente getCliente() {
         return cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 }

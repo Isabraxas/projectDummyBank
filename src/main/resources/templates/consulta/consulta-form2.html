@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" th:src="@{/jquery-ui-1.8.13.custom.css}" />
+    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#fecha').datetimepicker();
+        });
+    </script>
+</head>
+<body>
+
+<form method="POST" th:object="${movimiento}" th:action="@{/consulta/listaMovimientos}" >
+    <table>
+        <thead>
+        <tr>
+            <td colspan="2">
+                Movimientos
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+             <input type="hidden" th:value='${numeroCuenta}' name="numeroCuenta" />
+
+         <tr>
+             <td>
+                 <label for="id">Desde: </label>
+             </td>
+             <td>
+
+                 <select  th:field="${movimiento.opcion}" >
+                     <option value="0" >Selecciona una opcion</option>
+                     <option value="1" >Presente mes</option>
+                     <option value="2" >Pasado mes</option>
+                     <option value="3" >Hace tres meses</option>
+                     <option value="4" >Hace cuatro meses</option>
+                     <option value="5" >Hace cinco meses</option>
+                     <option value="12" >Hace doce meses</option>
+                 </select>
+             </td>
+
+         </tr>
+
+        <tr>
+            <td>
+                <label for="id">Por rango:</label>
+            </td>
+
+            <td>
+                <label >Desde: </label>
+                <input type="text" th:field="${movimiento.fechaInicioDesde}" />
+            </td>
+            <td>
+                <label >Hasta: </label>
+                <input type="text" th:field="${movimiento.fechaInicioHasta}" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit">Consultar movimientos</button>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</form>
+
+</body>
+</html>

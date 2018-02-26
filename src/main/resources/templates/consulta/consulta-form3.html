@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" th:src="@{/jquery-ui-1.8.13.custom.css}" />
+    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#fecha').datetimepicker();
+        });
+    </script>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Tansacciones</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Cuenta</th>
+        <th>Fecha de inicio</th>
+        <th>Operacion</th>
+        <th>Monto</th>
+        <th>Moneda</th>
+        <th>Saldo</th>
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="transaccion : ${transacciones}">
+        <td th:text="${transaccion.idTransaccion}">aaa</td>
+        <td th:text="${transaccion.numeroCuenta}">aaa</td>
+        <td th:text="${transaccion.fechaInicio}">aaa</td>
+        <td th:text="${transaccion.operacionId}">aaa</td>
+        <td th:text="${transaccion.monto}">aaa</td>
+        <td th:text="${transaccion.moneda}">aaa</td>
+        <td th:text="${transaccion.saldo}">aaa</td>
+        <td><a th:href="${'/transaccion/getTransaccion/'+transaccion.idTransaccion}">Ver</a></td>
+        <td><a th:href="${'/transaccion/update/'+transaccion.idTransaccion}">Modificar</a></td>
+        <td><a th:href="${'/transaccion/delete/'+transaccion.idTransaccion}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+</body>
+</html>
