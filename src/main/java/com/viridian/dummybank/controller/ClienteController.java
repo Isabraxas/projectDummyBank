@@ -252,4 +252,8 @@ public class ClienteController {
         clienteService.deleteCliente(Long.valueOf(id));
         return "redirect:/cliente/all";
     }
+
+    public void DoNothing(){
+
+    }
 }
