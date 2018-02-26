@@ -47,6 +47,7 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public void saveOrUpdatePersona(Persona persona) {
         log.info("Adicionando/Actualizando Persona");
+        log.info(persona.toString());
         personaRepository.save(persona);
     }
 
