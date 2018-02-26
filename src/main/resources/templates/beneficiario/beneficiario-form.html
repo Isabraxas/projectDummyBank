@@ -84,7 +84,8 @@
 
         <tr>
             <td colspan="2">
-                <button type="submit">Enviar</button>
+                <button th:if="${accion=='guardar'}" type="submit">Guardar</button>
+                <button th:if="${accion=='actualizar'}" type="submit">Actualizar</button>
             </td>
         </tr>
 

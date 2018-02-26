@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th colspan="6">Cuentas</th>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>Numero de cuenta</th>
+        <th>Tipo</th>
+        <th>Saldo</th>
+        <th>Ciente</th>
+        <th colspan="3">ACCION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cuenta : ${cuentas}">
+        <td th:text="${cuenta.idCuenta}">aaa</td>
+        <td th:text="${cuenta.numeroCuenta}">aaa</td>
+        <td th:text="${cuenta.tipo}">aaa</td>
+        <td th:text="${cuenta.saldo}">aaa</td>
+        <td th:text="${cuenta.cliente}">aaa</td>
+        <td><a th:href="${'/cuenta/getCuenta/'+cuenta.idCuenta}">Ver</a></td>
+        <td><a th:href="${'/cuenta/update/'+cuenta.idCuenta}">Modificar</a></td>
+        <td><a th:href="${'/cuenta/delete/'+cuenta.idCuenta}">Eliminar</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<botton><a th:href="${'/cuenta/new/'}">Agregar nueva </a></botton>
+
+</body>
+</html>

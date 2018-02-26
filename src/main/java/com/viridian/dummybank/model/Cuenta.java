@@ -5,7 +5,7 @@ import java.util.List;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Table(name="Cuenta")
+@Table(name="cuenta")
 @Entity
 @Access(AccessType.FIELD)
 public class Cuenta implements Serializable{
@@ -45,13 +45,6 @@ public class Cuenta implements Serializable{
     public void setNumeroCuenta(Long numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
-  
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
 
     public String getTipo() {
         return tipo;
@@ -67,5 +60,13 @@ public class Cuenta implements Serializable{
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

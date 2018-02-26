@@ -50,6 +50,7 @@ public class TransaccionController {
         model.addAttribute("beneficiarios",beneficiarioService.getAll());
         model.addAttribute("metodos",metodoService.getAll());
         model.addAttribute("transaccion", transaccion);
+        model.addAttribute("accion","actualizar");
         return "transaccion/transaccion-form";
     }
 
@@ -68,6 +69,7 @@ public class TransaccionController {
         model.addAttribute("beneficiarios",beneficiarioService.getAll());
         model.addAttribute("metodos",metodoService.getAll());
         model.addAttribute("transaccion", new Transaccion());
+        model.addAttribute("accion","guardar");
         return "transaccion/transaccion-form";
     }
 

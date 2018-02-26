@@ -15,32 +15,58 @@
     </script>
 </head>
 <body>
-<form method="POST" th:object="${cuenta}" th:action="@{/cuenta/get}" >
+<form method="POST" th:object="${cuenta}" th:action="@{/cuenta/save}" >
     <table>
         <thead>
         <tr>
             <td colspan="2">
-               Cuenta
+                Cuenta
             </td>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>
-                <label for="id">Codigo de cuenta cliente</label>
+                <label >Numero de cuenta</label>
             </td>
             <td>
-                <select th:field="${cuenta.numeroCuenta}">
-                    <option th:each="cuenta :${cuentas}"
-                            th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}">Codigo de cuenta</option>
-                </select>
+                <input type="hidden" th:field="*{idCuenta}" />
+                <input type="text"  th:field="*{numeroCuenta}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label >Tipo</label>
+            </td>
+            <td>
+                <input type="text"  th:field="*{tipo}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Saldo</label>
+            </td>
+            <td>
+                <input type="text"  th:field="*{saldo}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label >Cliente</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{cliente}"  />
             </td>
 
         </tr>
 
+
         <tr>
             <td colspan="2">
-                <button type="submit">Enviar</button>
+                <button th:if="${accion=='guardar'}" type="submit">Guardar</button>
+                <button th:if="${accion=='actualizar'}" type="submit">Actualizar</button>
             </td>
         </tr>
 

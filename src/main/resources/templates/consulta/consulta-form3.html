@@ -29,7 +29,7 @@
         <th>Monto</th>
         <th>Moneda</th>
         <th>Saldo</th>
-        <th colspan="3">ACCION</th>
+        <!-- <th colspan="3">ACCION</th> -->
     </tr>
     </thead>
     <tbody>
@@ -41,9 +41,7 @@
         <td th:text="${transaccion.monto}">aaa</td>
         <td th:text="${transaccion.moneda}">aaa</td>
         <td th:text="${transaccion.saldo}">aaa</td>
-        <td><a th:href="${'/transaccion/getTransaccion/'+transaccion.idTransaccion}">Ver</a></td>
-        <td><a th:href="${'/transaccion/update/'+transaccion.idTransaccion}">Modificar</a></td>
-        <td><a th:href="${'/transaccion/delete/'+transaccion.idTransaccion}">Eliminar</a></td>
+      <!--  <td><a th:href="${'/transaccion/getTransaccion/'+transaccion.idTransaccion}">Ver</a></td> -->
     </tr>
 
     </tbody>

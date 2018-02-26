@@ -32,6 +32,7 @@ public class BeneficiarioController {
     @GetMapping("/new")
     public String newBeneficiario(Model model){
         model.addAttribute("beneficiario", new Beneficiario());
+        model.addAttribute("accion", "guardar");
         return "beneficiario/beneficiario-form";
     }
     @PostMapping("/save")
@@ -43,6 +44,7 @@ public class BeneficiarioController {
     public String updateBeneficiario(@PathVariable Long id, Model model){
         Beneficiario beneficiario = beneficiarioService.getBeneficiarioById(id);
         model.addAttribute("beneficiario", beneficiario);
+        model.addAttribute("accion", "actualizar");
         return "beneficiario/beneficiario-form";
     }
     @GetMapping("/delete/{id}")

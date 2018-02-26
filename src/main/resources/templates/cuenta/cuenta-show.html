@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3 > Detalle de cuenta </h3>
+<table border="1">
+    <tr>
+        <td>Id</td>
+        <td th:text="${cuenta.idCuenta}">LOL</td>
+    </tr>
+    <tr>
+        <td>Numero de cuenta</td>
+        <td th:text="${cuenta.numeroCuenta}">LOL</td>
+    </tr>
+    <tr>
+        <td>Tipo</td>
+        <td th:text="${cuenta.tipo}">LOL</td>
+    </tr>
+    <tr>
+        <td>Saldo</td>
+        <td th:text="${cuenta.saldo}">LOL</td>
+    </tr>
+    <tr>
+        <td>Cliente</td>
+        <td th:text="${cuenta.cliente}">LOL</td>
+    </tr>
+
+</table>
+
+<botton><a th:href="${'/cuenta/getAll/'}">Regresar</a></botton>
+</body>
+</html>
