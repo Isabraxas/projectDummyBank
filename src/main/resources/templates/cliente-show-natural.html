@@ -13,19 +13,31 @@
         <td th:text="${personaN.id}"></td>
     </tr>
 </table>
-<table>
+<!--CUENTAS ASOCIADAS AL CLIENTE-->
+<h2>Cuentas Asociadas</h2>
+<table border="1">
+    <thead>
     <tr>
-        <td>CUENTAS ASOCIADAS</td>
-        <td th:text="${personaN}"></td>
+        <td>Id</td>
+        <td>Numero Cuenta</td>
+        <td>Tipo</td>
+        <td>Saldo</td>
     </tr>
+    </thead>
+    <tbody th:each="cuenta : ${cuentas}">
+    <tr>
+        <td th:text="${cuenta.idCuenta}">LOL</td>
+        <td th:text="${cuenta.numeroCuenta}">LOL</td>
+        <td th:text="${cuenta.tipo}">LOL</td>
+        <td th:text="${cuenta.saldo}">LOL</td>
+    </tr>
+    </tbody>
 </table>
 <br/>
 <br/>
 <!--Informacion de la PEROSONA-->
+<h2>INFORMACION PERSONAL</h2>
 <table border="1">
-    <tr>
-        <td colspan="2">INFORMACION PERSONA</td>
-    </tr>
     <tr>
         <td>ID</td>
         <td th:text="${personaN.persona.id}"></td>

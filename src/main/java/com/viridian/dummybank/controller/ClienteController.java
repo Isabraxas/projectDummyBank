@@ -37,19 +37,20 @@ public class ClienteController {
 
     // repositorios
     // todo convertir a servicio
-    //private  final CuentaRepository cuentaRepository;
+    private  final CuentaRepository cuentaRepository;
 
     @Autowired
     public ClienteController(ClienteService clienteService,
                              PersonaJuridicaService personaJuridicaService,
                              PersonaNaturalService personaNaturalService,
-                             PersonaService personaService/*,
-                             CuentaRepository cuentaRepository*/) {
+                             PersonaService personaService,
+                             CuentaRepository cuentaRepository) {
         this.clienteService = clienteService;
         this.personaJuridicaService = personaJuridicaService;
         this.personaNaturalService = personaNaturalService;
 
         this.personaService = personaService;
+        this.cuentaRepository = cuentaRepository;
     }
 
     /**
@@ -67,16 +68,20 @@ public class ClienteController {
     @GetMapping("cliente/show/{id}")
     public String getCliente(@PathVariable String id, Model model){
         Cliente cliente = clienteService.findOneById(Long.valueOf(id));
-        //List<Cuenta> cuentas;
+        // buscar las cuentas asociadas al cliente y añadirlas
+        List<Cuenta> cuentas = cuentaRepository.findAllByClienteId(Long.valueOf(id));
+        model.addAttribute("cuentas", cuentas);
 
         // determinar que clase de cliente es; natural o juridica
         if(cliente.getTipo().equals(ClienteUtils.PERSONA_NATURAL)){
-            // buscar a esa PersonaNatural
+            // buscar a esa PersonaNatural y añadirla
             model.addAttribute("personaN", personaNaturalService.findOneById(Long.valueOf(id)));
+
             return "cliente-show-natural";
         }else if(cliente.getTipo().equals(ClienteUtils.PERSONA_JURIDICA)){
-            // buscar a esa PersonaJuridica
+            // buscar a esa PersonaJuridica y añadirla
             model.addAttribute("personaJ",personaJuridicaService.findOneById(Long.valueOf(id)));
+
             return "cliente-show-juridica";
         }
         model.addAttribute("cliente",clienteService.findOneById(Long.valueOf(id)));

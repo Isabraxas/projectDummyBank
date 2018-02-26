@@ -25,12 +25,31 @@
     </tr>
 </table>
 
-<br/>
-<br/>
+<!--CUENTAS ASOCIADAS AL CLIENTE-->
+<h2>Cuentas Asociadas</h2>
 <table border="1">
+    <thead>
     <tr>
-        <td colspan="2">INFORMACION REPRESENTANTE LEGAL</td>
+        <td>Id</td>
+        <td>Numero Cuenta</td>
+        <td>Tipo</td>
+        <td>Saldo</td>
     </tr>
+    </thead>
+    <tbody th:each="cuenta : ${cuentas}">
+    <tr>
+        <td th:text="${cuenta.idCuenta}">LOL</td>
+        <td th:text="${cuenta.numeroCuenta}">LOL</td>
+        <td th:text="${cuenta.tipo}">LOL</td>
+        <td th:text="${cuenta.saldo}">LOL</td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<br/>
+
+<h2>INFORMACION REPRESENTANTE LEGAL</h2>
+<table border="1">
     <tr>
         <td>ID</td>
         <td th:text="${personaJ.representanteLegal.id}"></td>
