@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <td colspan="4">Persona</td>
+            <td colspan="3">Accion</td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>PATERNO</td>
+            <td>MATERNO</td>
+            <td>NOMBRE</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="persona : ${personas}">
+            <td th:text="${persona.id}"></td>
+            <td th:text="${persona.apellidoPaterno}"></td>
+            <td th:text="${persona.apellidoMaterno}"></td>
+            <td th:text="${persona.nombres}"></td>
+            <td><a>Ver</a></td>
+            <td><a>Editar</a></td>
+            <td><a>Eliminar</a></td>
+        </tr>
+    </tbody>
+
+</table>
+</body>
+</html>

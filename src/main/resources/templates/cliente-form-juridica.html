@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" th:object="${clienteAndPerson}" th:action="@{/cliente/savePerJ}" >
+    <table>
+        <thead>
+        <tr>
+            <td colspan="2">CLIENTE</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!--DATOS DE CLIENTE, SOLO SUS NUMEROS DE CUENTA Y EL TIPO-->
+        <tr>
+            <td><label for="id">Id_Cliente</label></td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.id_cliente}" id="id" readonly="readonly"/>
+            </td>
+
+        </tr>
+        <tr>
+            <td><label for="tipo">TIPO</label></td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.tipo}" id="tipo" readonly="readonly"/>
+            </td>
+
+        </tr>
+        <!--DATOS DE LA PERSONA JURIDICA-->
+        <tr>
+            <td colspan="2">PERSONA JURIDICA</td>
+        </tr>
+        <tr>
+            <td>Razon</td>
+            <td><input type="text" th:field="${clienteAndPerson.nombre_razon}"/></td>
+        </tr>
+
+        <tr>
+            <td>Nit</td>
+            <td><input type="text" th:field="${clienteAndPerson.nit}"/></td>
+        </tr>
+        <tr>
+            <td>Registro FundaEmpresa</td>
+            <td><input type="text" th:field="${clienteAndPerson.registro_fundaempresa}"/></td>
+        </tr>
+        <!--DATOS DE PERSONA (REPRESENTANTE LEGAL) A LA QUE SE REGISTRARA LA CUENTA-->
+        <tr>
+            <td colspan="2">PERSONA / REPRESENTANTE LEGAL</td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.persona_id}" readonly="readonly"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Paterno</td>
+            <td>
+
+                <input type="text" th:field="${clienteAndPerson.apellido_paterno}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Materno</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.apellido_materno}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Ap. Casado</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.apellido_casado}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Nombres</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.nombres}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Documento Identidad</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.documento_identidad}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Numero</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.numero_documento}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Fecha Nacimiento</td>
+            <td>
+                <input type="date" th:field="${clienteAndPerson.fecha_nacimiento}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Lugar Nacimiento</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.lugar_nacimiento}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Nacionalidad</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.nacionalidad}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Domicilio</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.domicilio}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Domicilio Trabajo</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.domicilio_trabajo}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Telefono</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.telefono}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.email}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Estado Civil</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.estado_civil}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Profesion</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.profesion}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Caracter Legal</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.caracter_legal}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre Padre</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.nombre_padre}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre Madre</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.nombre_madre}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre Conyuge</td>
+            <td>
+                <input type="text" th:field="${clienteAndPerson.nombre_conyuge}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">ENVIAR</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

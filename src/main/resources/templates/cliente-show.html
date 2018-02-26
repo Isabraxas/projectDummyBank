@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3 th:text="${'showing data of user Id: ' + (cliente.id) + ' below'}"></h3>
+<table border="1">
+    <tr>
+        <td>Id</td>
+        <td th:text="${cliente.id}">LOL</td>
+    </tr>
+    <tr>
+        <td>Tipo</td>
+        <td th:text="${cliente.tipo}">LOL</td>
+    </tr>
+</table>
+</body>
+</html>

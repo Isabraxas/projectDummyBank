@@ -1,6 +1,7 @@
 package com.viridian.dummybank.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -21,6 +22,13 @@ public class Cuenta implements Serializable{
 
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo ;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="cliente_id")
+    private Cliente cliente;
+
+    public Cuenta() {
+    }
 
     public Long getIdCuenta() {
         return idCuenta;
@@ -37,6 +45,13 @@ public class Cuenta implements Serializable{
     public void setNumeroCuenta(Long numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
+  
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
 
     public String getTipo() {
         return tipo;
