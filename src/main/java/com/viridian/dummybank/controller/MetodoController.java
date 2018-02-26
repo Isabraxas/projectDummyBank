@@ -30,6 +30,7 @@ public class MetodoController {
     @GetMapping("/new")
     public String newMetodo(Model model){
         model.addAttribute("metodo", new Metodo());
+        model.addAttribute("accion", "guardar");
         return "metodo/metodo-form";
     }
     @PostMapping("/save")
@@ -41,6 +42,7 @@ public class MetodoController {
     public String updateMetodo(@PathVariable Long id, Model model){
         Metodo metodo = metodoService.getMetodoById(id);
         model.addAttribute("metodo", metodo);
+        model.addAttribute("accion", "actualizar");
         return "metodo/metodo-form";
     }
     @GetMapping("/delete/{id}")

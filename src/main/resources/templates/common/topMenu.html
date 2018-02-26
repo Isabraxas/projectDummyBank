@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="navbar">
+    <table border="1">
+        <thead>
+        <tr>
+            <th><a th:href="${'/cuenta/getAll/'}">Cuentas</a></th>
+            <th><a th:href="${'/autorizacion/getAll/'}">Autorizacion</a></th>
+            <th><a th:href="${'/beneficiario/getAll/'}">Beneficiario</a></th>
+            <th><a th:href="${'/cliente/getAll/'}">Cliente</a></th>
+            <th><a th:href="${'/estatus/getAll/'}">Estatus</a></th>
+            <th><a th:href="${'/metodo/getAll/'}">Metodo</a></th>
+            <th><a th:href="${'/operacion/getAll/'}">Operacion</a></th>
+            <th><a th:href="${'/operador/getAll/'}">Operador</a></th>
+            <th><a th:href="${'/transaccion/getAll/'}">Transaccion</a></th>
+            <th><a th:href="${'/consulta/getCuentas/'}">Consultas cuentas</a></th>
+        </tr>
+        </thead>
+    </table>
+    <br/>
+</div>
+
+</body>
+</html>

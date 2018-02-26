@@ -30,6 +30,7 @@ public class OperadorController {
     @GetMapping("/new")
     public String newOperador(Model model){
         model.addAttribute("operador", new Operador());
+        model.addAttribute("accion", "actualizar");
         return "operador/operador-form";
     }
     @PostMapping("/save")
@@ -41,6 +42,7 @@ public class OperadorController {
     public String updateOperador(@PathVariable Long id, Model model){
         Operador operador = operadorService.getOperadorById(id);
         model.addAttribute("operador", operador);
+        model.addAttribute("accion", "actualizar");
         return "operador/operador-form";
     }
     @GetMapping("/delete/{id}")

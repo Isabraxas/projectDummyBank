@@ -29,6 +29,7 @@ public class EstatusController {
     @GetMapping("/new")
     public String newEstatus(Model model){
         model.addAttribute("estatus", new Estatus());
+        model.addAttribute("accion", "guardar");
         return "estatus/estatus-form";
     }
     @PostMapping("/save")
@@ -40,6 +41,7 @@ public class EstatusController {
     public String updateEstatus(@PathVariable Long id, Model model){
         Estatus estatus = estatusService.getEstatusById(id);
         model.addAttribute("estatus", estatus);
+        model.addAttribute("accion", "actualizar");
         return "estatus/estatus-form";
     }
     @GetMapping("/delete/{id}")
