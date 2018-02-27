@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -61,7 +60,7 @@ public class ClienteController {
     @GetMapping("cliente/all")
     public String getAllCuentas(Model model){
         model.addAttribute("clientes",clienteService.findAllClientes());
-        return "cliente-all";
+        return "cliente/cliente-all";
     }
 
     /**
@@ -81,15 +80,15 @@ public class ClienteController {
             // buscar a esa PersonaNatural y añadirla
             model.addAttribute("personaN", personaNaturalService.findOneById(Long.valueOf(id)));
 
-            return "cliente-show-natural";
+            return "cliente/cliente-show-natural";
         }else if(cliente.getTipo().equals(ClienteUtils.PERSONA_JURIDICA)){
             // buscar a esa PersonaJuridica y añadirla
             model.addAttribute("personaJ",personaJuridicaService.findOneById(Long.valueOf(id)));
 
-            return "cliente-show-juridica";
+            return "cliente/cliente-show-juridica";
         }
         model.addAttribute("cliente",clienteService.findOneById(Long.valueOf(id)));
-        return "cliente-show";
+        return "cliente/cliente-show";
     }
 
     /**
@@ -101,14 +100,14 @@ public class ClienteController {
         if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){         // si es persona juridica
             // buscar a esa PersonaJuridica
             model.addAttribute("personaJ",personaJuridicaService.findOneById(Long.valueOf(id)));
-            return "cliente-show-juridica";
+            return "cliente/cliente-show-juridica";
         } else if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){   // si es persona natural
             // buscar a esa PersonaNatural
             model.addAttribute("personaN", personaNaturalService.findOneById(Long.valueOf(id)));
-            return "cliente-show-natural";
+            return "cliente/cliente-show-natural";
         }
 
-        return "cliente-show";
+        return "cliente/cliente-show";
     }
 
     /**
@@ -117,7 +116,7 @@ public class ClienteController {
     @GetMapping("cliente/new")
     public String addNewClient(Model model){
         model.addAttribute("cliente", new Cliente());
-        return "cliente-form";
+        return "cliente/cliente-form";
     }
 
     /**
@@ -138,9 +137,9 @@ public class ClienteController {
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica();
             clienteAndPersonaJuridica.setTipo(ClienteUtils.PERSONA_JURIDICA);
             model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
-            return "cliente-form-juridica";
+            return "cliente/cliente-form-juridica";
         }
-        return "cliente-form";
+        return "cliente/cliente-form";
     }
 
     /**
@@ -203,18 +202,18 @@ public class ClienteController {
             ClienteAndPersonaNatural clienteAndPersonaNatural = new ClienteAndPersonaNatural(cliente, persona);
 
             model.addAttribute("clienteAndPerson", clienteAndPersonaNatural);
-            return "cliente-form-natural";
+            return "cliente/cliente-form-natural";
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
             // cliente es persona juridica
             PersonaJuridica persona = personaJuridicaService.findOneById(Long.valueOf(id));
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica(cliente,persona);
 
             model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
-            return "cliente-form-juridica";
+            return "cliente/cliente-form-juridica";
         }
         // extremo caso (mal formato)
         model.addAttribute("cliente", clienteService.findOneById(Long.valueOf(id)));
-        return "cliente-form";
+        return "cliente/cliente-form";
     }
 
     /**
@@ -232,7 +231,7 @@ public class ClienteController {
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica(cliente,persona);
 
             model.addAttribute("clienteAndPerson", clienteAndPersonaJuridica);
-            return "cliente-form-juridica";
+            return "cliente/cliente-form-juridica";
         } else if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
             // cliente es persona natural
             //Cliente cliente = clienteService.findOneById(Long.valueOf(id));
@@ -240,11 +239,11 @@ public class ClienteController {
             ClienteAndPersonaNatural clienteAndPersonaNatural = new ClienteAndPersonaNatural(cliente, persona);
 
             model.addAttribute("clienteAndPerson", clienteAndPersonaNatural);
-            return "cliente-form-natural";
+            return "cliente/cliente-form-natural";
         }else
         // caso extremo
         model.addAttribute("cliente", clienteService.findOneById(Long.valueOf(id)));
-        return "cliente-form";
+        return "cliente/cliente-form";
     }
 
     /**
@@ -260,9 +259,5 @@ public class ClienteController {
         }
         clienteService.deleteCliente(Long.valueOf(id));
         return "redirect:/cliente/all";
-    }
-
-    public void DoNothing(){
-
     }
 }
