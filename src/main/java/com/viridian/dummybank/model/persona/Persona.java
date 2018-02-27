@@ -103,6 +103,32 @@ public class Persona {
 
     }
 
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "id=" + id +
+                ", apellidoPaterno='" + apellidoPaterno + '\'' +
+                ", apellidoMaterno='" + apellidoMaterno + '\'' +
+                ", apellidoCasado='" + apellidoCasado + '\'' +
+                ", nombres='" + nombres + '\'' +
+                ", documentoIdentidad='" + documentoIdentidad + '\'' +
+                ", numeroDocumento=" + numeroDocumento +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", lugarNacimiento='" + lugarNacimiento + '\'' +
+                ", nacionalidad='" + nacionalidad + '\'' +
+                ", domicilio='" + domicilio + '\'' +
+                ", domicilioTrabajo='" + domicilioTrabajo + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                ", estadoCivil='" + estadoCivil + '\'' +
+                ", profesion='" + profesion + '\'' +
+                ", caracterLegal='" + caracterLegal + '\'' +
+                ", nombrePadre='" + nombrePadre + '\'' +
+                ", nombreMadre='" + nombreMadre + '\'' +
+                ", nombreConyuge='" + nombreConyuge + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
