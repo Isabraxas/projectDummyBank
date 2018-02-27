@@ -15,7 +15,7 @@ public class Cliente {
     @Column(name = "id_cliente")
     private Long id;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente")    // private Cliente cliente, de la clase Cuenta, es quien es "dueño" de este campo(posee las clavs foraneas)
     private List<Cuenta> cuentas;
 
     private String tipo;    // para diferenciar a que tabla buscar subsecuente (J juridica, N natural)

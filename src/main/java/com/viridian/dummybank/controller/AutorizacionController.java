@@ -31,6 +31,7 @@ public class AutorizacionController {
     @GetMapping("/new")
     public String newAutorizacion(Model model){
         model.addAttribute("autorizacion", new Autorizacion());
+        model.addAttribute("accion", "guardar");
         return "autorizacion/autorizacion-form";
     }
     @PostMapping("/save")
@@ -42,6 +43,7 @@ public class AutorizacionController {
     public String updateAutorizacion(@PathVariable Long id, Model model){
         Autorizacion autorizacion = autorizacionService.getAutorizacionById(id);
         model.addAttribute("autorizacion", autorizacion);
+        model.addAttribute("accion", "actualizar");
         return "autorizacion/autorizacion-form";
     }
     @GetMapping("/delete/{id}")

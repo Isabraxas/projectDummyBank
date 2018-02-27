@@ -30,8 +30,8 @@ public class CuentaController {
 
     @GetMapping("/new")
     public String newCuenta(Model model){
-        model.addAttribute("accion", "guardar");
         model.addAttribute("cuenta", new Cuenta());
+        model.addAttribute("accion", "guardar");
         return "cuenta/cuenta-form";
     }
     @PostMapping("/save")

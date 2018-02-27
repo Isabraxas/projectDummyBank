@@ -37,6 +37,7 @@ public class ClienteController {
 
     // repositorios
     // todo convertir a servicio
+
     private  final CuentaRepository cuentaRepository;
 
     @Autowired
@@ -45,6 +46,7 @@ public class ClienteController {
                              PersonaNaturalService personaNaturalService,
                              PersonaService personaService,
                              CuentaRepository cuentaRepository) {
+
         this.clienteService = clienteService;
         this.personaJuridicaService = personaJuridicaService;
         this.personaNaturalService = personaNaturalService;
@@ -68,9 +70,11 @@ public class ClienteController {
     @GetMapping("cliente/show/{id}")
     public String getCliente(@PathVariable String id, Model model){
         Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+
         // buscar las cuentas asociadas al cliente y añadirlas
         List<Cuenta> cuentas = cuentaRepository.findAllByClienteId(Long.valueOf(id));
         model.addAttribute("cuentas", cuentas);
+
 
         // determinar que clase de cliente es; natural o juridica
         if(cliente.getTipo().equals(ClienteUtils.PERSONA_NATURAL)){
