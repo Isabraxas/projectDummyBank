@@ -2,7 +2,7 @@ package com.viridian.dummybank.util;
 
 import java.sql.Timestamp;
 
-public class Movimiento {
+public class MovimientoForm {
     private Long numeroCuenta;
     private int opcion;
     private int limite;
@@ -35,7 +35,7 @@ public class Movimiento {
     }
 
     public Timestamp getFechaInicioDesde() {
-       // if (fechaInicioDesde.toString() == ""){
+       // if (fechaInicioDesde == ""){
          //   return Timestamp.valueOf("0000-00-00 00:00:00");
        // }
         return fechaInicioDesde;

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Movimiento {
     private Long numeroCuenta;
     private int opcion;
+    private int limite;
     private Timestamp fechaInicioDesde;
     private Timestamp fechaInicioHasta;
 
@@ -23,6 +24,14 @@ public class Movimiento {
 
     public void setOpcion(int opcion) {
         this.opcion = opcion;
+    }
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite(int limite) {
+        this.limite = limite;
     }
 
     public Timestamp getFechaInicioDesde() {

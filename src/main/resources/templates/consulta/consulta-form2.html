@@ -29,6 +29,10 @@
              <input type="hidden" th:value='${numeroCuenta}' name="numeroCuenta" />
 
          <tr>
+             <label >Por Meses:</label>
+         </tr>
+         <tr>
+
              <td>
                  <label for="id">Desde: </label>
              </td>
@@ -46,6 +50,24 @@
              </td>
 
          </tr>
+
+         <tr>
+             <td>
+                 <label >Por orden:</label>
+             </td>
+
+             <td>
+
+                 <select  th:field="${movimiento.limite}" >
+                     <option value="0" >Selecciona una opcion</option>
+                     <option value="10" >Los 10 ultimos</option>
+                     <option value="25" >Los 25 ultimos</option>
+                     <option value="60" >Los 60 ultimos</option>
+                 </select>
+             </td>
+
+         </tr>
+
 
         <tr>
             <td>
