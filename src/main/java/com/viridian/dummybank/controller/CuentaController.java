@@ -1,7 +1,8 @@
 package com.viridian.dummybank.controller;
 
-import com.viridian.dummybank.dao.CuentaRepository;
+
 import com.viridian.dummybank.model.Cuenta;
+import com.viridian.dummybank.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,19 +13,21 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/cuenta")
 public class CuentaController {
-
+    
     @Autowired
-    protected CuentaRepository cuentaRepository;
+    protected CuentaService cuentaService;
+    
+
 
     @GetMapping(value = "/getAll")
     public  String getAll(Model model){
-        model.addAttribute("cuentas", this.cuentaRepository.findAll());
+        model.addAttribute("cuentas", this.cuentaService.getAll());
         return "cuenta/cuenta-all";
     }
 
     @GetMapping(value = "/getCuenta/{id}")
     public String getCuenta(Model model, @PathVariable Long id){
-        model.addAttribute("cuenta",this.cuentaRepository.findOne(id));
+        model.addAttribute("cuenta",this.cuentaService.getCuenta(id));
         return "cuenta/cuenta-show";
     }
 
@@ -36,24 +39,24 @@ public class CuentaController {
     }
     @PostMapping("/save")
     public String saveCuenta(Cuenta cuenta){
-        this.cuentaRepository.save(cuenta);
+        this.cuentaService.save(cuenta);
         return "redirect:/cuenta/getAll";
     }
     @GetMapping("/update/{id}")
     public String updateCuenta(@PathVariable Long id, Model model){
-        Cuenta cuenta = this.cuentaRepository.findOne(id);
+        Cuenta cuenta = this.cuentaService.getCuenta(id);
         model.addAttribute("accion", "actualizar");
         model.addAttribute("cuenta", cuenta);
         return "cuenta/cuenta-form";
     }
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
-        this.cuentaRepository.findOne(id);
+        this.cuentaService.delete(id);
         return "redirect:/cuenta/getAll";
     }
 
 
     public @ResponseBody List<Cuenta> getAllREST(){
-        return this.cuentaRepository.findAll();
+        return this.cuentaService.getAll();
     }
 }

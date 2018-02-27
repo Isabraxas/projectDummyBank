@@ -27,7 +27,7 @@
         <td th:text="${cuenta.numeroCuenta}">aaa</td>
         <td th:text="${cuenta.tipo}">aaa</td>
         <td th:text="${cuenta.saldo}">aaa</td>
-        <td th:text="${cuenta.cliente}">aaa</td>
+        <td th:text="${cuenta.cliente.tipo}">aaa</td>
         <td><a th:href="${'/cuenta/getCuenta/'+cuenta.idCuenta}">Ver</a></td>
         <td><a th:href="${'/cuenta/update/'+cuenta.idCuenta}">Modificar</a></td>
         <td><a th:href="${'/cuenta/delete/'+cuenta.idCuenta}">Eliminar</a></td>
