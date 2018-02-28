@@ -131,7 +131,7 @@ public class ClienteController {
             ClienteAndPersonaNatural clienteAndPersonaNatural  = new ClienteAndPersonaNatural();
             clienteAndPersonaNatural.setTipo(ClienteUtils.PERSONA_NATURAL);
             model.addAttribute("clienteAndPerson",clienteAndPersonaNatural);
-            return "cliente-form-natural";
+            return "cliente/cliente-form-natural";
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
             // nuevo cliente, con persona juridica
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica();
