@@ -2,6 +2,7 @@ package com.viridian.dummybank.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Table(name="Operador")
@@ -18,6 +19,10 @@ public class Operador implements Serializable {
 
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
+
+    @OneToMany(mappedBy = "operador")
+    private List<Transaccion> transaccions;
+
 
 
     public Long getIdOperador() {
@@ -42,5 +47,13 @@ public class Operador implements Serializable {
 
     public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public List<Transaccion> getTransaccions() {
+        return transaccions;
+    }
+
+    public void setTransaccions(List<Transaccion> transaccions) {
+        this.transaccions = transaccions;
     }
 }

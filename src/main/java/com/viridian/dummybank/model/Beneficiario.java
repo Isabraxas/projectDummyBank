@@ -32,8 +32,9 @@ public class Beneficiario implements Serializable{
     @Column(name = "banco", nullable = false)
     private String banco;
 
-    @ManyToMany(mappedBy = "beneficiarios")
-    private List<Cliente> clientes;
+    @OneToMany(mappedBy = "beneficiario")
+    private List<Transaccion> transaccions;
+
 
     public Long getIdBeneficiario() {
         return idBeneficiario;
@@ -89,5 +90,13 @@ public class Beneficiario implements Serializable{
 
     public void setBanco(String banco) {
         this.banco = banco;
+    }
+
+    public List<Transaccion> getTransaccions() {
+        return transaccions;
+    }
+
+    public void setTransaccions(List<Transaccion> transaccions) {
+        this.transaccions = transaccions;
     }
 }
