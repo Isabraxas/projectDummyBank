@@ -95,6 +95,34 @@ INSERT INTO `Cliente` VALUES (1,'J'),(2,'J'),(3,'J'),(4,'N'),(6,'N'),(7,'N');
 /*!40000 ALTER TABLE `Cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `Cliente_Beneficiario`
+--
+
+DROP TABLE IF EXISTS `Cliente_Beneficiario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Cliente_Beneficiario` (
+  `cliente_id` bigint(20) NOT NULL,
+  `beneficiario_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`cliente_id`,`beneficiario_id`),
+  KEY `beneficiario_id` (`beneficiario_id`),
+  CONSTRAINT `Cliente_Beneficiario_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id_cliente`),
+  CONSTRAINT `Cliente_Beneficiario_ibfk_2` FOREIGN KEY (`beneficiario_id`) REFERENCES `Beneficiario` (`id_beneficiario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Cliente_Beneficiario`
+--
+
+LOCK TABLES `Cliente_Beneficiario` WRITE;
+/*!40000 ALTER TABLE `Cliente_Beneficiario` DISABLE KEYS */;
+INSERT INTO `Cliente_Beneficiario` VALUES (4,1),(6,1),(4,3);
+/*!40000 ALTER TABLE `Cliente_Beneficiario` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `Estatus`
 --
