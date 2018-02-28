@@ -57,6 +57,13 @@ public class TransferenciasController {
     public String saveTransferenciaPropia(HttpServletRequest request){
         log.info("Recibiendo datos de la transferencia a realizar");
         // obtener los datos de la transferencia propia
+        Long numeroCuentaOrigen = Long.valueOf(request.getParameter("origen"));
+        Long numeroCuentaDestino = Long.valueOf(request.getParameter("destino"));
+        BigDecimal monto = BigDecimal.valueOf(Long.valueOf(request.getParameter("monto")));
+        String moneda = request.getParameter("moneda");
+        String glosa = request.getParameter("glosa");
+        Long autorizacion = Long.valueOf(request.getParameter("autorizacion"));
+        Long regAsfi = Long.valueOf(request.getParameter("regAsfi"));
         /*
         System.out.println( "id cuenta origen: " + request.getParameter("origen"));
         System.out.println( "id cuenta destino: " + request.getParameter("destino"));
@@ -66,15 +73,21 @@ public class TransferenciasController {
         System.out.println( "autorizacion: " + request.getParameter("autorizacion"));
         System.out.println( "regAsif: " + request.getParameter("regAsfi"));
         */
+        if(numeroCuentaOrigen == numeroCuentaDestino){
+            log.error("no puede transferirse entre cuentas propias");
+            // todo Error Transferencia entre cuentas propias, misma cuenta
+        }
+        // todo Error saldo insuficiente
+
         log.info("Creando Un objeto Transaccion");
         // crear un objeto Transaccion con informacion necesaria para la BD
         Transaccion transaccion = new Transaccion();
-        transaccion.setNumeroCuenta(Long.valueOf(request.getParameter("origen")));
-        transaccion.setMonto(BigDecimal.valueOf(Long.valueOf(request.getParameter("monto"))));
-        transaccion.setMoneda(request.getParameter("moneda"));
-        transaccion.setConceptoGlosa(request.getParameter("glosa"));
-        transaccion.setAutorizacionId(Long.valueOf(request.getParameter("autorizacion")));
-        transaccion.setRegisAsfi(Long.valueOf(request.getParameter("regAsfi")));
+        transaccion.setNumeroCuenta(numeroCuentaOrigen);
+        transaccion.setMonto(monto);
+        transaccion.setMoneda(moneda);
+        transaccion.setConceptoGlosa(glosa);
+        transaccion.setAutorizacionId(autorizacion);
+        transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
             // considerar los atributos que no se piden
         transaccion.setEstatusId(TransferenciaUtils.STATUS_COMPLETA);
