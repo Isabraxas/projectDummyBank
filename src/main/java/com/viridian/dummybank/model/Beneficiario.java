@@ -3,6 +3,7 @@ package com.viridian.dummybank.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name="Beneficiario")
 @Entity
@@ -31,6 +32,8 @@ public class Beneficiario implements Serializable{
     @Column(name = "banco", nullable = false)
     private String banco;
 
+    @ManyToMany(mappedBy = "beneficiarios")
+    private List<Cliente> clientes;
 
     public Long getIdBeneficiario() {
         return idBeneficiario;

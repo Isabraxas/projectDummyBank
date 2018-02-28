@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>
-        Transferencia entre cuentas propias
+        Transferencia a cuentas de Terceros
     </h1>
     <h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
     <form method="POST" id="form-transfer" th:action="@{/transferencia/propias/save}">
@@ -14,13 +14,13 @@
         <h4>Cuenta Origen</h4>
         <select id="origen" name="origen">
             <option value="0" th:text="${'Select Operator'}"></option>
-            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+            <option th:each="cuenta : ${cliente.cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
         </select>
         <br/>
         <h4>Cuenta Destino</h4>
         <select id="destino" name="destino">
             <option value="0" th:text="${'Select Operator'}"></option>
-            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta}" th:text="${cuenta}"></option>
         </select>
         <br/>
         <!--MONTO Y MONEDA-->

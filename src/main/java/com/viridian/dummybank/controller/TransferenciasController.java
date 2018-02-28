@@ -3,6 +3,7 @@ package com.viridian.dummybank.controller;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.Transaccion;
+import com.viridian.dummybank.repository.TransferenciaRepository;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.TransaccionService;
 import com.viridian.dummybank.utils.TransferenciaUtils;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -31,12 +33,16 @@ public class TransferenciasController {
     // servicios
     private final ClienteService clienteService;
     private final TransaccionService transaccionService;
+    // repositorio
+    private final TransferenciaRepository transferenciaRepository;
 
     @Autowired
     public TransferenciasController(ClienteService clienteService,
-                                    TransaccionService transaccionService) {
+                                    TransaccionService transaccionService,
+                                    TransferenciaRepository transferenciaRepository) {
         this.clienteService = clienteService;
         this.transaccionService = transaccionService;
+        this.transferenciaRepository = transferenciaRepository;
     }
 
     @GetMapping("transferencia/propias/{idCliente}")
@@ -106,5 +112,19 @@ public class TransferenciasController {
         transaccionService.save(transaccion);
         log.info("Transaccion Guardada correctamente");
         return "redirect:/";
+    }
+
+
+    @GetMapping("transferencia/terceros/{idCliente}")
+    public String transferenciaCuentasTerceros(@PathVariable String idCliente, Model model){
+        // obtener al cliente de la BD
+        Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
+        model.addAttribute("cliente", cliente);
+        // obtener las cuentas de los beneficiarios registrados al cliente por su Id
+        List<Long> cuentas = transferenciaRepository.getCuentas(Long.valueOf(idCliente));
+        // cargarlos al modelo
+        model.addAttribute("cuentas", cuentas);
+        // cargar la vista
+        return "transferencias/transferencia-terceros";
     }
 }
