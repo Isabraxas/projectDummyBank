@@ -14,7 +14,7 @@
         <h4>Cuenta Origen</h4>
         <select id="origen" name="origen">
             <option value="0" th:text="${'Select Operator'}"></option>
-            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.idCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
         </select>
         <br/>
         <h4>Cuenta Destino</h4>

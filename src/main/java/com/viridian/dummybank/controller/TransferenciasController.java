@@ -4,6 +4,9 @@ import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.Transaccion;
 import com.viridian.dummybank.service.ClienteService;
+import com.viridian.dummybank.service.TransaccionService;
+import com.viridian.dummybank.utils.TransferenciaUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -20,16 +25,23 @@ import java.util.List;
 @Controller
 public class TransferenciasController {
 
+    // logger
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(TransferenciasController.class);
+
     // servicios
     private final ClienteService clienteService;
+    private final TransaccionService transaccionService;
 
     @Autowired
-    public TransferenciasController(ClienteService clienteService) {
+    public TransferenciasController(ClienteService clienteService,
+                                    TransaccionService transaccionService) {
         this.clienteService = clienteService;
+        this.transaccionService = transaccionService;
     }
 
     @GetMapping("transferencia/propias/{idCliente}")
     public String transferenciaCuentasPropias(@PathVariable String idCliente, Model model){
+        log.info("Creando nueva Transferencia entre cuentas propias.");
         // obtener al cliente desde la BD
         Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
         model.addAttribute(cliente);
@@ -43,8 +55,9 @@ public class TransferenciasController {
 
     @PostMapping("transferencia/propias/save")
     public String saveTransferenciaPropia(HttpServletRequest request){
+        log.info("Recibiendo datos de la transferencia a realizar");
         // obtener los datos de la transferencia propia
-        /**/
+        /*
         System.out.println( "id cuenta origen: " + request.getParameter("origen"));
         System.out.println( "id cuenta destino: " + request.getParameter("destino"));
         System.out.println( "monto: " + request.getParameter("monto"));
@@ -52,12 +65,33 @@ public class TransferenciasController {
         System.out.println( "glosa: " + request.getParameter("glosa"));
         System.out.println( "autorizacion: " + request.getParameter("autorizacion"));
         System.out.println( "regAsif: " + request.getParameter("regAsfi"));
-        /**/
+        */
+        log.info("Creando Un objeto Transaccion");
         // crear un objeto Transaccion con informacion necesaria para la BD
-            // considerar los atributos que no se piden
-        // introducir la transaccion a la BD
-        // todo completar el registro de la transaccion
         Transaccion transaccion = new Transaccion();
+        transaccion.setNumeroCuenta(Long.valueOf(request.getParameter("origen")));
+        transaccion.setMonto(BigDecimal.valueOf(Long.valueOf(request.getParameter("monto"))));
+        transaccion.setMoneda(request.getParameter("moneda"));
+        transaccion.setConceptoGlosa(request.getParameter("glosa"));
+        transaccion.setAutorizacionId(Long.valueOf(request.getParameter("autorizacion")));
+        transaccion.setRegisAsfi(Long.valueOf(request.getParameter("regAsfi")));
+        log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
+            // considerar los atributos que no se piden
+        transaccion.setEstatusId(TransferenciaUtils.STATUS_COMPLETA);
+        transaccion.setAutorizacionId(TransferenciaUtils.AUTORIZACION_DEF);
+        transaccion.setMetodoId(TransferenciaUtils.METODO_CUENTAS_PROPIAS);
+        transaccion.setNumeroOrden(TransferenciaUtils.NUMERO_ORDEN_DEF);
+        transaccion.setOperacionId(TransferenciaUtils.OPERACION_DEPOSITO);
+        transaccion.setOperador(TransferenciaUtils.OPERADOR_DEF);
+        transaccion.setRegistroFacturacion(TransferenciaUtils.REGISTRO_FACTURACION);
+        transaccion.setBeneficiarioId(TransferenciaUtils.BENEFICIARIO_DEF);
+        transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+        transaccion.setSaldo(TransferenciaUtils.SALDO_DEF);
+
+        // introducir la transaccion a la BD
+        log.info("Guardando Transaccion en BD");
+        transaccionService.save(transaccion);
+        log.info("Transaccion Guardada correctamente");
         return "redirect:/";
     }
 }
