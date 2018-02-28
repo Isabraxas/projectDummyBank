@@ -40,6 +40,7 @@
         <label for="reg_asfi">Registro ASFI (opcional)</label>
         <input type="text" id="reg_asfi" name="regAsfi" placeholder="registro"/>
         <br/>
+        <input type="hidden" name="metodo" th:text="${metodo}" th:value="${metodo}" hidden="hidden"/>
         <button type="submit">REALIZAR TRANSFERENCIA</button>
 
     </form>

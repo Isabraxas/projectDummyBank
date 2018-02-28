@@ -1,11 +1,8 @@
 package com.viridian.dummybank.controller;
 
-import com.viridian.dummybank.model.Cliente;
-import com.viridian.dummybank.model.Cuenta;
-import com.viridian.dummybank.model.Transaccion;
+import com.viridian.dummybank.model.*;
 import com.viridian.dummybank.repository.TransferenciaRepository;
-import com.viridian.dummybank.service.ClienteService;
-import com.viridian.dummybank.service.TransaccionService;
+import com.viridian.dummybank.service.*;
 import com.viridian.dummybank.utils.TransferenciaUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +30,34 @@ public class TransferenciasController {
     // servicios
     private final ClienteService clienteService;
     private final TransaccionService transaccionService;
+    private final AutorizacionService autorizacionService;
+    private final EstatusService estatusService;
+    private final MetodoService metodoService;
+    private final OperacionService operacionService;
+    private final BeneficiarioService beneficiarioService;
+    private final OperadorService operadorService;
     // repositorio
     private final TransferenciaRepository transferenciaRepository;
 
     @Autowired
     public TransferenciasController(ClienteService clienteService,
                                     TransaccionService transaccionService,
-                                    TransferenciaRepository transferenciaRepository) {
+                                    TransferenciaRepository transferenciaRepository,
+                                    AutorizacionService autorizacionService,
+                                    EstatusService estatusService,
+                                    MetodoService metodoService,
+                                    OperacionService operacionService,
+                                    BeneficiarioService beneficiarioService,
+                                    OperadorService operadorService) {
         this.clienteService = clienteService;
         this.transaccionService = transaccionService;
         this.transferenciaRepository = transferenciaRepository;
+        this.autorizacionService = autorizacionService;
+        this.estatusService = estatusService;
+        this.metodoService = metodoService;
+        this.operacionService = operacionService;
+        this.beneficiarioService  = beneficiarioService;
+        this.operadorService = operadorService;
     }
 
     @GetMapping("transferencia/propias/{idCliente}")
@@ -55,6 +70,8 @@ public class TransferenciasController {
         List<Cuenta> cuentas = cliente.getCuentas();
         // adicionar las cuentas al modelo
         model.addAttribute("cuentas", cuentas);
+
+        model.addAttribute("metodo",TransferenciaUtils.METODO_CUENTAS_PROPIAS);
         // cargar la vista
         return "transferencias/transferencia-propias";
     }
@@ -70,6 +87,8 @@ public class TransferenciasController {
         String glosa = request.getParameter("glosa");
         Long autorizacion = Long.valueOf(request.getParameter("autorizacion"));
         Long regAsfi = Long.valueOf(request.getParameter("regAsfi"));
+
+        Long metodoId = Long.valueOf(request.getParameter("metodo"));
         /*
         System.out.println( "id cuenta origen: " + request.getParameter("origen"));
         System.out.println( "id cuenta destino: " + request.getParameter("destino"));
@@ -92,18 +111,17 @@ public class TransferenciasController {
         transaccion.setMonto(monto);
         transaccion.setMoneda(moneda);
         transaccion.setConceptoGlosa(glosa);
-        transaccion.setAutorizacionId(autorizacion);
+        transaccion.setAutorizacion(autorizacionService.getAutorizacionById(autorizacion));
         transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
             // considerar los atributos que no se piden
-        transaccion.setEstatusId(TransferenciaUtils.STATUS_COMPLETA);
-        transaccion.setAutorizacionId(TransferenciaUtils.AUTORIZACION_DEF);
-        transaccion.setMetodoId(TransferenciaUtils.METODO_CUENTAS_PROPIAS);
+        transaccion.setEstatus(estatusService.getEstatusById(TransferenciaUtils.STATUS_COMPLETA));
+        transaccion.setMetodo(metodoService.getMetodoById(metodoId));
         transaccion.setNumeroOrden(TransferenciaUtils.NUMERO_ORDEN_DEF);
-        transaccion.setOperacionId(TransferenciaUtils.OPERACION_DEPOSITO);
-        transaccion.setOperador(TransferenciaUtils.OPERADOR_DEF);
+        transaccion.setOperacion(operacionService.getOperacionById(TransferenciaUtils.OPERACION_DEPOSITO));
+        transaccion.setOperador(operadorService.getOperadorById(TransferenciaUtils.OPERADOR_DEF));
         transaccion.setRegistroFacturacion(TransferenciaUtils.REGISTRO_FACTURACION);
-        transaccion.setBeneficiarioId(TransferenciaUtils.BENEFICIARIO_DEF);
+        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioById(TransferenciaUtils.BENEFICIARIO_DEF));
         transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
         transaccion.setSaldo(TransferenciaUtils.SALDO_DEF);
 
@@ -124,6 +142,8 @@ public class TransferenciasController {
         List<Long> cuentas = transferenciaRepository.getCuentas(Long.valueOf(idCliente));
         // cargarlos al modelo
         model.addAttribute("cuentas", cuentas);
+
+        model.addAttribute("metodo",TransferenciaUtils.METODO_CUENTAS_TERCEROS);
         // cargar la vista
         return "transferencias/transferencia-terceros";
     }
