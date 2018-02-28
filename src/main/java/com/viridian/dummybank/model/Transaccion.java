@@ -166,6 +166,11 @@ public class Transaccion implements Serializable {
             this.fechaInicio = nuevaFechaInicio;
 
     }
+    // añadido por marcelo
+    public void setFechaInicioTS(Timestamp date)  {
+        this.fechaInicio = date;
+    }
+    //--------------------
 
     public String getFechaAprobacion() {
         if(fechaAprobacion == null){

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <h1>
+        Transferencia entre cuentas propias
+    </h1>
+    <h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
+    <form method="POST" id="form-transfer" th:action="@{/transferencia/propias/save}">
+        <!--SELECCION DE CUENTAS ORIGEN Y DESTINO-->
+        <h4>Cuenta Origen</h4>
+        <select id="origen" name="origen">
+            <option value="0" th:text="${'Select Operator'}"></option>
+            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+        </select>
+        <br/>
+        <h4>Cuenta Destino</h4>
+        <select id="destino" name="destino">
+            <option value="0" th:text="${'Select Operator'}"></option>
+            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta.idCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+        </select>
+        <br/>
+        <!--MONTO Y MONEDA-->
+        <label for="monto">Monto</label>
+        <input type="text" id="monto" name="monto" placeholder="monto" required="required"/>
+        <br/>
+        <label for="moneda">Moneda</label>
+        <input type="text" id="moneda" name="moneda" placeholder="moneda" required="required"/>
+        <br/>
+        <!--DEMAS INFO-->
+        <label for="glosa">Glosa</label>
+        <textarea id="glosa" form="form-transfer" name="glosa"></textarea>
+        <br/>
+        <label for="autorizacion">Autorizacion</label>
+        <input type="text" id="autorizacion" name="autorizacion" placeholder="autorizacion" required="required"/>
+        <br/>
+        <label for="reg_asfi">Registro ASFI (opcional)</label>
+        <input type="text" id="reg_asfi" name="regAsfi" placeholder="registro"/>
+        <br/>
+        <button type="submit">REALIZAR TRANSFERENCIA</button>
+
+    </form>
+</body>
+</html>
