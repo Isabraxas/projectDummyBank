@@ -29,7 +29,7 @@
     </tr>
     <tr>
         <td>Estatus</td>
-        <td th:text="${transaccion.estatusId}">LOL</td>
+        <td th:text="${transaccion.estatus.descripcion}">LOL</td>
     </tr>
     <tr>
         <td>Monto</td>
@@ -45,7 +45,7 @@
     </tr>
     <tr>
         <td>Beneficiario</td>
-        <td th:text="${transaccion.beneficiarioId}">LOL</td>
+        <td th:text="${transaccion.beneficiario.nombreRs}">LOL</td>
     </tr>
     <tr>
         <td>Concepto/Glosa</td>
@@ -53,7 +53,7 @@
     </tr>
     <tr>
         <td>Operador</td>
-        <td th:text="${transaccion.operador}">LOL</td>
+        <td th:text="${transaccion.operador.nombre}">LOL</td>
     </tr>
 
 </table>

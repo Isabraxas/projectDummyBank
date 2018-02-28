@@ -36,18 +36,22 @@ public class Transaccion implements Serializable {
 
     @Column(name = "numero_orden", nullable = false)
     private Long numeroOrden;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "metodo_id")
+    private Metodo metodo ;
 
-    @Column(name = "metodo_id", nullable = false)
-    private Long metodoId ;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "estatus_id")
+    private Estatus estatus ;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "autorizacion_id")
+    private Autorizacion autorizacion;
 
-    @Column(name = "estatus_id", nullable = false)
-    private Long estatusId ;
-
-    @Column(name = "autorizacion_id", nullable = false)
-    private Long autorizacionId;
-
-    @Column(name = "operacion_id", nullable = false)
-    private Long operacionId ;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "operacion_id")
+    private Operacion operacion;
 
     @Column(name = "concepto_glosa", nullable = false)
     //Cambiar el tipo por varchar en la bd
@@ -61,12 +65,14 @@ public class Transaccion implements Serializable {
 
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo ;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "beneficiario_id")
+    private Beneficiario beneficiario;
 
-    @Column(name = "beneficiario_id", nullable = false)
-    private Long beneficiarioId;
-
-    @Column(name = "operador_id", nullable = false)
-    private Long operadorId;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "operador_id")
+    private Operador operador;
 
     @Column(name = "regis_asfi", nullable = false)
     private Long regisAsfi;
@@ -80,39 +86,39 @@ public class Transaccion implements Serializable {
 
     }
 
-    public Transaccion(Long numeroCuenta, Timestamp fechaInicio, Timestamp fechaAprobacion, Timestamp fechaEjecucion, Long numeroOrden, Long metodoId, Long estatusId, Long autorizacionId, Long operacionId, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Long beneficiarioId, Long operadorId, Long regisAsfi, Long registroFacturacion) {
+    public Transaccion(Long numeroCuenta, Timestamp fechaInicio, Timestamp fechaAprobacion, Timestamp fechaEjecucion, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
         this.numeroCuenta = numeroCuenta;
         this.fechaInicio = fechaInicio;
         this.fechaAprobacion = fechaAprobacion;
         this.fechaEjecucion = fechaEjecucion;
         this.numeroOrden = numeroOrden;
-        this.metodoId = metodoId;
-        this.estatusId = estatusId;
-        this.autorizacionId = autorizacionId;
-        this.operacionId = operacionId;
+        this.metodo = metodo;
+        this.estatus = estatus;
+        this.autorizacion = autorizacion;
+        this.operacion = operacion;
         this.conceptoGlosa = conceptoGlosa;
         this.monto = monto;
         this.moneda = moneda;
         this.saldo = saldo;
-        this.beneficiarioId = beneficiarioId;
-        this.operadorId = operadorId;
+        this.beneficiario = beneficiario;
+        this.operador = operador;
         this.regisAsfi = regisAsfi;
         this.registroFacturacion = registroFacturacion;
     }
 
-    public Transaccion(Long numeroCuenta, Long numeroOrden, Long metodoId, Long estatusId, Long autorizacionId, Long operacionId, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Long beneficiarioId, Long operadorId, Long regisAsfi, Long registroFacturacion) {
+    public Transaccion(Long numeroCuenta, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
         this.numeroCuenta = numeroCuenta;
         this.numeroOrden = numeroOrden;
-        this.metodoId = metodoId;
-        this.estatusId = estatusId;
-        this.autorizacionId = autorizacionId;
-        this.operacionId = operacionId;
+        this.metodo = metodo;
+        this.estatus = estatus;
+        this.autorizacion = autorizacion;
+        this.operacion = operacion;
         this.conceptoGlosa = conceptoGlosa;
         this.monto = monto;
         this.moneda = moneda;
         this.saldo = saldo;
-        this.beneficiarioId = beneficiarioId;
-        this.operadorId = operadorId;
+        this.beneficiario = beneficiario;
+        this.operador = operador;
         this.regisAsfi = regisAsfi;
         this.registroFacturacion = registroFacturacion;
     }
@@ -233,12 +239,12 @@ public class Transaccion implements Serializable {
         this.saldo = saldo;
     }
 
-    public Long getOperador() {
-        return operadorId;
+    public Operador getOperador() {
+        return operador;
     }
 
-    public void setOperador(Long operadorId) {
-        this.operadorId = operadorId;
+    public void setOperador(Operador operador) {
+        this.operador = operador;
     }
 
     public Long getRegisAsfi() {
@@ -261,43 +267,43 @@ public class Transaccion implements Serializable {
     //TODO eliminar los metodos a los que estos sustituyen
 
 
-    public Long getMetodoId() {
-        return metodoId;
+    public Metodo getMetodo() {
+        return metodo;
     }
 
-    public void setMetodoId(Long metodoId) {
-        this.metodoId = metodoId;
+    public void setMetodo(Metodo metodo) {
+        this.metodo = metodo;
     }
 
-    public Long getEstatusId() {
-        return estatusId;
+    public Estatus getEstatus() {
+        return estatus;
     }
 
-    public void setEstatusId(Long estatusId) {
-        this.estatusId = estatusId;
+    public void setEstatus(Estatus estatus) {
+        this.estatus = estatus;
     }
 
-    public Long getAutorizacionId() {
-        return autorizacionId;
+    public Autorizacion getAutorizacion() {
+        return autorizacion;
     }
 
-    public void setAutorizacionId(Long autorizacionId) {
-        this.autorizacionId = autorizacionId;
+    public void setAutorizacion(Autorizacion autorizacion) {
+        this.autorizacion = autorizacion;
     }
 
-    public Long getOperacionId() {
-        return operacionId;
+    public Operacion getOperacion() {
+        return operacion;
     }
 
-    public void setOperacionId(Long operacionId) {
-        this.operacionId = operacionId;
+    public void setOperacion(Operacion operacion) {
+        this.operacion = operacion;
     }
 
-    public Long getBeneficiarioId() {
-        return beneficiarioId;
+    public Beneficiario getBeneficiario() {
+        return beneficiario;
     }
 
-    public void setBeneficiarioId(Long beneficiarioId) {
-        this.beneficiarioId = beneficiarioId;
+    public void setBeneficiario(Beneficiario beneficiario) {
+        this.beneficiario = beneficiario;
     }
 }
