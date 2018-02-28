@@ -4,26 +4,31 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
 
-    <link type="text/css" rel="stylesheet" th:src="@{/jquery-ui-1.8.13.custom.css}" />
-    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}"></script>
-    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}"></script>
-    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}"></script>
-    <script type="text/javascript">
-        $(function(){
-            $('#fecha').datetimepicker();
-        });
-    </script>
+    <style type="text/css">
+        td { border:none}
+    </style>
+
+
+    <link type="text/css" rel="stylesheet" th:href="@{/jquery-ui-1.8.13.custom.css}" href="/home/isvarv/Documents/projectDummyBank/src/main/resources/static/jquery.datetimepicker.min.css"/>
+
+
+    <script type="text/javascript" th:src="@{/jquery-1.5.1.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-1.8.13.custom.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/jquery-ui-timepicker-addon.js}" ></script>
+
 </head>
 <body>
 
 <div th:replace="common/topMenu :: navbar"/>
 
-<form method="POST" th:object="${cuenta}" th:action="@{/cuenta/get}" >
-    <table>
+<form method="POST" th:object="${movimientoFormForm}" th:action="@{/consulta/lista}" >
+
+    <!-- FORM PARA seleccionar la cuenta a filtrar -->
+    <table border="2">
         <thead>
         <tr>
             <td colspan="2">
-               Cuenta
+              <h4>Cuenta</h4>
             </td>
         </tr>
         </thead>
@@ -33,7 +38,7 @@
                 <label for="id">Codigo de cuenta cliente</label>
             </td>
             <td>
-                <select th:field="${cuenta.numeroCuenta}">
+                <select th:field="${movimientoForm.numeroCuenta}">
                     <option th:each="cuenta :${cuentas}"
                             th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}">Codigo de cuenta</option>
                 </select>
@@ -41,16 +46,138 @@
 
         </tr>
 
+        </tbody>
+
+    </table>
+
+    <!-- FORM DE FILTRADO PARA MOVIMIENTOS EN LA CUENTA SELCCIONADA -->
+    <table border="2">
+        <thead>
         <tr>
             <td colspan="2">
-                <button type="submit">Enviar</button>
+               <h4>Movimientos</h4>
+            </td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr>
+
+            <tr>
+                <td><label >Por Meses:</label></td>
+            <td>
+
+                <select  th:field="${movimientoForm.opcion}" >
+                    <option value="0" >Selecciona una opcion</option>
+                    <option value="1" >Presente mes</option>
+                    <option value="2" >Pasado mes</option>
+                    <option value="3" >Hace tres meses</option>
+                    <option value="4" >Hace cuatro meses</option>
+                    <option value="5" >Hace cinco meses</option>
+                    <option value="12" >Hace doce meses</option>
+                </select>
+            </td>
+            </tr>
+
+
+        </tr>
+
+        <tr>
+            <td>
+                <label >Por orden:</label>
+            </td>
+
+            <td>
+
+                <select  th:field="${movimientoForm.limite}" >
+                    <option value="0" >Selecciona una opcion</option>
+                    <option value="10" >Los 10 ultimos</option>
+                    <option value="25" >Los 25 ultimos</option>
+                    <option value="60" >Los 60 ultimos</option>
+                </select>
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td>
+                <label for="id">Por rango:</label>
+            </td>
+
+            <td>
+                <label >Desde: </label>
+                <input type="text" th:field="${movimientoForm.fechaInicioDesde}" class="fecha" />
+            </td>
+            <td>
+                <label >Hasta: </label>
+                <input type="text" th:field="${movimientoForm.fechaInicioHasta}" class="fecha" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit">Consultar movimiento</button>
             </td>
         </tr>
 
         </tbody>
 
     </table>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th colspan="6">Tansacciones</th>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>Cuenta</th>
+            <th>Fecha de inicio</th>
+            <th>Operacion</th>
+            <th>Monto</th>
+            <th>Moneda</th>
+            <th>Saldo</th>
+            <!-- <th colspan="3">ACCION</th> -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaccion : ${transacciones}">
+            <td th:text="${transaccion.idTransaccion}">aaa</td>
+            <td th:text="${transaccion.numeroCuenta}">aaa</td>
+            <td th:text="${transaccion.fechaInicio}">aaa</td>
+            <td th:text="${transaccion.operacionId}">aaa</td>
+            <td th:text="${transaccion.monto}">aaa</td>
+            <td th:text="${transaccion.moneda}">aaa</td>
+            <td th:text="${transaccion.saldo}">aaa</td>
+            <!--  <td><a th:href="${'/transaccion/getTransaccion/'+transaccion.idTransaccion}">Ver</a></td> -->
+        </tr>
+
+        </tbody>
+    </table>
+
 </form>
+
+
+
+<script >
+
+
+    $(".fecha").datetimepicker({
+
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'hh:mm:ss.0',
+        stepHour: 2,
+        stepMinute: 10,
+        stepSecond: 10,
+
+    });
+
+
+</script>
 
 </body>
 </html>
