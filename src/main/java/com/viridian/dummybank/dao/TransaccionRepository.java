@@ -37,4 +37,11 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
             "AND YEAR(fecha_inicio)= YEAR(curdate())\n" +
             "ORDER BY fecha_inicio DESC", nativeQuery = true)
     List<Transaccion> finByNumeroCuentaAndCurrentMonth(Long numeroCuenta);
+
+    @Query(value = "UPDATE cuenta c " +
+            "    INNER JOIN Transaccion t " +
+            "    ON t.numero_cuenta = c.numero_cuenta " +
+            "    SET c.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) , " +
+                        "where numero_orden = ?1; ", nativeQuery = true)
+    void updateSaldobyNumeroOrden(Long numeroOrden);
 }

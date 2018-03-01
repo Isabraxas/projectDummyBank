@@ -36,6 +36,11 @@ public class TransaccionServiceImpl implements TransaccionService{
     }
 
     @Override
+    public void updateTansactionAndSaldoCuentaByNuemeroOrden(Long numeroOrden) {
+        this.transaccionRepository.updateSaldobyNumeroOrden(numeroOrden);
+    }
+
+    @Override
     public List<Transaccion> getTransaccionGreaterTo(String fechaA, String fechaB) {
         //Timestamp fechaInicio= Util.convertStringToTimestamp(fecha);
         //return this.transaccionRepository.findByFechaInicioGreaterThanEqual(fechaInicio);

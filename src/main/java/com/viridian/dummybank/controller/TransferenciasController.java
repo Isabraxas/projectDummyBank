@@ -1,5 +1,6 @@
 package com.viridian.dummybank.controller;
 
+import com.viridian.dummybank.dao.CuentaRepository;
 import com.viridian.dummybank.model.*;
 import com.viridian.dummybank.repository.TransferenciaRepository;
 import com.viridian.dummybank.service.*;
@@ -36,6 +37,7 @@ public class TransferenciasController {
     private final OperacionService operacionService;
     private final BeneficiarioService beneficiarioService;
     private final OperadorService operadorService;
+    private final CuentaService cuentaService;
     // repositorio
     private final TransferenciaRepository transferenciaRepository;
 
@@ -48,7 +50,8 @@ public class TransferenciasController {
                                     MetodoService metodoService,
                                     OperacionService operacionService,
                                     BeneficiarioService beneficiarioService,
-                                    OperadorService operadorService) {
+                                    OperadorService operadorService,
+                                    CuentaService cuentaService) {
         this.clienteService = clienteService;
         this.transaccionService = transaccionService;
         this.transferenciaRepository = transferenciaRepository;
@@ -58,6 +61,7 @@ public class TransferenciasController {
         this.operacionService = operacionService;
         this.beneficiarioService  = beneficiarioService;
         this.operadorService = operadorService;
+        this.cuentaService=cuentaService;
     }
 
     @GetMapping("transferencia/propias/{idCliente}")
@@ -102,8 +106,11 @@ public class TransferenciasController {
             log.error("no puede transferirse entre cuentas propias");
             // todo Error Transferencia entre cuentas propias, misma cuenta
         }
-        // todo Error saldo insuficiente
 
+        if(cuentaService.getCuentaByNumber(numeroCuentaOrigen).getSaldo().compareTo(monto) < 0) {
+            log.error("saldo insuficiente");
+            // todo Error saldo insuficiente
+        }
         log.info("Creando Un objeto Transaccion");
         // crear un objeto Transaccion con informacion necesaria para la BD
         Transaccion transaccion = new Transaccion();
