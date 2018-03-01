@@ -147,4 +147,19 @@ public class TransferenciasController {
         // cargar la vista
         return "transferencias/transferencia-terceros";
     }
+
+
+    @GetMapping("transferencia/otros/{idCliente}")
+    public String transferenciaCuentasExternas(@PathVariable String idCliente, Model model){
+        // obtener al cliente de la BD
+        Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
+        model.addAttribute("cliente", cliente);
+        // obtener los beneficiarios que son de otros bancos
+        List<Beneficiario> beneficiarios = transferenciaRepository.getBeneficiariosFromOtherBanksAndByClienteId(Long.valueOf(idCliente));
+        model.addAttribute("beneficiarios",beneficiarios);
+
+        model.addAttribute("metodo", TransferenciaUtils.METODO_CUENTAS_OTROS);
+        // cargar la vista
+        return "transferencias/transferencia-otros";
+    }
 }

@@ -10,6 +10,7 @@ public class TransferenciaUtils {
     //public static final Long AUTORIZACION_DEF = 1L; // usar este valor por defecto
     public static final Long METODO_CUENTAS_PROPIAS = 4L; // ?
     public static final Long METODO_CUENTAS_TERCEROS = 5L; // ?
+    public static final Long METODO_CUENTAS_OTROS = 6L;
     public static final Long NUMERO_ORDEN_DEF = 1L; // ?
     public static final Long OPERACION_DEPOSITO = 2L;
     public static final Long OPERADOR_DEF = 3L;
