@@ -27,7 +27,6 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     public List<Persona> getAllPersonas() {
-        log.info("Mostrando a todas las Personas");
         List<Persona> personas = new ArrayList<>();
         personaRepository.findAll().forEach(personas::add);
         return personas;
@@ -35,7 +34,6 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     public Persona findPersonaById(Long id) {
-        log.info("Mostrando a Persona Id: " + id);
         Persona persona = personaRepository.findOne(id);
         if(persona == null){
             log.error("Persona Id: "+ id + " no encontrada");
@@ -46,14 +44,11 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     public void saveOrUpdatePersona(Persona persona) {
-        log.info("Adicionando/Actualizando Persona");
-        log.info(persona.toString());
         personaRepository.save(persona);
     }
 
     @Override
     public void deletePersona(Long id) {
-        log.info("Eliminando Persona Id: "+ id);
         personaRepository.delete(id);
     }
 }

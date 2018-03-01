@@ -146,9 +146,11 @@ public class TransferenciasController {
         Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
         model.addAttribute("cliente", cliente);
         // obtener las cuentas de los beneficiarios registrados al cliente por su Id
-        List<Long> cuentas = transferenciaRepository.getCuentas(Long.valueOf(idCliente));
+        //List<Long> cuentas = transferenciaRepository.getCuentas(Long.valueOf(idCliente));
+        List<Beneficiario> beneficiarios = transferenciaRepository.getThirdBeneficiariosFromThisBankAndByClienteId(Long.valueOf(idCliente));
         // cargarlos al modelo
-        model.addAttribute("cuentas", cuentas);
+        //model.addAttribute("cuentas", cuentas);
+        model.addAttribute("beneficiarios",beneficiarios);
 
         model.addAttribute("metodo",TransferenciaUtils.METODO_CUENTAS_TERCEROS);
         // cargar la vista

@@ -13,6 +13,7 @@ import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
 import com.viridian.dummybank.service.persona.PersonaService;
 import com.viridian.dummybank.utils.ClienteUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ import java.util.List;
  */
 @Controller
 public class ClienteController {
+
+    // logger
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ClienteController.class);
 
     // servicios
     private final ClienteService clienteService;
@@ -59,7 +63,9 @@ public class ClienteController {
      */
     @GetMapping("cliente/all")
     public String getAllCuentas(Model model){
+        log.info("Obteniendo todos los clientes");
         model.addAttribute("clientes",clienteService.findAllClientes());
+        log.info("Clientes obtenidos");
         return "cliente/cliente-all";
     }
 
@@ -68,23 +74,26 @@ public class ClienteController {
      */
     @GetMapping("cliente/show/{id}")
     public String getCliente(@PathVariable String id, Model model){
+        log.info("Buscando al Cliente id: " + id);
         Cliente cliente = clienteService.findOneById(Long.valueOf(id));
-
+        log.info("Accediendo a sus cuentas");
         // buscar las cuentas asociadas al cliente y añadirlas
         List<Cuenta> cuentas = cuentaRepository.findAllByClienteId(Long.valueOf(id));
         model.addAttribute("cuentas", cuentas);
 
-
+        log.info("Cargando informacion del cliente (tipo)");
         // determinar que clase de cliente es; natural o juridica
         if(cliente.getTipo().equals(ClienteUtils.PERSONA_NATURAL)){
+            log.info("Tipo: Persona Natural, cargando datos");
             // buscar a esa PersonaNatural y añadirla
             model.addAttribute("personaN", personaNaturalService.findOneById(Long.valueOf(id)));
-
+            log.info("Informacion Cargada, deplegando vista.");
             return "cliente/cliente-show-natural";
         }else if(cliente.getTipo().equals(ClienteUtils.PERSONA_JURIDICA)){
+            log.info("Tipo: Person Juridica, cargando datos");
             // buscar a esa PersonaJuridica y añadirla
             model.addAttribute("personaJ",personaJuridicaService.findOneById(Long.valueOf(id)));
-
+            log.info("Informacion Cargada, deplegando vista");
             return "cliente/cliente-show-juridica";
         }
         model.addAttribute("cliente",clienteService.findOneById(Long.valueOf(id)));
@@ -92,7 +101,7 @@ public class ClienteController {
     }
 
     /**
-     * Mostrara una cuenta en especifico, especificando el tipo de cuenta antes.
+     * Mostrara una cuenta en especifico, especificando el tipo de cuenta antes. NO USAR
      */
     @GetMapping("cliente/show/{id}/{tipo}")
     public String getClienteTipo(@PathVariable String id, @PathVariable String tipo, Model model){
@@ -111,10 +120,11 @@ public class ClienteController {
     }
 
     /**
-     * Crear nuevo cliente. pero solo nuevo cliente, sin su respectiva Persona
+     * Crear nuevo cliente. pero solo nuevo cliente, sin su respectiva Persona - NO USAR
      */
     @GetMapping("cliente/new")
     public String addNewClient(Model model){
+        log.info("Cargando formulario, para nuevo Cliente");
         model.addAttribute("cliente", new Cliente());
         return "cliente/cliente-form";
     }
@@ -124,15 +134,18 @@ public class ClienteController {
      */
     @GetMapping("cliente/new/{tipo}")
     public String addNewClientEspecifico(@PathVariable String tipo,Model model){
+        log.info("Cargando Formulario, determinando tipo de Cliente");
         Cliente cliente = new Cliente();
         // determinar que clase de cliente es
         if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            log.info("Tipo: Persona Natural, cargando formulario");
             // nuevo cliente, con persona natural
             ClienteAndPersonaNatural clienteAndPersonaNatural  = new ClienteAndPersonaNatural();
             clienteAndPersonaNatural.setTipo(ClienteUtils.PERSONA_NATURAL);
             model.addAttribute("clienteAndPerson",clienteAndPersonaNatural);
             return "cliente/cliente-form-natural";
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            log.info("Tipo: Person Juridica, cargando formulario");
             // nuevo cliente, con persona juridica
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica();
             clienteAndPersonaJuridica.setTipo(ClienteUtils.PERSONA_JURIDICA);
@@ -143,10 +156,11 @@ public class ClienteController {
     }
 
     /**
-     * Guarda/Actualiza el cliente en la base de datos dependiendo si existe o no
+     * Guarda/Actualiza el cliente en la base de datos dependiendo si existe o no - NO USAR
      */
     @PostMapping("cliente/save")
     public String saveCliente(Cliente cliente){
+        log.info("Guardando Cliente");
         clienteService.saveOrUpdateCliente(cliente);
         return "redirect:/cliente/all";
     }
@@ -156,6 +170,7 @@ public class ClienteController {
      */
     @PostMapping("cliente/savePerN")
     public String saveClientePerN(ClienteAndPersonaNatural clienteAndPersonaNatural){
+        log.info("Guardando / Actualizando al Cliente - Persona Natural");
         Cliente cliente = clienteAndPersonaNatural.getCliente();
         Persona persona = clienteAndPersonaNatural.getPersona();
 
@@ -164,6 +179,7 @@ public class ClienteController {
 
         personaNaturalService.saveOrUpdatePersonaNatural(new PersonaNatural(cliente.getId(),persona));
         //clienteService.saveOrUpdateCliente(cliente);
+        log.info("Guardado / Actualizado Completo");
         return "redirect:/cliente/all";
     }
 
@@ -172,6 +188,7 @@ public class ClienteController {
      */
     @PostMapping("cliente/savePerJ")
     public String saveClientePerJ(ClienteAndPersonaJuridica clienteAndPersonaJuridica){
+        log.info("Guardando / Actualizando al Cliente - Persona Juridica");
         Cliente cliente = clienteAndPersonaJuridica.getCliente();
         Persona persona = clienteAndPersonaJuridica.getPersona();
         //PersonaJuridica personaJuridica = clienteAndPersonaJuridica.getPersonaJuridica();
@@ -184,6 +201,7 @@ public class ClienteController {
                                                                                 clienteAndPersonaJuridica.getRegistro_fundaempresa(),
                                                                                 persona));
         //clienteService.saveOrUpdateCliente(cliente);
+        log.info("Guardado / Actualizado Completo");
         return "redirect:/cliente/all";
     }
 
@@ -192,11 +210,15 @@ public class ClienteController {
      */
     @GetMapping("cliente/update/{id}")
     public String updateCliente(Model model,@PathVariable String id){
+        log.info("Actualizando Cliente id: "+ id);
+        log.info("Determinando tipo de cliente");
         // buscar al cliente, y obtener su tipo
         Cliente cliente = clienteService.findOneById(Long.valueOf(id));
         String tipo = cliente.getTipo();
         // cargar el respectivo formulario de acuerdo al tipo
         if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            log.info("Tipo: Persona Natural");
+            log.info("Cargando Datos");
             // cliente es persona natural
             PersonaNatural persona = personaNaturalService.findOneById(Long.valueOf(id));
             ClienteAndPersonaNatural clienteAndPersonaNatural = new ClienteAndPersonaNatural(cliente, persona);
@@ -204,6 +226,8 @@ public class ClienteController {
             model.addAttribute("clienteAndPerson", clienteAndPersonaNatural);
             return "cliente/cliente-form-natural";
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            log.info("Tipo: Persona Juridica");
+            log.info("Cargando Datos");
             // cliente es persona juridica
             PersonaJuridica persona = personaJuridicaService.findOneById(Long.valueOf(id));
             ClienteAndPersonaJuridica clienteAndPersonaJuridica = new ClienteAndPersonaJuridica(cliente,persona);
@@ -217,7 +241,7 @@ public class ClienteController {
     }
 
     /**
-     * Actualizar Cliente, especificando el tipo anteriormente
+     * Actualizar Cliente, especificando el tipo anteriormente - NO RECOMENDADO
      */
     @GetMapping("cliente/update/{id}/{tipo}")
     public String updateClienteEspecifico(Model model,@PathVariable String id, @PathVariable String tipo){
@@ -251,13 +275,17 @@ public class ClienteController {
      */
     @GetMapping("cliente/delete/{id}")
     public String deleteCliente(@PathVariable String id){
+        log.info("Borrando Cliente id: " + id);
         String tipo = clienteService.findOneById(Long.valueOf(id)).getTipo();
         if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
+            log.info("Tipo: Persona Natural");
             personaNaturalService.deletePersonaNatural(Long.valueOf(id));
         }else if(tipo.equals(ClienteUtils.PERSONA_JURIDICA)){
+            log.info("Tipo: Persona Juridica");
             personaJuridicaService.deletePersonaJuridica(Long.valueOf(id));
         }
         clienteService.deleteCliente(Long.valueOf(id));
+        log.info("Borrado Completo");
         return "redirect:/cliente/all";
     }
 }

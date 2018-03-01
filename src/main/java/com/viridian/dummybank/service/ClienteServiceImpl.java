@@ -26,7 +26,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Cliente> findAllClientes() {
-        log.info("Mostrando a todos los clientes");
         List<Cliente> clientes = new ArrayList<>();
         clienteRepository.findAll().forEach(clientes::add);
         return clientes;
@@ -34,7 +33,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente findOneById(Long id) {
-        log.info("Mostrando al cliente Id: "+ id);
         Cliente cliente = clienteRepository.findOne(id);
         if(cliente == null){
             log.error("Cliente ID: "+ id +" no encontrado");
@@ -45,13 +43,11 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void saveOrUpdateCliente(Cliente cliente) {
-        log.info("Adicionando/Actualizando Cliente");
         clienteRepository.save(cliente);
     }
 
     @Override
     public void deleteCliente(Long id) {
-        log.info("Eliminando Cliente Id: " + id);
         clienteRepository.delete(id);
     }
 }
