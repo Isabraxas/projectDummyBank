@@ -20,7 +20,8 @@
         <h4>Cuenta Destino</h4>
         <select id="destino" name="destino">
             <option value="0" th:text="${'Select Operator'}"></option>
-            <option th:each="cuenta : ${cuentas}"  th:value="${cuenta}" th:text="${cuenta}"></option>
+            <!--<option th:each="cuenta : ${cuentas}"  th:value="${cuenta}" th:text="${cuenta}"></option>-->
+            <option th:each="beneficiario : ${beneficiarios}"  th:value="${beneficiario.numeroCuenta}" th:text="${beneficiario.numeroCuenta}"></option>
         </select>
         <br/>
         <!--MONTO Y MONEDA-->

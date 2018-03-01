@@ -36,7 +36,7 @@ public interface TransferenciaRepository extends JpaRepository<Beneficiario, Lon
             "exists " +
                     "(select C.* " +
                     "from cuenta as C " +
-                    "where C.numero_cuenta = B.numer_cuenta)",nativeQuery = true)
+                    "where C.numero_cuenta = B.numero_cuenta)",nativeQuery = true)
     List<Beneficiario> getThirdBeneficiariosFromThisBankAndByClienteId(Long id);
 
 
