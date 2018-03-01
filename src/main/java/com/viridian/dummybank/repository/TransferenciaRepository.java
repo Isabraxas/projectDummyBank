@@ -28,6 +28,17 @@ public interface TransferenciaRepository extends JpaRepository<Beneficiario, Lon
             "where CB.cliente_id = ?1",nativeQuery = true)
     List<Long> getCuentas(Long clienteId);
 
+    @Query(value =
+            "select B.* " +
+            "from Beneficiario as B left outer join Cliente_Beneficiario as CB on B.id_beneficiario = CB.beneficiario_id " +
+            "where CB.cliente_id = ?1 " +
+                    "and " +
+            "exists " +
+                    "(select C.* " +
+                    "from cuenta as C " +
+                    "where C.numero_cuenta = B.numer_cuenta)",nativeQuery = true)
+    List<Beneficiario> getThirdBeneficiariosFromThisBankAndByClienteId(Long id);
+
 
     @Query(value=
             "select B.* \n" +
