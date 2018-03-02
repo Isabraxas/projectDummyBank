@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class PagosController {
@@ -107,7 +108,7 @@ public class PagosController {
         transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
         transaccion.setEstatus(estatusService.getEstatusById(1L));
         transaccion.setOperacion(operacionService.getOperacionById(1L));
-        transaccion.setNumeroOrden(17L);
+        transaccion.setNumeroOrden(15L);
         // introducir la transaccion a la BD
         log.info("Guardando Transaccion en BD");
         transaccionService.save(transaccion);
@@ -116,10 +117,11 @@ public class PagosController {
 
         if(numeroCuentaOrigen == beneficiarioService.getBeneficiarioById(beneficiarioId).getNumeroCuenta()){
             log.error("no puede transferirse entre cuentas propias");
-            // todo Error Transferencia entre cuentas propias, misma cuenta
+
             log.info("Actualizando Transaccion en BD");
             transaccion.setEstatus(estatusService.getEstatusById(3L));
             transaccionService.save(transaccion);
+            //TODO actualizar saldo
             log.info("Transaccion Actualizada");
 
         }else if(cuentaService.getCuentaByNumber(numeroCuentaOrigen).getSaldo().compareTo(monto) < 0) {
@@ -128,14 +130,13 @@ public class PagosController {
             transaccion.setEstatus(estatusService.getEstatusById(3L));
             transaccionService.save(transaccion);
             log.info("Transaccion Actualizada");
-            // todo Error saldo insuficiente
+            //TODO actualizar saldo
         }else {
-            log.info("Actualizsar saldo en la BDx");
-            //TODO Agregar monto a saldo retenido y restarmonto a saldo disponible
-            transaccion.setEstatus(estatusService.getEstatusById(2L));
-
-            Long number =transaccion.getNumeroOrden();
-            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(number);
+            log.info("Actualizsar saldo en la BD");
+            //TODO Agregar monto a saldo retenido y restar monto a saldo disponible
+            //transaccion.setEstatus(estatusService.getEstatusById(2L));
+            //TODO CAMBIAR NOMRE FUNCION BY IDTRANSACCION
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(transaccion.getIdTransaccion(),2L);
             log.info("Transaccion Actualizada correctamente");
         }
 
@@ -144,6 +145,153 @@ public class PagosController {
         model.addAttribute("transaccion",transaccion);
 
         return "pagos/pago-de-servicios-show";
+    }
+
+
+    @PostMapping("pago/servicio/send")
+    public String sendPagoServicio(HttpServletRequest request , Model model){
+        String accion =request.getParameter("accion");
+        if(accion.equalsIgnoreCase("continuar")) {
+
+            Long idTransaccion = Long.valueOf(request.getParameter("idTransaccion"));
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            //TODO usar nueva consulta para actualizar estatus
+            transaccion.setEstatus(estatusService.getEstatusById(5L));
+            transaccion.setFechaEjecucion(new Timestamp(System.currentTimeMillis()).toString());
+            transaccionService.save(transaccion);
+            //
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-servicios-estatus";
+        }else if (accion.equalsIgnoreCase("abortar")){
+            Long idTransaccion = Long.valueOf(request.getParameter("idTransaccion"));
+            //TODO Restablecer a su estado anterior.
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(idTransaccion,4L);
+            //
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            transaccionService.save(transaccion);
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-servicios-estatus";
+        }
+
+        return "redirect:/";
+    }
+
+//
+
+
+
+    @GetMapping("pago/prestamo/{idCliente}")
+    public String pagoPrestamo(@PathVariable String idCliente, Model model){
+        // obtener al cliente de la BD
+        Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
+        model.addAttribute("cliente", cliente);
+        // obtener los beneficiarios que son de otros bancos
+        //TODO hacer que las cuentas que se muestran sean solo las de tipo prestamo asociadas al cliente
+        List<Cuenta> cuentasPrestamoCli = cliente.getCuentas();
+        model.addAttribute("cuentasPrestamoCli",cuentasPrestamoCli);
+
+        model.addAttribute("metodos", metodoService.getAll());
+        // cargar la vista
+        return "pagos/pago-de-prestamos";
+    }
+
+    @PostMapping("pago/prestamo/validate")
+    public String savePagoPrestamo(HttpServletRequest request , Model model){
+        log.info("Recibiendo datos del Pago a realizar");
+        // Verificar los datos
+        Long numeroCuentaOrigen = Long.valueOf(request.getParameter("origen"));
+        BigDecimal monto = BigDecimal.valueOf(Long.valueOf(request.getParameter("monto")));
+        String moneda = request.getParameter("moneda");
+        Long beneficiarioNumCuenta = Long.valueOf(request.getParameter("beneficiario"));
+
+        //Datos adicionales
+        String glosa = request.getParameter("glosa");
+        Long autorizacionId = Long.valueOf(request.getParameter("autorizacion"));
+        Long metodoId = Long.valueOf(request.getParameter("metodo"));
+
+        log.info("Creando Un objeto Transaccion");
+        // crear un objeto Transaccion con informacion necesaria para la BD
+
+        Transaccion transaccion = new Transaccion();
+        transaccion.setNumeroCuenta(numeroCuentaOrigen);
+        transaccion.setMonto(monto);
+        transaccion.setMoneda(moneda);
+        transaccion.setMetodo(metodoService.getMetodoById(metodoId));
+        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioByNumeroCuenta(beneficiarioNumCuenta));
+        transaccion.setConceptoGlosa(glosa);
+        transaccion.setAutorizacion(autorizacionService.getAutorizacionById(autorizacionId));
+        log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
+        // considerar los atributos que no se piden
+        transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+        transaccion.setEstatus(estatusService.getEstatusById(1L));
+        transaccion.setOperacion(operacionService.getOperacionById(1L));
+        transaccion.setNumeroOrden(new Random().nextLong());
+
+        // introducir la transaccion a la BD
+        log.info("Guardando Transaccion en BD");
+        transaccionService.save(transaccion);
+        log.info("Transaccion Guardada correctamente");
+
+
+        if(numeroCuentaOrigen == beneficiarioService.getBeneficiarioByNumeroCuenta(beneficiarioNumCuenta).getNumeroCuenta()){
+            log.error("no puede transferirse entre cuentas propias");
+
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            //TODO actualizar saldo
+            log.info("Transaccion Actualizada");
+
+        }else if(cuentaService.getCuentaByNumber(numeroCuentaOrigen).getSaldo().compareTo(monto) < 0) {
+            log.error("saldo insuficiente");
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            log.info("Transaccion Actualizada");
+            //TODO actualizar saldo
+        }else {
+            log.info("Actualizsar saldo en la BD");
+            //TODO Agregar monto a saldo retenido y restar monto a saldo disponible
+            transaccion.setEstatus(estatusService.getEstatusById(2L));
+            //TODO CAMBIAR NOMRE FUNCION BY IDTRANSACCION
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(transaccion.getIdTransaccion(),2L);
+            log.info("Transaccion Actualizada correctamente");
+        }
+
+
+
+        model.addAttribute("transaccion",transaccion);
+
+        return "pagos/pago-de-prestamos-show";
+    }
+
+
+    @PostMapping("pago/prestamo/send")
+    public String sendPagoPrestamo(HttpServletRequest request , Model model){
+
+        String accion =request.getParameter("accion");
+        Long idTransaccion = Long.valueOf(request.getParameter("idTransaccion"));
+
+        if(accion.equalsIgnoreCase("continuar")) {
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            //TODO usar nueva consulta para actualizar estatus
+            transaccion.setEstatus(estatusService.getEstatusById(5L));
+            transaccion.setFechaEjecucion(new Timestamp(System.currentTimeMillis()).toString());
+            transaccionService.save(transaccion);
+            //
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-prestamos-estatus";
+        }else if (accion.equalsIgnoreCase("abortar")){
+            //TODO Restablecer a su estado anterior.
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(idTransaccion,4L);
+            //
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            transaccionService.save(transaccion);
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-prestamos-estatus";
+        }
+
+        return "redirect:/";
     }
 
 

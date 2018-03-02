@@ -1,7 +1,10 @@
 package com.viridian.dummybank.controller;
 
 
+import com.viridian.dummybank.model.Beneficiario;
+import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
+import com.viridian.dummybank.service.BeneficiarioService;
 import com.viridian.dummybank.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ public class CuentaController {
     
     @Autowired
     protected CuentaService cuentaService;
+    @Autowired
+    protected BeneficiarioService beneficiarioService;
     
 
 
@@ -46,6 +51,19 @@ public class CuentaController {
     }
     @PostMapping("/save")
     public String saveCuenta(Cuenta cuenta){
+        if (cuenta.getTipo().equalsIgnoreCase("prestamo")){
+            Cliente cliente = cuenta.getCliente();
+            Beneficiario beneficiario= new Beneficiario();
+            beneficiario.setNumeroCuenta(cuenta.getNumeroCuenta());
+            //TODO colocar columna moneda a la cuenta
+            beneficiario.setMoneda("BOB");
+            //TODO hacer algo con la la relacion cliente persona no puedo obtener datos para llenar beneficiario
+            beneficiario.setNombreRs("YO");
+            beneficiario.setNitCi("7777777");
+
+            this.beneficiarioService.save(beneficiario);
+
+        }
         this.cuentaService.save(cuenta);
         return "redirect:/cuenta/getAll";
     }

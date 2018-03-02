@@ -1,6 +1,7 @@
 package com.viridian.dummybank.service;
 
 import com.viridian.dummybank.dao.CuentaRepository;
+import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,16 @@ public class CuentaServiceImpl implements CuentaService{
     @Override
     public Cuenta getCuentaByNumber(Long number) {
         return this.cuentaRepository.findByNumeroCuentaEquals(number);
+    }
+
+    @Override
+    public List<Cuenta> getCuentaByCliente(Cliente cliente) {
+        return this.cuentaRepository.findAllByCliente(cliente);
+    }
+
+    @Override
+    public List<Cuenta> getCuentaByClienteId(Long clienteId) {
+        return this.cuentaRepository.findAllByClienteId(clienteId);
     }
 
 

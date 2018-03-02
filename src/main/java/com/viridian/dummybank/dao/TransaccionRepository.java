@@ -42,6 +42,33 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
 
     @Transactional
     @Modifying
-    @Query(value = "update Transaccion t set t.saldo = 3000 , t.estatus = 2 where t.idTransaccion = 56 and t.numeroOrden = ?1 ")
-    void updateSaldobyNumeroOrden(Long numeroOrden);
+    @Query(value = "UPDATE cuenta c " +
+            "    INNER JOIN Transaccion t " +
+            "    ON t.numero_cuenta = c.numero_cuenta " +
+            "    SET c.saldo =if( t.operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto )  ," +
+            "        t.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) ," +
+            "        t.estatus_id = ?2 ," +
+            "        t.fecha_aprobacion = now() " +
+            "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
+    void updateSaldoAndEstatusByIdTransaccion(Long idTransaccion , Long estatusId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE cuenta c " +
+            "    INNER JOIN Transaccion t " +
+            "    ON t.numero_cuenta = c.numero_cuenta " +
+            "    SET c.saldo =if( t.operacion_id = 2, c.saldo - t.monto, c.saldo + t.monto )  ," +
+            "        t.saldo =if( t.operacion_id = 2, c.saldo - t.monto, c.saldo + t.monto ) ," +
+            "        t.estatus_id = ?2 ," +
+            "        t.fecha_aprobacion = now() " +
+            "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
+    void updateRestablecerSaldo(Long idTransaccion , Long estatusId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Transaccion t " +
+            "    SET t.estatus_id = 5 ," +
+            "        t.fecha_ejecucion = now() " +
+            "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
+    void updateEstatus(Long idTransaccion);
 }

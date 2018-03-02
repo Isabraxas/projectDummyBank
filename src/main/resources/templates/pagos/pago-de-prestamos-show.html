@@ -7,13 +7,17 @@
 <body>
 <h3>Verifique la informacion</h3>
 <h3 th:text="${'Numero de Orden: ' + (transaccion.numeroOrden)}"> Numero de Orden </h3>
-<form method="POST" th:action="@{/pago/servicio/send}">
+<form method="POST" th:action="@{/pago/prestamo/send}">
     <input type="hidden" th:field="${transaccion.idTransaccion}"/>
 
     <table border="1">
         <tr>
             <td>Cuenta de (origen)</td>
             <td th:text="${transaccion.numeroCuenta}">LOL</td>
+        </tr>
+        <tr>
+            <td>Pago de Prestamo a Cuenta destino:</td>
+            <td th:text="${transaccion.beneficiario.numeroCuenta}">LOL</td>
         </tr>
         <tr>
             <td>Estatus</td>
@@ -27,20 +31,6 @@
             <td>Moneda</td>
             <td th:text="${transaccion.moneda}">LOL</td>
         </tr>
-        <tr>
-            <td>Pago de servicios a:</td>
-            <td th:text="${transaccion.beneficiario.nombreRs}">LOL</td>
-        </tr>
-        <tr>
-            <td>Cuenta destino</td>
-            <td th:text="${transaccion.beneficiario.numeroCuenta}">LOL</td>
-        </tr>
-
-        <tr>
-            <td>Regitro facturacion</td>
-            <td th:text="${transaccion.registroFacturacion}">LOL</td>
-        </tr>
-
 
     </table>
 

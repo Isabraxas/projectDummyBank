@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Comprobante de pago</h3>
+    <table border="1">
+        <tr>
+            <td th:text="${'El numero de orden que identifica la operacion es: ' + (transaccion.numeroOrden)}">Numero de orden:</td>
+        </tr>
+        <tr>
+            <td>Estatus</td>
+            <td th:text="${transaccion.estatus.descripcion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Fecha</td>
+            <td th:text="${transaccion.fechaInicio}">LOL</td>
+        </tr>
+        <h3>Detalle de la transaccion</h3>
+        <tr>
+            <td>Cuenta de (origen):</td>
+            <td th:text="${transaccion.numeroCuenta}">LOL</td>
+        </tr>
+
+        <tr>
+            <td>Fecha de inicio:</td>
+            <td th:text="${transaccion.fechaInicio}">LOL</td>
+        </tr>
+        <tr>
+            <td>Fecha de Aprobacion:</td>
+            <td th:text="${transaccion.fechaAprobacion}">LOL</td>
+        </tr>
+
+        <tr>
+            <td>Fecha de Aprobacion:</td>
+            <td th:text="${transaccion.fechaEjecucion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Numero de Orden:</td>
+            <td th:text="${transaccion.numeroOrden}">LOL</td>
+        </tr>
+        <tr>
+            <td>Metodo de pago:</td>
+            <td th:text="${transaccion.metodo.descripcion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Fecha de Aprobacion:</td>
+            <td th:text="${transaccion.fechaEjecucion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Estatus:</td>
+            <td th:text="${transaccion.estatus.descripcion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Autorizacion:</td>
+            <td th:text="${transaccion.autorizacion.tipo}">LOL</td>
+        </tr>
+        <tr>
+            <td>Operacion:</td>
+            <td th:text="${transaccion.operacion.descripcion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Glosa/descripcion:</td>
+            <td th:text="${transaccion.conceptoGlosa}">LOL</td>
+        </tr>
+        <tr>
+            <td>Monto de la transaccion: </td>
+            <td th:text="${transaccion.monto}">LOL</td>
+        </tr>
+        <tr>
+            <td>Moneda de la transaccion:</td>
+            <td th:text="${transaccion.moneda}">LOL</td>
+        </tr>
+        <tr>
+            <td>Saldo al momento de ejecutarse la transacion:</td>
+            <td th:text="${transaccion.saldo}">LOL</td>
+        </tr>
+
+        <tr>
+            <td>Beneficiario:</td>
+            <td th:text="${transaccion.beneficiario.nombreRs}">LOL</td>
+        </tr>
+        <tr>
+            <td>-Numero de cuenta:</td>
+            <td th:text="${transaccion.beneficiario.numeroCuenta}">LOL</td>
+        </tr>
+        <tr>
+            <td>-Moneda:</td>
+            <td th:text="${transaccion.beneficiario.moneda}">LOL</td>
+        </tr>
+        <tr>
+            <td>Registro ASFI:</td>
+            <td th:text="${transaccion.regisAsfi}">LOL</td>
+        </tr>
+        <tr>
+            <td>Registro Facturacion:</td>
+            <td th:text="${transaccion.registroFacturacion}">LOL</td>
+        </tr>
+
+
+
+    </table>
+
+    <a th:href="${'/index/'}">Inicio</a>
+
+</body>
+</html>

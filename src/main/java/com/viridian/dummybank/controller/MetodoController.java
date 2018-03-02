@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/metodo")
 public class MetodoController {
+    //
     @Autowired
     protected MetodoService metodoService;
 

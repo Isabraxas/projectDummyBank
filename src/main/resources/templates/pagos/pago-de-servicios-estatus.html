@@ -5,10 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Verifique la informacion</h3>
-<h3 th:text="${'Numero de Orden: ' + (transaccion.numeroOrden)}"> Numero de Orden </h3>
 
+<h3>Compribante de pago</h3>
     <table border="1">
+        <tr>
+            <td th:text="${'El numero de orden que identifica la operacion es: ' + (transaccion.numeroOrden)}">Numero de orden:</td>
+        </tr>
         <tr>
             <td>Cuenta de (origen)</td>
             <td th:text="${transaccion.numeroCuenta}">LOL</td>
@@ -42,7 +44,7 @@
 
     </table>
 
-    <button type="submit">Continuar</button>
+    <a th:href="${'/index/'}">Inicio</a>
 
 </body>
 </html>

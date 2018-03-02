@@ -1,5 +1,6 @@
 package com.viridian.dummybank.service;
 
+import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 
 import java.math.BigDecimal;
@@ -32,4 +33,7 @@ public interface CuentaService {
     void delete(Long id);
 
     Cuenta getCuentaByNumber(Long number);
+
+    List<Cuenta> getCuentaByCliente(Cliente cliente);
+    List<Cuenta> getCuentaByClienteId(Long clienteId);
 }

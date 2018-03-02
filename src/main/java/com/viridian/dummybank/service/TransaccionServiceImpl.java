@@ -36,8 +36,13 @@ public class TransaccionServiceImpl implements TransaccionService{
     }
 
     @Override
-    public void updateTansactionAndSaldoCuentaByNuemeroOrden(Long numeroOrden) {
-        this.transaccionRepository.updateSaldobyNumeroOrden(numeroOrden);
+    public void updateTansactionAndSaldoCuentaByNuemeroOrden(Long numeroOrden, Long estatusId) {
+        if(estatusId == 4L){
+            this.transaccionRepository.updateRestablecerSaldo(numeroOrden, estatusId);
+        }else {
+            this.transaccionRepository.updateSaldoAndEstatusByIdTransaccion(numeroOrden, estatusId);
+        }
+
     }
 
     @Override
