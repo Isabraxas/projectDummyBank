@@ -115,7 +115,7 @@ public class TransferenciasController {
         transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
             // considerar los atributos que no se piden
-        transaccion.setEstatus(estatusService.getEstatusById(TransferenciaUtils.STATUS_COMPLETA));
+        transaccion.setEstatus(estatusService.getEstatusById(TransferenciaUtils.STATUS_PARC_COMPR));
         transaccion.setMetodo(metodoService.getMetodoById(metodoId));
         transaccion.setNumeroOrden(TransferenciaUtils.NUMERO_ORDEN_DEF);
         transaccion.setOperacion(operacionService.getOperacionById(TransferenciaUtils.OPERACION_DEPOSITO));
@@ -163,5 +163,64 @@ public class TransferenciasController {
         model.addAttribute("metodo", TransferenciaUtils.METODO_CUENTAS_OTROS);
         // cargar la vista
         return "transferencias/transferencia-otros";
+    }
+
+    @GetMapping("transferencia/reversion/{idTransaccion}/{idAutorizacion}")
+    public String revertirTransaccion(@PathVariable String idTransaccion, @PathVariable String idAutorizacion, Model model){
+        log.info("Revertiendo operacion id: " + idTransaccion);
+        log.info("Verificando Autorizacion");
+        // verificar que tiene autorizacion para revertir
+        if(Long.valueOf(idAutorizacion) == TransferenciaUtils.AUTORIZACION_PARA_REVERTIR){
+            // tiene autorizacion
+            log.info("Autorizacion Aceptada");
+            log.info("Buscando Transaccion");
+            Transaccion transaccion = transaccionService.getTransaccionById(Long.valueOf(idTransaccion));
+            log.info("Transaccion Encontrada");
+            // REVERTIR TRANSACCION
+            Transaccion transaccionRevertida = new Transaccion();
+            Beneficiario beneficiario = transaccion.getBeneficiario();
+            transaccionRevertida.setNumeroCuenta(beneficiario.getNumeroCuenta());
+            transaccionRevertida.setMonto(transaccion.getMonto());
+            transaccionRevertida.setMoneda(transaccion.getMoneda());
+            transaccionRevertida.setConceptoGlosa("REVERSION TRANSACCION: " + idTransaccion);
+            transaccionRevertida.setAutorizacion(autorizacionService.getAutorizacionById(Long.valueOf(idAutorizacion)));
+            transaccionRevertida.setEstatus(estatusService.getEstatusById(TransferenciaUtils.STATUS_PARC_COMPR));
+            transaccionRevertida.setMetodo(metodoService.getMetodoById(TransferenciaUtils.METODO_REVERSION));
+            transaccionRevertida.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+            transaccionRevertida.setSaldo(TransferenciaUtils.SALDO_DEF);// CALCULAR LUEGO (?)
+            // beneficiario
+            Beneficiario beneficiarioRev = beneficiarioService.getBeneficiarioByNumeroCuenta(transaccion.getNumeroCuenta());
+            if(beneficiarioRev == null){
+                beneficiarioRev = new Beneficiario();
+                beneficiarioRev.setBanco(beneficiario.getBanco());
+                beneficiarioRev.setIdBeneficiario(beneficiario.getIdBeneficiario());
+                beneficiarioRev.setMoneda(beneficiario.getMoneda());
+                beneficiarioRev.setMonto(beneficiario.getMonto());
+                beneficiarioRev.setNitCi(beneficiario.getNitCi());
+                beneficiarioRev.setNombreRs(beneficiario.getNombreRs());
+                beneficiarioRev.setNumeroCuenta(beneficiario.getNumeroCuenta());
+
+                beneficiarioRev.setTransaccions(beneficiario.getTransaccions());
+                beneficiarioService.save(beneficiario);
+            }
+            transaccionRevertida.setBeneficiario(beneficiarioRev);
+
+
+            transaccionRevertida.setRegisAsfi(transaccion.getRegisAsfi());
+            transaccionRevertida.setNumeroOrden(TransferenciaUtils.NUMERO_ORDEN_DEF);
+            transaccionRevertida.setOperacion(operacionService.getOperacionById(TransferenciaUtils.OPERACION_DEPOSITO));
+            transaccionRevertida.setOperador(operadorService.getOperadorById(TransferenciaUtils.OPERADOR_DEF));
+            transaccionRevertida.setRegistroFacturacion(transaccion.getRegistroFacturacion());
+
+
+            transaccionService.save(transaccionRevertida);
+
+            model.addAttribute("mensaje", "transaccion revertida");
+        }else{
+            // no tienen autorizacion
+            log.info("Autorizacion Denegada");
+            model.addAttribute("mensaje", "reversion fallida");
+        }
+        return "transferencias/transferencia-reversion-res";
     }
 }
