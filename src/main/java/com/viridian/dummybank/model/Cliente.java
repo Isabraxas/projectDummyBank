@@ -20,6 +20,13 @@ public class Cliente {
 
     private String tipo;    // para diferenciar a que tabla buscar subsecuente (J juridica, N natural)
 
+    @ManyToMany
+    @JoinTable(
+            name = "Cliente_Beneficiario",
+            joinColumns = @JoinColumn(name="cliente_id"),
+            inverseJoinColumns =  @JoinColumn(name="beneficiario_id"))
+    private List<Beneficiario> beneficiarios;
+
     public Cliente() {
     }
 
@@ -50,5 +57,13 @@ public class Cliente {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public List<Beneficiario> getBeneficiarios() {
+        return beneficiarios;
+    }
+
+    public void setBeneficiarios(List<Beneficiario> beneficiarios) {
+        this.beneficiarios = beneficiarios;
     }
 }

@@ -5,6 +5,7 @@ import com.viridian.dummybank.model.Cuenta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -31,6 +32,11 @@ public class CuentaServiceImpl implements CuentaService{
     @Override
     public void delete(Long id) {
         this.cuentaRepository.delete(id);
+    }
+
+    @Override
+    public Cuenta getCuentaByNumber(Long number) {
+        return this.cuentaRepository.findByNumeroCuentaEquals(number);
     }
 
 

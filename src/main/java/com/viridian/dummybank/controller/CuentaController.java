@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -28,6 +29,12 @@ public class CuentaController {
     @GetMapping(value = "/getCuenta/{id}")
     public String getCuenta(Model model, @PathVariable Long id){
         model.addAttribute("cuenta",this.cuentaService.getCuenta(id));
+        return "cuenta/cuenta-show";
+    }
+
+    @GetMapping(value = "/getCuentaByNumber/{number}")
+    public String getCuentaByNumber(Model model, @PathVariable Long number){
+        model.addAttribute("cuenta",this.cuentaService.getCuentaByNumber(number));
         return "cuenta/cuenta-show";
     }
 

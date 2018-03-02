@@ -32,4 +32,12 @@ public class BeneficiarioServiceImpl implements BeneficiarioService{
     public Beneficiario getBeneficiarioById(Long id) {
         return this.beneficiarioRepository.findOne(id);
     }
+
+    // añadido por marcelo
+    @Override
+    public Beneficiario getBeneficiarioByNumeroCuenta(Long numeroCuenta) {
+        return beneficiarioRepository.getBeneficiarioByNumeroCuenta(numeroCuenta);
+    }
+
+
 }

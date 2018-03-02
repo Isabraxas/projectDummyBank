@@ -1,0 +1,150 @@
+package com.viridian.dummybank.controller;
+
+import com.viridian.dummybank.model.Beneficiario;
+import com.viridian.dummybank.model.Cliente;
+import com.viridian.dummybank.model.Cuenta;
+import com.viridian.dummybank.model.Transaccion;
+import com.viridian.dummybank.repository.TransferenciaRepository;
+import com.viridian.dummybank.service.*;
+import com.viridian.dummybank.utils.TransferenciaUtils;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.List;
+
+@Controller
+public class PagosController {
+
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(PagosController.class);
+
+    // servicios
+    private final ClienteService clienteService;
+    private final TransaccionService transaccionService;
+    private final AutorizacionService autorizacionService;
+    private final EstatusService estatusService;
+    private final MetodoService metodoService;
+    private final OperacionService operacionService;
+    private final BeneficiarioService beneficiarioService;
+    private final OperadorService operadorService;
+    private final CuentaService cuentaService;
+    // repositorio
+    private final TransferenciaRepository transferenciaRepository;
+
+    @Autowired
+    public PagosController(ClienteService clienteService,
+                           TransaccionService transaccionService,
+                           TransferenciaRepository transferenciaRepository,
+                           AutorizacionService autorizacionService,
+                           EstatusService estatusService,
+                           MetodoService metodoService,
+                           OperacionService operacionService,
+                           BeneficiarioService beneficiarioService,
+                           OperadorService operadorService,
+                           CuentaService cuentaService) {
+        this.clienteService = clienteService;
+        this.transaccionService = transaccionService;
+        this.transferenciaRepository = transferenciaRepository;
+        this.autorizacionService = autorizacionService;
+        this.estatusService = estatusService;
+        this.metodoService = metodoService;
+        this.operacionService = operacionService;
+        this.beneficiarioService  = beneficiarioService;
+        this.operadorService = operadorService;
+        this.cuentaService=cuentaService;
+    }
+
+    @GetMapping("pago/servicio/{idCliente}")
+    public String pagoServicio(@PathVariable String idCliente, Model model){
+        // obtener al cliente de la BD
+        Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
+        model.addAttribute("cliente", cliente);
+        // obtener los beneficiarios que son de otros bancos
+        List<Beneficiario> beneficiarios = transferenciaRepository.getBeneficiariosFromOtherBanksAndByClienteId(Long.valueOf(idCliente));
+        model.addAttribute("beneficiarios",beneficiarios);
+
+        model.addAttribute("metodos", metodoService.getAll());
+        // cargar la vista
+        return "pagos/pago-de-servicios";
+    }
+
+    @PostMapping("pago/servicio/validate")
+    public String savePagoServicio(HttpServletRequest request , Model model){
+        log.info("Recibiendo datos del Pago a realizar");
+        // Verificar los datos
+        Long numeroCuentaOrigen = Long.valueOf(request.getParameter("origen"));
+        Long metodoId = Long.valueOf(request.getParameter("metodo"));
+        BigDecimal monto = BigDecimal.valueOf(Long.valueOf(request.getParameter("monto")));
+        String moneda = request.getParameter("moneda");
+        Long beneficiarioId = Long.valueOf(request.getParameter("beneficiario"));
+
+        //Datos para facturacion
+        String nombre = request.getParameter("nombre");
+        Long cedulaNit = Long.valueOf(request.getParameter("cedulaNit"));
+        Long codServ = Long.valueOf(request.getParameter("codServ"));
+
+
+        log.info("Creando Un objeto Transaccion");
+        // crear un objeto Transaccion con informacion necesaria para la BD
+
+        Transaccion transaccion = new Transaccion();
+        transaccion.setNumeroCuenta(numeroCuentaOrigen);
+        transaccion.setMonto(monto);
+        transaccion.setMoneda(moneda);
+        transaccion.setMetodo(metodoService.getMetodoById(metodoId));
+        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioById(beneficiarioId));
+
+        log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
+        // considerar los atributos que no se piden
+        transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+        transaccion.setEstatus(estatusService.getEstatusById(1L));
+        transaccion.setOperacion(operacionService.getOperacionById(1L));
+        transaccion.setNumeroOrden(17L);
+        // introducir la transaccion a la BD
+        log.info("Guardando Transaccion en BD");
+        transaccionService.save(transaccion);
+        log.info("Transaccion Guardada correctamente");
+
+
+        if(numeroCuentaOrigen == beneficiarioService.getBeneficiarioById(beneficiarioId).getNumeroCuenta()){
+            log.error("no puede transferirse entre cuentas propias");
+            // todo Error Transferencia entre cuentas propias, misma cuenta
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            log.info("Transaccion Actualizada");
+
+        }else if(cuentaService.getCuentaByNumber(numeroCuentaOrigen).getSaldo().compareTo(monto) < 0) {
+            log.error("saldo insuficiente");
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            log.info("Transaccion Actualizada");
+            // todo Error saldo insuficiente
+        }else {
+            log.info("Actualizsar saldo en la BDx");
+            //TODO Agregar monto a saldo retenido y restarmonto a saldo disponible
+            transaccion.setEstatus(estatusService.getEstatusById(2L));
+
+            Long number =transaccion.getNumeroOrden();
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(number);
+            log.info("Transaccion Actualizada correctamente");
+        }
+
+
+
+        model.addAttribute("transaccion",transaccion);
+
+        return "pagos/pago-de-servicios-show";
+    }
+
+
+}

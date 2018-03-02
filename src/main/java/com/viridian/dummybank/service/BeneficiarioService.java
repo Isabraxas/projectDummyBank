@@ -29,4 +29,8 @@ public interface BeneficiarioService {
      * @return Beneficiario
      */
     Beneficiario getBeneficiarioById(Long id);
+
+
+    // añadido por marcelo
+    Beneficiario getBeneficiarioByNumeroCuenta(Long numeroCuenta);
 }
