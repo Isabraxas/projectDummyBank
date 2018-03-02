@@ -221,6 +221,6 @@ public class TransferenciasController {
             log.info("Autorizacion Denegada");
             model.addAttribute("mensaje", "reversion fallida");
         }
-        return "";
+        return "transferencias/transferencia-reversion-res";
     }
 }
