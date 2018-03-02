@@ -107,7 +107,7 @@ public class PagosController {
         transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
         transaccion.setEstatus(estatusService.getEstatusById(1L));
         transaccion.setOperacion(operacionService.getOperacionById(1L));
-        transaccion.setNumeroOrden(15L);
+        transaccion.setNumeroOrden(17L);
         // introducir la transaccion a la BD
         log.info("Guardando Transaccion en BD");
         transaccionService.save(transaccion);
@@ -130,10 +130,12 @@ public class PagosController {
             log.info("Transaccion Actualizada");
             // todo Error saldo insuficiente
         }else {
-            log.info("Actualizsar saldo en la BD");
+            log.info("Actualizsar saldo en la BDx");
             //TODO Agregar monto a saldo retenido y restarmonto a saldo disponible
-            //transaccion.setEstatus(estatusService.getEstatusById(2L));
-            //transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(transaccion.getNumeroOrden());
+            transaccion.setEstatus(estatusService.getEstatusById(2L));
+
+            Long number =transaccion.getNumeroOrden();
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(number);
             log.info("Transaccion Actualizada correctamente");
         }
 

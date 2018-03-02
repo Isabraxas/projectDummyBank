@@ -2,7 +2,9 @@ package com.viridian.dummybank.dao;
 
 import com.viridian.dummybank.model.Transaccion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -38,10 +40,8 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
             "ORDER BY fecha_inicio DESC", nativeQuery = true)
     List<Transaccion> finByNumeroCuentaAndCurrentMonth(Long numeroCuenta);
 
-    @Query(value = "UPDATE cuenta c " +
-            "    INNER JOIN Transaccion t " +
-            "    ON t.numero_cuenta = c.numero_cuenta " +
-            "    SET c.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) , " +
-                        "where numero_orden = ?1; ", nativeQuery = true)
+    @Transactional
+    @Modifying
+    @Query(value = "update Transaccion t set t.saldo = 3000 , t.estatus = 2 where t.idTransaccion = 56 and t.numeroOrden = ?1 ")
     void updateSaldobyNumeroOrden(Long numeroOrden);
 }
