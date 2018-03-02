@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>
+    Pago de servicios
+</h1>
+<h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
+<form method="POST" id="form-transfer" th:action="@{/pago/servicio/validate}">
+    <!--SELECCION DE CUENTAS ORIGEN Y DESTINO-->
+    <h4>Cuenta Origen</h4>
+    <select id="origen" name="origen">
+        <option value="0" th:text="${'Selecciona una opcion'}"></option>
+        <option th:each="cuenta : ${cliente.cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+    </select>
+    <br/>
+    <h4>Beneficiario</h4>
+    <select id="beneficiario" name="beneficiario">
+        <option value="0" th:text="${'Selecciona una opcion'}"></option>
+        <option th:each="beneficiario : ${beneficiarios}"  th:value="${beneficiario.idBeneficiario}" th:text="${beneficiario.nombreRs}"></option>
+    </select>
+    <br/>
+    <!--MONTO Y MONEDA-->
+    <label for="monto">Monto</label>
+    <input type="text" id="monto" name="monto" placeholder="monto" required="required"/>
+    <br/>
+    <label for="moneda">Moneda</label>
+    <input type="text" id="moneda" name="moneda" placeholder="moneda" required="required"/>
+    <br/>
+    <!--DEMAS INFO-->
+    <h4>Datos de facturacion</h4>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" form="form-transfer" name="nombre"/>
+    <br/>
+    <label for="cedulaNit">Cedula o nit</label>
+    <input type="text" id="cedulaNit" name="cedulaNit" placeholder="4836908" />
+    <br/>
+    <label for="codServ">codigo del servicio</label>
+    <input type="text" id="codServ" name="codServ" placeholder="78899000066"/>
+    <br/>
+    <label for="metodo">Metodo de pago</label>
+    <select id="metodo" name="metodo">
+        <option th:each="metodo :${metodos}"
+                th:value="${metodo.idMetodo}" th:text="${metodo.descripcion}">Efectivo</option>
+    </select>
+    <br/>
+    <button type="submit">Continuar</button>
+
+</form>
+</body>
+</html>
