@@ -1,8 +1,6 @@
 package com.viridian.dummybank.controller;
 
-import com.viridian.dummybank.model.Cliente;
-import com.viridian.dummybank.model.Cuenta;
-import com.viridian.dummybank.model.Transaccion;
+import com.viridian.dummybank.model.*;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.TransaccionService;
 import com.viridian.dummybank.utils.TransferenciaUtils;
@@ -62,7 +60,7 @@ public class TransferenciasController {
         BigDecimal monto = BigDecimal.valueOf(Long.valueOf(request.getParameter("monto")));
         String moneda = request.getParameter("moneda");
         String glosa = request.getParameter("glosa");
-        Long autorizacion = Long.valueOf(request.getParameter("autorizacion"));
+        Autorizacion autorizacion = new Autorizacion();
         Long regAsfi = Long.valueOf(request.getParameter("regAsfi"));
         /*
         System.out.println( "id cuenta origen: " + request.getParameter("origen"));
@@ -86,18 +84,18 @@ public class TransferenciasController {
         transaccion.setMonto(monto);
         transaccion.setMoneda(moneda);
         transaccion.setConceptoGlosa(glosa);
-        transaccion.setAutorizacionId(autorizacion);
+        transaccion.setAutorizacion(autorizacion);
         transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
             // considerar los atributos que no se piden
-        transaccion.setEstatusId(TransferenciaUtils.STATUS_COMPLETA);
-        transaccion.setAutorizacionId(TransferenciaUtils.AUTORIZACION_DEF);
-        transaccion.setMetodoId(TransferenciaUtils.METODO_CUENTAS_PROPIAS);
+        transaccion.setEstatus(new Estatus());
+        transaccion.setAutorizacion(new Autorizacion("A-3" , "non se"));
+        transaccion.setMetodo(new Metodo());
         transaccion.setNumeroOrden(TransferenciaUtils.NUMERO_ORDEN_DEF);
-        transaccion.setOperacionId(TransferenciaUtils.OPERACION_DEPOSITO);
-        transaccion.setOperador(TransferenciaUtils.OPERADOR_DEF);
+        transaccion.setOperacion(new Operacion());
+        transaccion.setOperador(new Operador());
         transaccion.setRegistroFacturacion(TransferenciaUtils.REGISTRO_FACTURACION);
-        transaccion.setBeneficiarioId(TransferenciaUtils.BENEFICIARIO_DEF);
+        transaccion.setBeneficiario(new Beneficiario());
         transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
         transaccion.setSaldo(TransferenciaUtils.SALDO_DEF);
 

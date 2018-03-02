@@ -20,6 +20,13 @@ public class Autorizacion implements Serializable {
     @OneToMany(mappedBy = "autorizacion")
     private List<Transaccion> transaccions;
 
+    public Autorizacion(){}
+
+    public Autorizacion(String tipo, String detalle) {
+        this.tipo = tipo;
+        this.detalle = detalle;
+    }
+
     public Long getIdAutorizacion() {
         return idAutorizacion;
     }
