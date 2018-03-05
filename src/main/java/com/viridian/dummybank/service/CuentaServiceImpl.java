@@ -50,5 +50,10 @@ public class CuentaServiceImpl implements CuentaService{
         return this.cuentaRepository.findAllByClienteId(clienteId);
     }
 
+    @Override
+    public Cuenta getByTipoAndCliente(String tipo, Cliente cliente) {
+        return this.cuentaRepository.findByTipoEqualsAndCliente(tipo, cliente);
+    }
+
 
 }

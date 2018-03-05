@@ -33,4 +33,7 @@ public interface BeneficiarioService {
 
     // añadido por marcelo
     Beneficiario getBeneficiarioByNumeroCuenta(Long numeroCuenta);
+
+
+    Beneficiario getBeneficiarioByClienteIdAndNumeroCuenta(Long id_cliente, Long numeroCuenta);
 }

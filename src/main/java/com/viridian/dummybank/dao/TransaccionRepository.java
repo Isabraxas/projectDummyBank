@@ -71,4 +71,7 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
             "        t.fecha_ejecucion = now() " +
             "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
     void updateEstatus(Long idTransaccion);
+
+
+
 }

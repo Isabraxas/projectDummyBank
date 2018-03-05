@@ -39,5 +39,10 @@ public class BeneficiarioServiceImpl implements BeneficiarioService{
         return beneficiarioRepository.getBeneficiarioByNumeroCuenta(numeroCuenta);
     }
 
+    @Override
+    public Beneficiario getBeneficiarioByClienteIdAndNumeroCuenta(Long id_cliente, Long numeroCuenta) {
+        return this.beneficiarioRepository.findBeneficiarioByClienteIdAndNumeroCuenta(id_cliente, numeroCuenta);
+    }
+
 
 }

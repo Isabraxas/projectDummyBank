@@ -1,13 +1,13 @@
 package com.viridian.dummybank.controller;
 
 import com.viridian.dummybank.model.*;
-<<<<<<< HEAD
+
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.TransaccionService;
-=======
+
 import com.viridian.dummybank.repository.TransferenciaRepository;
 import com.viridian.dummybank.service.*;
->>>>>>> 33b5eeffb80d0cd336d44501544595fc5e724f8f
+
 import com.viridian.dummybank.utils.TransferenciaUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +116,7 @@ public class TransferenciasController {
         transaccion.setMonto(monto);
         transaccion.setMoneda(moneda);
         transaccion.setConceptoGlosa(glosa);
-<<<<<<< HEAD
+
         transaccion.setAutorizacion(autorizacion);
         transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
@@ -129,8 +129,8 @@ public class TransferenciasController {
         transaccion.setOperador(new Operador());
         transaccion.setRegistroFacturacion(TransferenciaUtils.REGISTRO_FACTURACION);
         transaccion.setBeneficiario(new Beneficiario());
-=======
-        transaccion.setAutorizacion(autorizacionService.getAutorizacionById(autorizacion));
+
+        transaccion.setAutorizacion(autorizacion);
         transaccion.setRegisAsfi(regAsfi);
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
             // considerar los atributos que no se piden
@@ -141,7 +141,7 @@ public class TransferenciasController {
         transaccion.setOperador(operadorService.getOperadorById(TransferenciaUtils.OPERADOR_DEF));
         transaccion.setRegistroFacturacion(TransferenciaUtils.REGISTRO_FACTURACION);
         transaccion.setBeneficiario(beneficiarioService.getBeneficiarioById(TransferenciaUtils.BENEFICIARIO_DEF));
->>>>>>> 33b5eeffb80d0cd336d44501544595fc5e724f8f
+
         transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
         transaccion.setSaldo(TransferenciaUtils.SALDO_DEF);
 

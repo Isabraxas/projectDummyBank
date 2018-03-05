@@ -12,4 +12,6 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
     List<Cuenta>findAllByCliente(Cliente cliente);
     List<Cuenta> findAllByClienteId(Long idCliente);
+
+    Cuenta findByTipoEqualsAndCliente(String tipo , Cliente cliente);
 }
