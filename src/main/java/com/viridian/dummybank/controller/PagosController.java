@@ -181,14 +181,15 @@ public class PagosController {
 
 
     @GetMapping("pago/prestamo/{idCliente}")
-    public String pagoPrestamo(@PathVariable String idCliente, Model model){
+    public String pagoPrestamo(@PathVariable Long idCliente, Model model){
         // obtener al cliente de la BD
-        Cliente cliente = clienteService.findOneById(Long.valueOf(idCliente));
+        Cliente cliente = clienteService.findOneById(idCliente);
         model.addAttribute("cliente", cliente);
-        // obtener los beneficiarios que son de otros bancos
-        //TODO hacer que las cuentas que se muestran sean solo las de tipo prestamo asociadas al cliente
-        List<Cuenta> cuentasPrestamoCli = cliente.getCuentas();
-        model.addAttribute("cuentasPrestamoCli",cuentasPrestamoCli);
+
+        // obtener las cuentas que se muestran sean solo las de tipo prestamo asociadas al cliente
+        Cuenta cuentaPrestamoCli = this.cuentaService.getByTipoAndCliente("prestamo",cliente);
+
+        model.addAttribute("cuentasPrestamoCli",cuentaPrestamoCli);
 
         model.addAttribute("metodos", metodoService.getAll());
         // cargar la vista
@@ -208,6 +209,7 @@ public class PagosController {
         String glosa = request.getParameter("glosa");
         Long autorizacionId = Long.valueOf(request.getParameter("autorizacion"));
         Long metodoId = Long.valueOf(request.getParameter("metodo"));
+        Long clienteId = Long.valueOf(request.getParameter("clienteId"));
 
         log.info("Creando Un objeto Transaccion");
         // crear un objeto Transaccion con informacion necesaria para la BD
@@ -217,7 +219,7 @@ public class PagosController {
         transaccion.setMonto(monto);
         transaccion.setMoneda(moneda);
         transaccion.setMetodo(metodoService.getMetodoById(metodoId));
-        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioByNumeroCuenta(beneficiarioNumCuenta));
+        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioByClienteIdAndNumeroCuenta(clienteId,beneficiarioNumCuenta));
         transaccion.setConceptoGlosa(glosa);
         transaccion.setAutorizacion(autorizacionService.getAutorizacionById(autorizacionId));
         log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
@@ -293,6 +295,7 @@ public class PagosController {
 
         return "redirect:/";
     }
+
 
 
 }

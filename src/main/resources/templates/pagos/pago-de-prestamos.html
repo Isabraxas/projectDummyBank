@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>
-    Pago de servicios
+    Pago de Prestamos
 </h1>
 <h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
 <form method="POST" id="form-transfer" th:action="@{/pago/prestamo/validate}">
@@ -22,6 +22,7 @@
         <option value="0" th:text="${'Selecciona una opcion'}"></option>
         <option th:each="cuentaPrestamoCli : ${cuentasPrestamoCli}"  th:value="${cuentaPrestamoCli.numeroCuenta}" th:text="${cuentaPrestamoCli.numeroCuenta}"></option>
     </select>
+    <input type="hidden" id="clienteId" name="clienteId" th:value="${cliente.id}"/>
     <br/>
     <!--MONTO Y MONEDA-->
     <label for="monto">Monto</label>

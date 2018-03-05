@@ -36,4 +36,6 @@ public interface CuentaService {
 
     List<Cuenta> getCuentaByCliente(Cliente cliente);
     List<Cuenta> getCuentaByClienteId(Long clienteId);
+
+    Cuenta getByTipoAndCliente(String tipo , Cliente cliente);
 }
