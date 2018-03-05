@@ -2,6 +2,7 @@ package com.viridian.dummybank.service.persona;
 
 import com.viridian.dummybank.model.persona.PersonaJuridica;
 import com.viridian.dummybank.repository.persona.PersonaJuridicaRepository;
+import com.viridian.dummybank.error.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,9 @@ public class PersonaJuridicaServiceImpl implements PersonaJuridicaService {
         log.info("Mostrando al cliente, persona juridica Id: "+ id);
         PersonaJuridica persona = personaJuridicaRepository.findOne(id);
         if(persona == null){
-            log.error("Persona Juridica Id: "+ id + " no encontrada");
-            // todo error not found
+            String errorMsg = "Persona Juridica Id: " + id + " no encontrada.";
+            log.error(errorMsg);
+            throw new NoEncontradoException(errorMsg);
         }
         return persona;
     }

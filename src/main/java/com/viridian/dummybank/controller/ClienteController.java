@@ -9,6 +9,7 @@ import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.model.persona.PersonaJuridica;
 import com.viridian.dummybank.model.persona.PersonaNatural;
 import com.viridian.dummybank.service.ClienteService;
+import com.viridian.dummybank.service.CuentaService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
 import com.viridian.dummybank.service.persona.PersonaService;
@@ -39,8 +40,6 @@ public class ClienteController {
     private final PersonaService personaService;
 
     // repositorios
-    // todo convertir a servicio
-
     private  final CuentaRepository cuentaRepository;
 
     @Autowired
@@ -276,7 +275,7 @@ public class ClienteController {
     @GetMapping("cliente/delete/{id}")
     public String deleteCliente(@PathVariable String id){
         log.info("Borrando Cliente id: " + id);
-        String tipo = clienteService.findOneById(Long.valueOf(id)).getTipo();
+        String tipo = clienteService.findOneById(Long.valueOf(id)).getTipo(); // si no encuentra al cliente, dara error de no encontrada
         if(tipo.equals(ClienteUtils.PERSONA_NATURAL)){
             log.info("Tipo: Persona Natural");
             personaNaturalService.deletePersonaNatural(Long.valueOf(id));

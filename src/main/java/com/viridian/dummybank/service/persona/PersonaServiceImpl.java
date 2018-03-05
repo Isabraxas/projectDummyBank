@@ -2,6 +2,7 @@ package com.viridian.dummybank.service.persona;
 
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.repository.persona.PersonaRepository;
+import com.viridian.dummybank.error.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,9 @@ public class PersonaServiceImpl implements PersonaService {
     public Persona findPersonaById(Long id) {
         Persona persona = personaRepository.findOne(id);
         if(persona == null){
-            log.error("Persona Id: "+ id + " no encontrada");
-            // todo error not found
+            String errorMsg ="Persona Id: "+ id + " no encontrada";
+            log.error(errorMsg);
+            throw new NoEncontradoException(errorMsg);
         }
         return persona;
     }

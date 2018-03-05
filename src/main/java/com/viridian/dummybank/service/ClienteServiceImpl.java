@@ -2,6 +2,7 @@ package com.viridian.dummybank.service;
 
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.repository.ClienteRepository;
+import com.viridian.dummybank.error.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,11 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente findOneById(Long id) {
         Cliente cliente = clienteRepository.findOne(id);
         if(cliente == null){
-            log.error("Cliente ID: "+ id +" no encontrado");
-            // todo error not found
+            // throw ERROR
+            String errorMsg = "Cliente ID: "+ id +" no encontrado";
+            log.error(errorMsg);
+            log.info("redireccionando apagina de error");
+            throw new NoEncontradoException(errorMsg);
         }
         return cliente;
     }
