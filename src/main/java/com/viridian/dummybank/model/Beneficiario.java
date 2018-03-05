@@ -35,6 +35,13 @@ public class Beneficiario implements Serializable{
     @OneToMany(mappedBy = "beneficiario")
     private List<Transaccion> transaccions;
 
+    @ManyToMany
+    @JoinTable(
+            name = "Cliente_Beneficiario",
+            joinColumns = @JoinColumn(name="beneficiario_id"),
+            inverseJoinColumns =  @JoinColumn(name="cliente_id"))
+    private List<Cliente> clientes;
+
 
     public Long getIdBeneficiario() {
         return idBeneficiario;
@@ -98,5 +105,13 @@ public class Beneficiario implements Serializable{
 
     public void setTransaccions(List<Transaccion> transaccions) {
         this.transaccions = transaccions;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 }

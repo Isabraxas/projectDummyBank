@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3>Verifique la informacion</h3>
+<h3 th:text="${'Numero de Orden: ' + (transaccion.numeroOrden)}"> Numero de Orden </h3>
+<form method="POST" th:action="@{/pago/prestamo/send}">
+    <input type="hidden" th:field="${transaccion.idTransaccion}"/>
+
+    <table border="1">
+        <tr>
+            <td>Cuenta de (origen)</td>
+            <td th:text="${transaccion.numeroCuenta}">LOL</td>
+        </tr>
+        <tr>
+            <td>Pago de Tarjeta a Cuenta destino:</td>
+            <td th:text="${transaccion.beneficiario.numeroCuenta}">LOL</td>
+        </tr>
+        <tr>
+            <td>Estatus</td>
+            <td th:text="${transaccion.estatus.descripcion}">LOL</td>
+        </tr>
+        <tr>
+            <td>Monto</td>
+            <td th:text="${transaccion.monto}">LOL</td>
+        </tr>
+        <tr>
+            <td>Moneda</td>
+            <td th:text="${transaccion.moneda}">LOL</td>
+        </tr>
+
+    </table>
+
+    <input type="submit" id="accion" name="accion" th:value="continuar" />
+    <input type="submit" id="accion" name="accion" th:value="abortar" />
+
+</form>
+
+</body>
+</html>

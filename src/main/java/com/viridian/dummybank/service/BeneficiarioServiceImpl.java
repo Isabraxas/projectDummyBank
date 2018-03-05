@@ -44,5 +44,10 @@ public class BeneficiarioServiceImpl implements BeneficiarioService{
         return this.beneficiarioRepository.findBeneficiarioByClienteIdAndNumeroCuenta(id_cliente, numeroCuenta);
     }
 
+    @Override
+    public boolean existsByIdBeneficiario(Long idBeneficiario) {
+        return this.beneficiarioRepository.exists(idBeneficiario);
+    }
+
 
 }

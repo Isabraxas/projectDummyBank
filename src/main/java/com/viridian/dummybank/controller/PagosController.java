@@ -254,9 +254,10 @@ public class PagosController {
         }else {
             log.info("Actualizsar saldo en la BD");
             //TODO Agregar monto a saldo retenido y restar monto a saldo disponible
-            transaccion.setEstatus(estatusService.getEstatusById(2L));
+            //transaccion.setEstatus(estatusService.getEstatusById(2L));
             //TODO CAMBIAR NOMRE FUNCION BY IDTRANSACCION
             transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(transaccion.getIdTransaccion(),2L);
+            transaccion.setEstatus(estatusService.getEstatusById(2L));
             log.info("Transaccion Actualizada correctamente");
         }
 
@@ -296,6 +297,124 @@ public class PagosController {
         return "redirect:/";
     }
 
+
+
+    @GetMapping("pago/tarjeta/{idCliente}")
+    public String pagoTarjeta(@PathVariable Long idCliente, Model model){
+        // obtener al cliente de la BD
+        Cliente cliente = clienteService.findOneById(idCliente);
+        model.addAttribute("cliente", cliente);
+
+        // obtener las cuentas que se muestran sean solo las de tipo tarjeta asociadas al cliente
+        Cuenta cuentaTarjeta = this.cuentaService.getByTipoAndCliente("credito",cliente);
+
+        model.addAttribute("cuentasTarjeta",cuentaTarjeta);
+
+        model.addAttribute("metodos", metodoService.getAll());
+        // cargar la vista
+        return "pagos/pago-de-tarjetas";
+    }
+
+    @PostMapping("pago/tarjeta/validate")
+    public String savePagoTarjetas(HttpServletRequest request , Model model){
+        log.info("Recibiendo datos del Pago a realizar");
+        // Verificar los datos
+        Long numeroCuentaOrigen = Long.valueOf(request.getParameter("origen"));
+        BigDecimal monto = BigDecimal.valueOf(Long.valueOf(request.getParameter("monto")));
+        String moneda = request.getParameter("moneda");
+        Long beneficiarioNumCuenta = Long.valueOf(request.getParameter("beneficiario"));
+
+        //Datos adicionales
+        String glosa = request.getParameter("glosa");
+        Long autorizacionId = Long.valueOf(request.getParameter("autorizacion"));
+        Long metodoId = Long.valueOf(request.getParameter("metodo"));
+        Long clienteId = Long.valueOf(request.getParameter("clienteId"));
+
+        log.info("Creando Un objeto Transaccion");
+        // crear un objeto Transaccion con informacion necesaria para la BD
+
+        Transaccion transaccion = new Transaccion();
+        transaccion.setNumeroCuenta(numeroCuentaOrigen);
+        transaccion.setMonto(monto);
+        transaccion.setMoneda(moneda);
+        transaccion.setMetodo(metodoService.getMetodoById(metodoId));
+        transaccion.setBeneficiario(beneficiarioService.getBeneficiarioByClienteIdAndNumeroCuenta(clienteId,beneficiarioNumCuenta));
+        transaccion.setConceptoGlosa(glosa);
+        transaccion.setAutorizacion(autorizacionService.getAutorizacionById(autorizacionId));
+        log.info("Llenando datos por defecto. REVISAR EN EL FUTURO");
+        // considerar los atributos que no se piden
+        transaccion.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+        transaccion.setEstatus(estatusService.getEstatusById(1L));
+        transaccion.setOperacion(operacionService.getOperacionById(1L));
+        transaccion.setNumeroOrden(new Random().nextLong());
+
+        // introducir la transaccion a la BD
+        log.info("Guardando Transaccion en BD");
+        transaccionService.save(transaccion);
+        log.info("Transaccion Guardada correctamente");
+
+
+        if(numeroCuentaOrigen == beneficiarioService.getBeneficiarioByNumeroCuenta(beneficiarioNumCuenta).getNumeroCuenta()){
+            log.error("no puede transferirse entre cuentas propias");
+
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            //TODO actualizar saldo
+            log.info("Transaccion Actualizada");
+
+        }else if(cuentaService.getCuentaByNumber(numeroCuentaOrigen).getSaldo().compareTo(monto) < 0) {
+            log.error("saldo insuficiente");
+            log.info("Actualizando Transaccion en BD");
+            transaccion.setEstatus(estatusService.getEstatusById(3L));
+            transaccionService.save(transaccion);
+            log.info("Transaccion Actualizada");
+            //TODO actualizar saldo
+        }else {
+            log.info("Actualizsar saldo en la BD");
+            //TODO Agregar monto a saldo retenido y restar monto a saldo disponible
+            //transaccion.setEstatus(estatusService.getEstatusById(2L));
+            //TODO CAMBIAR NOMRE FUNCION BY IDTRANSACCION
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(transaccion.getIdTransaccion(),2L);
+            transaccion.setEstatus(estatusService.getEstatusById(2L));
+            log.info("Transaccion Actualizada correctamente");
+        }
+
+
+
+        model.addAttribute("transaccion",transaccion);
+
+        return "pagos/pago-de-tarjetas-show";
+    }
+
+
+    @PostMapping("pago/tarjeta/send")
+    public String sendPagoTarjetas(HttpServletRequest request , Model model){
+
+        String accion =request.getParameter("accion");
+        Long idTransaccion = Long.valueOf(request.getParameter("idTransaccion"));
+
+        if(accion.equalsIgnoreCase("continuar")) {
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            //TODO usar nueva consulta para actualizar estatus
+            transaccion.setEstatus(estatusService.getEstatusById(5L));
+            transaccion.setFechaEjecucion(new Timestamp(System.currentTimeMillis()).toString());
+            transaccionService.save(transaccion);
+            //
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-tarjetas-estatus";
+        }else if (accion.equalsIgnoreCase("abortar")){
+            //TODO Restablecer a su estado anterior.
+            transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(idTransaccion,4L);
+            //
+            Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+            transaccionService.save(transaccion);
+            model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
+            return "pagos/pago-de-tarjetas-estatus";
+        }
+
+        return "redirect:/";
+    }
 
 
 }

@@ -46,7 +46,7 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
             "    INNER JOIN Transaccion t " +
             "    ON t.numero_cuenta = c.numero_cuenta " +
             "    SET c.saldo =if( t.operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto )  ," +
-            "        t.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) ," +
+            "        t.saldo =if( t.operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) ," +
             "        t.estatus_id = ?2 ," +
             "        t.fecha_aprobacion = now() " +
             "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
