@@ -9,6 +9,7 @@ import com.viridian.dummybank.repository.TransferenciaRepository;
 import com.viridian.dummybank.service.*;
 
 import com.viridian.dummybank.utils.TransferenciaUtils;
+import jdk.internal.dynalink.MonomorphicCallSite;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -64,6 +66,22 @@ public class TransferenciasController {
         this.beneficiarioService  = beneficiarioService;
         this.operadorService = operadorService;
     }
+
+    @GetMapping("transferencia/selec-cliente")
+    public String clientesBanco(Model model){
+        log.info("Cargando list de clientes");
+        model.addAttribute("clientes",clienteService.findAllClientes());
+        return "transferencias/transferencia-selec-cliente";
+    }
+
+    @PostMapping("transferencia/setCliente")
+    public String settingCliente(HttpServletRequest request, Model model){
+        Long idCliente = Long.valueOf(request.getParameter("cliente"));
+        log.info("Cargando las posibles transferencias para el Cliente Id: "+ idCliente);
+        model.addAttribute("cliente",idCliente);
+        return "transferencias/transferencia-menu";
+    }
+
 
     @GetMapping("transferencia/propias/{idCliente}")
     public String transferenciaCuentasPropias(@PathVariable String idCliente, Model model){

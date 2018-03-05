@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>Transferencias Bancarias</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <td>OPERACION</td>
+        <td>ACCION</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Transferencia entre cuentas propias</td>
+        <td><a th:href="${'/transferencia/propias/' + cliente}">Realizar</a></td>
+    </tr>
+    <tr>
+        <td>Transferencia entre Terceros</td>
+        <td><a th:href="${'/transferencia/terceros/' + cliente}">Realizar</a></td>
+    </tr>
+    <tr>
+        <td>Transferencia entre Otros bancos</td>
+        <td><a th:href="${'/transferencia/otros/' + cliente}">Realizar</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

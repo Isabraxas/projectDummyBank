@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/transferencia/setCliente}">
+    <select id="Cliente" name="cliente">
+        <option value="0" th:text="${'Select Operator'}"></option>
+        <option th:each="cliente : ${clientes}"  th:value="${cliente.id}" th:text="${cliente.id}"></option>
+    </select>
+    <button type="submit">REALIZAR</button>
+</form>
+</body>
+</html>
