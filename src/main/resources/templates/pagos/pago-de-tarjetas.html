@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>
-    Pago de Tarjetas de credito
+    Pago de Tarjetas de creditox
 </h1>
 <h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
-<form method="POST" id="form-transfer" th:action="@{/pago/prestamo/validate}">
+<form method="POST" id="form-transfer" th:action="@{/pago/tarjeta/validate}">
     <!--SELECCION DE CUENTAS ORIGEN Y DESTINO-->
     <h4>Cuenta Origen</h4>
     <select id="origen" name="origen" >

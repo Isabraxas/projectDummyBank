@@ -30,6 +30,8 @@ public interface TransaccionService {
      */
     Transaccion getTransaccionById(Long id);
 
+    void updateCuentaBeneficiarioAndSaldoAndEstatusByIdTransaccion(Long idTransaccion);
+
     void updateTansactionAndSaldoCuentaByNuemeroOrden(Long numeroOrden, Long estatusId);
 
     List<Transaccion> getTransaccionGreaterTo(String fechaA, String fechaB);

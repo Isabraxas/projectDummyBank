@@ -7,7 +7,7 @@
 <body>
 <h3>Verifique la informacion</h3>
 <h3 th:text="${'Numero de Orden: ' + (transaccion.numeroOrden)}"> Numero de Orden </h3>
-<form method="POST" th:action="@{/pago/prestamo/send}">
+<form method="POST" th:action="@{/pago/tarjeta/send}">
     <input type="hidden" th:field="${transaccion.idTransaccion}"/>
 
     <table border="1">
