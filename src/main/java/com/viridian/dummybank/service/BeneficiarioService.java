@@ -36,4 +36,6 @@ public interface BeneficiarioService {
 
 
     Beneficiario getBeneficiarioByClienteIdAndNumeroCuenta(Long id_cliente, Long numeroCuenta);
+
+    boolean existsByIdBeneficiario(Long idBeneficiario);
 }

@@ -38,4 +38,6 @@ public interface CuentaService {
     List<Cuenta> getCuentaByClienteId(Long clienteId);
 
     Cuenta getByTipoAndCliente(String tipo , Cliente cliente);
+
+    boolean existsByIdCuenta(Long idCuenta);
 }

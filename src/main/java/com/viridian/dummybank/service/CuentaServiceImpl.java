@@ -55,5 +55,10 @@ public class CuentaServiceImpl implements CuentaService{
         return this.cuentaRepository.findByTipoEqualsAndCliente(tipo, cliente);
     }
 
+    @Override
+    public boolean existsByIdCuenta(Long idCuenta) {
+        return this.cuentaRepository.existsByIdCuenta(idCuenta);
+    }
+
 
 }

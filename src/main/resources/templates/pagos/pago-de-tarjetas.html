@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>
+    Pago de Tarjetas de credito
+</h1>
+<h3 th:text="${'Cliente Id: '+cliente.id}"></h3>
+<form method="POST" id="form-transfer" th:action="@{/pago/prestamo/validate}">
+    <!--SELECCION DE CUENTAS ORIGEN Y DESTINO-->
+    <h4>Cuenta Origen</h4>
+    <select id="origen" name="origen" >
+        <option value="" th:text="${'Selecciona una opcion'}"></option>
+        <option th:each="cuenta : ${cliente.cuentas}"  th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+    </select>
+    <br/>
+    <h4>Cuenta destino/Trajeta a pagar</h4>
+    <select id="beneficiario" name="beneficiario">
+        <option value="0" th:text="${'Selecciona una opcion'}"></option>
+        <option th:each="cuentaTarjeta : ${cuentasTarjeta}"  th:value="${cuentaTarjeta.numeroCuenta}" th:text="${cuentaTarjeta.numeroCuenta}"></option>
+    </select>
+    <input type="hidden" id="clienteId" name="clienteId" th:value="${cliente.id}"/>
+    <br/>
+    <!--MONTO Y MONEDA-->
+    <label for="monto">Monto</label>
+    <input type="text" id="monto" name="monto" placeholder="monto" required="required"/>
+    <br/>
+    <label for="moneda">Moneda</label>
+    <input type="text" id="moneda" name="moneda" placeholder="moneda" required="required"/>
+    <br/>
+    <label for="glosa">Glosa/descripcion</label>
+    <input type="text" id="glosa" form="form-transfer" name="glosa"/>
+    <br/>
+    <label for="autorizacion">Autorizacion</label>
+    <input type="autorizacion" id="autorizacion" name="autorizacion" placeholder="1"/>
+    <br/>
+    <label for="metodo">Metodo de pago</label>
+    <select id="metodo" name="metodo">
+        <option th:each="metodo :${metodos}"
+                th:value="${metodo.idMetodo}" th:text="${metodo.descripcion}">Efectivo</option>
+    </select>
+    <br/>
+    <button type="submit">Continuar</button>
+
+</form>
+</body>
+</html>
