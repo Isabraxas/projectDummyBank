@@ -3,11 +3,13 @@ package com.viridian.dummybank.controller.error;
 import com.viridian.dummybank.error.*;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.exceptions.TemplateProcessingException;
 
 /**
  * Created by marcelo on 05-03-18

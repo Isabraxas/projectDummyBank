@@ -58,7 +58,7 @@ CREATE TABLE `Beneficiario` (
   PRIMARY KEY (`id_beneficiario`),
   UNIQUE KEY `nit_ci` (`nit_ci`),
   UNIQUE KEY `numero_cuenta` (`numero_cuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `Beneficiario` (
 
 LOCK TABLES `Beneficiario` WRITE;
 /*!40000 ALTER TABLE `Beneficiario` DISABLE KEYS */;
-INSERT INTO `Beneficiario` VALUES (1,'Mario Ramos','3652789',78945612,200,'BOB','Viridian'),(3,'Adriana Velisar','54684',54698,112,'BSF','Viridian');
+INSERT INTO `Beneficiario` VALUES (1,'Mario Ramos','3652789',78945612,200,'BOB','Viridian'),(3,'Adriana Velisar','54684',54698,112,'BSF','Viridian'),(4,'bob jhonson','11223344',100004544,500,'USD','bisa');
 /*!40000 ALTER TABLE `Beneficiario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +82,7 @@ CREATE TABLE `Cliente` (
   `id_cliente` bigint(20) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(1) NOT NULL,
   PRIMARY KEY (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,10 +91,9 @@ CREATE TABLE `Cliente` (
 
 LOCK TABLES `Cliente` WRITE;
 /*!40000 ALTER TABLE `Cliente` DISABLE KEYS */;
-INSERT INTO `Cliente` VALUES (1,'J'),(2,'J'),(3,'J'),(4,'N'),(6,'N'),(7,'N');
+INSERT INTO `Cliente` VALUES (1,'J'),(2,'J'),(3,'J'),(4,'N'),(6,'N'),(7,'N'),(9,'N'),(10,'N');
 /*!40000 ALTER TABLE `Cliente` ENABLE KEYS */;
 UNLOCK TABLES;
-
 
 --
 -- Table structure for table `Cliente_Beneficiario`
@@ -119,7 +118,7 @@ CREATE TABLE `Cliente_Beneficiario` (
 
 LOCK TABLES `Cliente_Beneficiario` WRITE;
 /*!40000 ALTER TABLE `Cliente_Beneficiario` DISABLE KEYS */;
-INSERT INTO `Cliente_Beneficiario` VALUES (4,1),(6,1),(4,3);
+INSERT INTO `Cliente_Beneficiario` VALUES (4,1),(6,1),(4,3),(4,4);
 /*!40000 ALTER TABLE `Cliente_Beneficiario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +157,7 @@ CREATE TABLE `Metodo` (
   `id_metodo` bigint(20) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) NOT NULL,
   PRIMARY KEY (`id_metodo`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +166,7 @@ CREATE TABLE `Metodo` (
 
 LOCK TABLES `Metodo` WRITE;
 /*!40000 ALTER TABLE `Metodo` DISABLE KEYS */;
-INSERT INTO `Metodo` VALUES (1,'Efectivo en ventanilla'),(2,'Cheque'),(3,'Tarjeta de credito'),(4,'Tarnferencia cuentas propias'),(5,'Tarnferencia cuentas de terceros'),(6,'Tarnferencia cuentas de otros bancos');
+INSERT INTO `Metodo` VALUES (1,'Efectivo en ventanilla'),(2,'Cheque'),(3,'Tarjeta de credito'),(4,'Tarnferencia cuentas propias'),(5,'Tarnferencia cuentas de terceros'),(6,'Tarnferencia cuentas de otros bancos'),(7,'Reversion Transaccion');
 /*!40000 ALTER TABLE `Metodo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +248,7 @@ CREATE TABLE `Persona` (
   `nombre_padre` varchar(50) NOT NULL,
   `nombre_madre` varchar(50) NOT NULL,
   PRIMARY KEY (`id_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +257,7 @@ CREATE TABLE `Persona` (
 
 LOCK TABLES `Persona` WRITE;
 /*!40000 ALTER TABLE `Persona` DISABLE KEYS */;
-INSERT INTO `Persona` VALUES (1,'peres','peres','','marco','carnet','211112','2000-02-01','la paz','boliviano','C. falsa','','222222','email@email.com','soltero','abogado','titular','','jhon peres','linda peres'),(2,'sanches','sanches','sanches','julia','carnet','44566','1995-02-01','santa cruz','boliviana','Av. falsa','C. Real','456789','e4mail@email.com','casada','ama de casa','titular','','steve sanches','rosa sanches'),(3,'jhonson','jhonson','','larry','carnet','989879','1980-10-10','cochabamba','boliviano','C. Lorem','C. Ipsum','445654','mail@email.com','viudo','informatico','titular','','larry senior','martha'),(4,'aaaa','bbbb','ccc','ddd','eee','132456','2000-06-06','fff','ggg','hhh','iii','jjj','kkk','lll','mmm','nnn','qqq','ooo','ppp'),(5,'zzz','zzz','zzz','zzz','zzz','444444','2001-01-01','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz'),(7,'ppp','ppp','ppp','ppp','ppp','78978798','2002-02-02','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp'),(8,'mats','boskowits','','mike','carnet','99885522','2005-05-05','la paz','boliviano','c. peres','','555555','mike@email.com','soltero','chofer','titular','','jhon mats','lia boskowits');
+INSERT INTO `Persona` VALUES (1,'peres','peres','','marco','carnet','211112','2000-02-01','la paz','boliviano','C. falsa','','222222','email@email.com','soltero','abogado','titular','','jhon peres','linda peres'),(2,'sanches','sanches','sanches','julia','carnet','44566','1995-02-01','santa cruz','boliviana','Av. falsa','C. Real','456789','e4mail@email.com','casada','ama de casa','titular','','steve sanches','rosa sanches'),(3,'jhonson','jhonson','','larry','carnet','989879','1980-10-10','cochabamba','boliviano','C. Lorem','C. Ipsum','445654','mail@email.com','viudo','informatico','titular','','larry senior','martha'),(4,'aaaa','bbbb','ccc','ddd','eee','132456','2000-06-06','fff','ggg','hhh','iii','jjj','kkk','lll','mmm','nnn','qqq','ooo','ppp'),(5,'zzz','zzz','zzz','zzz','zzz','444444','2001-01-01','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz','zzz'),(7,'ppp','ppp','ppp','ppp','ppp','78978798','2002-02-02','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp','ppp'),(8,'mats','boskowits','','mike','carnet','99885522','2005-05-05','la paz','boliviano','c. peres','','555555','mike@email.com','soltero','chofer','titular','','jhon mats','lia boskowits'),(9,'oooo','oooo','oooo','oooo','oooo','0','2001-10-10','ooo','ooo','ooo','ooo','ooo','ooo','ooo','ooo','ooo','ooo','ooo','ooo'),(10,'xxx','xx','x','x','x','44','2001-01-01','x','x','x','x','x','x','x','x','x','x','x','x');
 /*!40000 ALTER TABLE `Persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +310,7 @@ CREATE TABLE `Persona_Natural` (
 
 LOCK TABLES `Persona_Natural` WRITE;
 /*!40000 ALTER TABLE `Persona_Natural` DISABLE KEYS */;
-INSERT INTO `Persona_Natural` VALUES (4,1),(6,4),(7,5);
+INSERT INTO `Persona_Natural` VALUES (4,1),(6,4),(7,5),(9,9),(10,10);
 /*!40000 ALTER TABLE `Persona_Natural` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +341,7 @@ CREATE TABLE `Transaccion` (
   `regis_asfi` bigint(20) NOT NULL,
   `registro_facturacion` bigint(20) NOT NULL,
   PRIMARY KEY (`id_transaccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,7 +350,7 @@ CREATE TABLE `Transaccion` (
 
 LOCK TABLES `Transaccion` WRITE;
 /*!40000 ALTER TABLE `Transaccion` DISABLE KEYS */;
-INSERT INTO `Transaccion` VALUES (1,12345678,'1970-01-01 00:00:01','1970-01-01 00:00:01','1970-01-01 00:00:01',1,1,1,1,1,'transferencia pago curso',100,'BOB',500,1,1,1,1),(2,12345678,'1972-01-01 00:00:01','1973-01-01 00:00:01','1974-01-01 00:00:01',1,3,1,1,1,'transferencia pago curso',100,'USD',500,1,1,1,1),(6,12345679,'2015-10-21 00:00:00','1970-01-01 00:16:41','1970-01-01 00:16:41',1,1,1,1,1,'transferencia pago curso',100,'BOB',500,1,1,1,1),(7,12345677,'1972-01-01 00:00:01','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(8,12345677,'2018-02-26 12:21:08','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(9,12345677,'2018-02-26 12:21:08','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(10,12345673,'1985-01-01 00:00:01','0002-11-30 00:00:00','1989-01-01 00:00:01',2,2,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(13,124235,'2018-02-26 12:22:03','1972-01-01 00:00:01','1972-01-01 00:00:01',1,1,1,2,1,'transferencia pago curso',33,'BOB',4444,1,1,1,1),(14,22,'2018-02-26 12:22:03','1972-01-01 00:00:01','1972-01-01 00:00:01',1,1,1,1,1,'transferencia pago curso',50,'USD',70,1,1,1,1),(21,12345678,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(22,12345678,'2018-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(23,12345678,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(24,12345679,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(25,12345678,'2018-01-10 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(26,12345678,'2018-02-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(27,12345678,'2018-02-12 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(28,12345678,'2017-12-05 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(29,12345678,'2017-12-01 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(30,12345678,'2017-11-28 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(31,12345678,'2017-01-05 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(32,12345678,'2017-10-28 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(33,12345678,'2017-11-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1);
+INSERT INTO `Transaccion` VALUES (1,12345678,'1970-01-01 00:00:01','1970-01-01 00:00:01','1970-01-01 00:00:01',1,1,1,1,1,'transferencia pago curso',100,'BOB',500,1,1,1,1),(2,12345678,'1972-01-01 00:00:01','1973-01-01 00:00:01','1974-01-01 00:00:01',1,3,1,1,1,'transferencia pago curso',100,'USD',500,1,1,1,1),(6,12345679,'2015-10-21 00:00:00','1970-01-01 00:16:41','1970-01-01 00:16:41',1,1,1,1,1,'transferencia pago curso',100,'BOB',500,1,1,1,1),(7,12345677,'1972-01-01 00:00:01','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(8,12345677,'2018-02-26 12:21:08','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(9,12345677,'2018-02-26 12:21:08','1972-01-01 00:00:01','1972-01-01 00:00:01',2,1,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(10,12345673,'1985-01-01 00:00:01','0002-11-30 00:00:00','1989-01-01 00:00:01',2,2,2,2,2,'prueba nuevo',20,'USD',300,1,2,2,2),(13,124235,'2018-02-26 12:22:03','1972-01-01 00:00:01','1972-01-01 00:00:01',1,1,1,2,1,'transferencia pago curso',33,'BOB',4444,1,1,1,1),(14,22,'2018-02-26 12:22:03','1972-01-01 00:00:01','1972-01-01 00:00:01',1,1,1,1,1,'transferencia pago curso',50,'USD',70,1,1,1,1),(21,12345678,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(22,12345678,'2018-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(23,12345678,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(24,12345679,'2017-01-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(25,12345678,'2018-01-10 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(26,12345678,'2018-02-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(27,12345678,'2018-02-12 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(28,12345678,'2017-12-05 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(29,12345678,'2017-12-01 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(30,12345678,'2017-11-28 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(31,12345678,'2017-01-05 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(32,12345678,'2017-10-28 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(33,12345678,'2017-11-22 04:02:00','2019-02-23 04:02:26','2015-02-23 04:02:26',1,1,1,1,1,'no se',100,'BOB',500,1,1,1,1),(34,100004542,'2018-02-28 10:10:51',NULL,NULL,1,4,6,1,2,'transfer prueba',50,'BOB',50,1,0,1,1),(35,100004543,'2018-02-28 10:16:32',NULL,NULL,1,4,6,1,2,'transfer example 2',50,'BOB',50,1,0,1,1),(36,100004541,'2018-02-28 12:48:51',NULL,NULL,1,4,6,1,2,'transfer-terceros',50,'BOB',50,1,0,1,1),(37,100004542,'2018-02-28 15:12:09',NULL,NULL,1,4,5,1,2,'transfer update',50,'BOB',50,1,3,1,1),(38,100004541,'2018-03-01 09:47:58',NULL,NULL,1,6,5,1,2,'gringo',10,'USD',50,1,3,1,1),(39,100004541,'2018-03-02 09:11:59',NULL,NULL,1,5,1,1,2,'NOTA REVERTIR ESTA',5,'BOB',50,1,3,1,1),(40,78945612,'2018-03-02 09:13:26',NULL,NULL,1,7,2,1,2,'REVERSION TRANSACCION: 39',5,'BOB',50,1,3,1,1);
 /*!40000 ALTER TABLE `Transaccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-26 16:44:38
+-- Dump completed on 2018-03-06 13:15:03
