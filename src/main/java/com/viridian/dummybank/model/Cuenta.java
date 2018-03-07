@@ -1,5 +1,7 @@
 package com.viridian.dummybank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 import java.io.Serializable;
@@ -25,6 +27,7 @@ public class Cuenta implements Serializable{
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
     public Cuenta() {
