@@ -277,6 +277,26 @@ public class PagosController {
 
         if(accion.equalsIgnoreCase("continuar")) {
             Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+
+            Transaccion transaccionBeneficiario = new Transaccion();
+            transaccionBeneficiario.setNumeroCuenta(transaccion.getNumeroCuenta());
+            transaccionBeneficiario.setMonto(transaccion.getMonto());
+            transaccionBeneficiario.setMoneda(transaccion.getMoneda());
+            transaccionBeneficiario.setMetodo(transaccion.getMetodo());
+            transaccionBeneficiario.setBeneficiario(transaccion.getBeneficiario());
+            transaccionBeneficiario.setConceptoGlosa(transaccion.getConceptoGlosa());
+            transaccionBeneficiario.setAutorizacion(transaccion.getAutorizacion());
+            transaccionBeneficiario.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+
+            transaccionBeneficiario.setEstatus(transaccion.getEstatus());
+            transaccionBeneficiario.setOperacion(operacionService.getOperacionById(2L));
+            transaccionBeneficiario.setNumeroOrden(transaccion.getNumeroOrden());
+            transaccionBeneficiario.setSaldo(BigDecimal.ZERO);
+            transaccionService.save(transaccionBeneficiario);
+
+            transaccionBeneficiario = transaccionService.getTransaccionById(transaccionBeneficiario.getIdTransaccion());
+            transaccionService.updateCuentaBeneficiarioAndSaldoAndEstatusByIdTransaccion(transaccionBeneficiario.getIdTransaccion());
+
             //TODO usar nueva consulta para actualizar estatus
             transaccion.setEstatus(estatusService.getEstatusById(5L));
             transaccion.setFechaEjecucion(new Timestamp(System.currentTimeMillis()).toString());
@@ -396,6 +416,26 @@ public class PagosController {
 
         if(accion.equalsIgnoreCase("continuar")) {
             Transaccion transaccion= transaccionService.getTransaccionById(idTransaccion);
+
+            Transaccion transaccionBeneficiario = new Transaccion();
+            transaccionBeneficiario.setNumeroCuenta(transaccion.getNumeroCuenta());
+            transaccionBeneficiario.setMonto(transaccion.getMonto());
+            transaccionBeneficiario.setMoneda(transaccion.getMoneda());
+            transaccionBeneficiario.setMetodo(transaccion.getMetodo());
+            transaccionBeneficiario.setBeneficiario(transaccion.getBeneficiario());
+            transaccionBeneficiario.setConceptoGlosa(transaccion.getConceptoGlosa());
+            transaccionBeneficiario.setAutorizacion(transaccion.getAutorizacion());
+            transaccionBeneficiario.setFechaInicioTS(new Timestamp(System.currentTimeMillis()));
+
+            transaccionBeneficiario.setEstatus(transaccion.getEstatus());
+            transaccionBeneficiario.setOperacion(operacionService.getOperacionById(2L));
+            transaccionBeneficiario.setNumeroOrden(transaccion.getNumeroOrden());
+            transaccionBeneficiario.setSaldo(BigDecimal.ZERO);
+            transaccionService.save(transaccionBeneficiario);
+
+            transaccionBeneficiario = transaccionService.getTransaccionById(transaccionBeneficiario.getIdTransaccion());
+            transaccionService.updateCuentaBeneficiarioAndSaldoAndEstatusByIdTransaccion(transaccionBeneficiario.getIdTransaccion());
+
             //TODO usar nueva consulta para actualizar estatus
             transaccion.setEstatus(estatusService.getEstatusById(5L));
             transaccion.setFechaEjecucion(new Timestamp(System.currentTimeMillis()).toString());
@@ -403,6 +443,7 @@ public class PagosController {
             //
             model.addAttribute("transaccion", transaccionService.getTransaccionById(idTransaccion));
             return "pagos/pago-de-tarjetas-estatus";
+
         }else if (accion.equalsIgnoreCase("abortar")){
             //TODO Restablecer a su estado anterior.
             transaccionService.updateTansactionAndSaldoCuentaByNuemeroOrden(idTransaccion,4L);

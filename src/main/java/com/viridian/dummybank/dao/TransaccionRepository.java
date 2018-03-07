@@ -72,6 +72,18 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long>{
             "WHERE t.id_transaccion = ?1 ; ", nativeQuery = true)
     void updateEstatus(Long idTransaccion);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update cuenta c \n" +
+            "left join Beneficiario b\n" +
+            "on c.numero_cuenta =b.numero_cuenta\n" +
+            "left join Transaccion t\n" +
+            "on b.id_beneficiario= t.beneficiario_id\n" +
+            "set c.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) ,\n" +
+            "\tt.saldo =if( operacion_id = 2, c.saldo + t.monto, c.saldo - t.monto ) \n" +
+            "where t.id_transaccion = ?1 ;",
+            nativeQuery = true)
+    void updateCuentaBeneficiarioAndSaldoAndEstatusByIdTransaccion(Long idTransaccion);
 
 
 }
