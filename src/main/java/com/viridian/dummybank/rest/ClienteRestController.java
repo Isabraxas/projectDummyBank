@@ -16,6 +16,7 @@ import com.viridian.dummybank.utils.ClienteUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +52,9 @@ public class ClienteRestController {
     /**
      * Mostrara una cuenta en especifico, si es Persona Natural, o Juridica
      */
-    @GetMapping("cliente/rest/show/{id}")
-    public ProductoBancarioCliente getCliente(@PathVariable String id, Model model){
+    @CrossOrigin
+    @GetMapping(value = "cliente/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductoBancarioCliente getCliente(@PathVariable String id){
         ProductoBancarioCliente obj = new ProductoBancarioCliente();
         log.info("request informacion Cliente id: ");
         log.info("buscando al cliente en BD");
