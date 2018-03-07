@@ -1,4 +1,4 @@
-package com.viridian.dummybank.rest;
+package com.viridian.dummybank.rest.model;
 
 import com.viridian.dummybank.error.ErrorNoEncontrado;
 

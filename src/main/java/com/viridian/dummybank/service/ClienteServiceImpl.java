@@ -37,13 +37,14 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepository.findOne(id);
         if(cliente == null){
             // throw ERROR
-            /**/
+            /*// ERROR REDIRECCIONANDO A PAGINA DE ERROR*/
             String errorMsg = "Cliente ID: "+ id +" no encontrado";
             /*
             log.error(errorMsg);
             log.info("cargando mensaje error");
             throw new NoEncontradoException(errorMsg);
             */
+            // ERROR REDIRECCIONANDO UNA CLASE ERROR
             throw new NoEncontradoRestException(errorMsg, new ErrorNoEncontrado(id,"001","no se encontro al Cliente en la BD","Hemos encontrado un error intentelo mas tarde"));
         }
         return cliente;

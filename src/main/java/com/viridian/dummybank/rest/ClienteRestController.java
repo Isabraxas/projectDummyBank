@@ -2,24 +2,21 @@ package com.viridian.dummybank.rest;
 
 import com.viridian.dummybank.controller.ClienteController;
 import com.viridian.dummybank.dao.CuentaRepository;
-import com.viridian.dummybank.error.NoEncontradoException;
 import com.viridian.dummybank.error.NoEncontradoRestException;
 import com.viridian.dummybank.model.Cliente;
-import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
+import com.viridian.dummybank.rest.request.ClienteRequest;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
 import com.viridian.dummybank.service.persona.PersonaService;
-import com.viridian.dummybank.utils.ClienteUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by marcelo on 07-03-18
@@ -49,14 +46,14 @@ public class ClienteRestController {
     }
 
     /**
-     * Mostrara una cuenta en especifico, si es Persona Natural, o Juridica
+     * Mostrar la informacion de un cliente - person natural en formato json
      */
-    @GetMapping("cliente/rest/show/{id}")
-    public ProductoBancarioCliente getCliente(@PathVariable String id, Model model){
+    @PostMapping("cliente/rest/show")
+    public ProductoBancarioCliente getCliente(@RequestBody ClienteRequest clienteRequest){
         ProductoBancarioCliente obj = new ProductoBancarioCliente();
         log.info("request informacion Cliente id: ");
         log.info("buscando al cliente en BD");
-        Cliente cliente = clienteService.findOneById(Long.valueOf(id));
+        Cliente cliente = clienteService.findOneById(clienteRequest.getIdCliente());
         log.info("cliente encontrado");
         obj.setIdCliente(cliente.getId());
         obj.setCuentas(cliente.getCuentas());

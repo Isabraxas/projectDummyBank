@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NoEncontradoRestException extends RuntimeException{
-    private ErrorNoEncontrado errorNoEncontrado;
+
+    private ErrorNoEncontrado errorNoEncontrado;        // contiene informacion del error
 
     public NoEncontradoRestException() {
     }
