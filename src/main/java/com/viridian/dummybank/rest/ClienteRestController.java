@@ -2,8 +2,10 @@ package com.viridian.dummybank.rest;
 
 import com.viridian.dummybank.controller.ClienteController;
 import com.viridian.dummybank.dao.CuentaRepository;
+import com.viridian.dummybank.error.NoEncontradoException;
 import com.viridian.dummybank.error.NoEncontradoRestException;
 import com.viridian.dummybank.model.Cliente;
+import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
@@ -12,9 +14,11 @@ import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
 import com.viridian.dummybank.service.persona.PersonaService;
+import com.viridian.dummybank.utils.ClienteUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +54,9 @@ public class ClienteRestController {
      */
     @PostMapping("cliente/rest/show")
     public ProductoBancarioCliente getCliente(@RequestBody ClienteRequest clienteRequest){
+    @CrossOrigin
+    @GetMapping(value = "cliente/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductoBancarioCliente getCliente(@PathVariable String id){
         ProductoBancarioCliente obj = new ProductoBancarioCliente();
         log.info("request informacion Cliente id: ");
         log.info("buscando al cliente en BD");
