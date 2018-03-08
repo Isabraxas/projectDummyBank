@@ -144,7 +144,7 @@ public class ClienteRestControllerTest {
         cuentas.add(cuenta3);
         mockProductoBancarioCliente.setCuentas(cuentas);
 
-        Mockito.when(clienteRestController.getCliente(Mockito.anyString())).thenReturn(mockProductoBancarioCliente);
+        //Mockito.when(clienteRestController.getCliente(Mockito.anyString())).thenReturn(mockProductoBancarioCliente);
 
         String URI = "/cliente/rest/show/6";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(

@@ -36,6 +36,7 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente findOneById(Long id) {
         Cliente cliente = clienteRepository.findOne(id);
         if(cliente == null){
+            log.error("cliente: "+id +" no encontradp en BD");
             // throw ERROR
             /*// ERROR REDIRECCIONANDO A PAGINA DE ERROR*/
             String errorMsg = "Cliente ID: "+ id +" no encontrado";
