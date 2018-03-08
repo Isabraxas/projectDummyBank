@@ -1,5 +1,9 @@
 package com.viridian.dummybank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,6 +12,7 @@ import java.util.List;
 @Table(name="Beneficiario")
 @Entity
 @Access(AccessType.FIELD)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Beneficiario implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +38,7 @@ public class Beneficiario implements Serializable{
     private String banco;
 
     @OneToMany(mappedBy = "beneficiario")
+    @JsonIgnore
     private List<Transaccion> transaccions;
 
     @ManyToMany
@@ -40,6 +46,7 @@ public class Beneficiario implements Serializable{
             name = "Cliente_Beneficiario",
             joinColumns = @JoinColumn(name="beneficiario_id"),
             inverseJoinColumns =  @JoinColumn(name="cliente_id"))
+    @JsonIgnore
     private List<Cliente> clientes;
 
 

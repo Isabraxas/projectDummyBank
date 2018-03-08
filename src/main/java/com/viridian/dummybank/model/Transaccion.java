@@ -1,5 +1,6 @@
 package com.viridian.dummybank.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.viridian.dummybank.util.Util;
 
 import javax.persistence.*;
@@ -39,18 +40,22 @@ public class Transaccion implements Serializable {
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "metodo_id")
+    @JsonManagedReference
     private Metodo metodo ;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "estatus_id")
+    @JsonManagedReference
     private Estatus estatus ;
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "autorizacion_id")
+    @JsonManagedReference
     private Autorizacion autorizacion;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "operacion_id")
+    @JsonManagedReference
     private Operacion operacion;
 
     @Column(name = "concepto_glosa", nullable = false)
@@ -68,10 +73,12 @@ public class Transaccion implements Serializable {
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "beneficiario_id")
+    @JsonManagedReference
     private Beneficiario beneficiario;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "operador_id")
+    @JsonManagedReference
     private Operador operador;
 
     @Column(name = "regis_asfi", nullable = false)
