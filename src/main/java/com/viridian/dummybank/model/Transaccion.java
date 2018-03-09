@@ -26,6 +26,11 @@ public class Transaccion implements Serializable {
     @Column(name = "numero_cuenta", nullable = false)
     private Long numeroCuenta;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    @JsonManagedReference
+    private Cliente cliente;
+
     @Column(name = "fecha_inicio", nullable = false)
     private Timestamp fechaInicio ;
 
@@ -93,8 +98,9 @@ public class Transaccion implements Serializable {
 
     }
 
-    public Transaccion(Long numeroCuenta, Timestamp fechaInicio, Timestamp fechaAprobacion, Timestamp fechaEjecucion, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
+    public Transaccion(Long numeroCuenta,Cliente cliente, Timestamp fechaInicio, Timestamp fechaAprobacion, Timestamp fechaEjecucion, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
         this.numeroCuenta = numeroCuenta;
+        this.cliente= cliente;
         this.fechaInicio = fechaInicio;
         this.fechaAprobacion = fechaAprobacion;
         this.fechaEjecucion = fechaEjecucion;
@@ -113,8 +119,9 @@ public class Transaccion implements Serializable {
         this.registroFacturacion = registroFacturacion;
     }
 
-    public Transaccion(Long numeroCuenta, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
+    public Transaccion(Long numeroCuenta,Cliente cliente, Long numeroOrden, Metodo metodo, Estatus estatus, Autorizacion autorizacion, Operacion operacion, String conceptoGlosa, BigDecimal monto, String moneda, BigDecimal saldo, Beneficiario beneficiario, Operador operador, Long regisAsfi, Long registroFacturacion) {
         this.numeroCuenta = numeroCuenta;
+        this.cliente = cliente;
         this.numeroOrden = numeroOrden;
         this.metodo = metodo;
         this.estatus = estatus;
@@ -146,17 +153,24 @@ public class Transaccion implements Serializable {
         this.numeroCuenta = numeroCuenta;
     }
 
-
-/*
-    public Timestamp getFechaInicio() {
-        return fechaInicio;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    Set original de fecha inicio
-    public void setFechaInicio(Timestamp fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
-    */
+
+    /*
+        public Timestamp getFechaInicio() {
+            return fechaInicio;
+        }
+
+        Set original de fecha inicio
+        public void setFechaInicio(Timestamp fechaInicio) {
+            this.fechaInicio = fechaInicio;
+        }
+        */
     public String getFechaInicio() {
         if(fechaInicio == null){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss.SSS");
