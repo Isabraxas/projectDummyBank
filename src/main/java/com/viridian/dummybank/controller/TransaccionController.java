@@ -95,7 +95,7 @@ public class TransaccionController {
     }
 
     @RequestMapping(value = "/getTransaccionByCuenta/{numeroCuenta}", method = RequestMethod.GET)
-    public List<Transaccion> getTransaccionByCuenta(@PathVariable Long numeroCuenta){
+    public @ResponseBody List<Transaccion> getTransaccionByCuenta(@PathVariable Long numeroCuenta){
 
         return this.transaccionService.getTransaccionByCuenta(numeroCuenta);
     }

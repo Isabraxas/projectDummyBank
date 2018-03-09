@@ -1,5 +1,8 @@
 package com.viridian.dummybank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.List;
 @Table(name="Operador")
 @Entity
 @Access(AccessType.FIELD)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Operador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +25,7 @@ public class Operador implements Serializable {
     private Long usuarioId;
 
     @OneToMany(mappedBy = "operador")
+    @JsonBackReference
     private List<Transaccion> transaccions;
 
 
