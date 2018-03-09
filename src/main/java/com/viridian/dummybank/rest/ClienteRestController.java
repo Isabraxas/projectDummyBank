@@ -9,6 +9,7 @@ import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.request.ClienteRequest;
 import com.viridian.dummybank.rest.service.ClienteRestService;
 import com.viridian.dummybank.service.ClienteService;
@@ -47,9 +48,20 @@ public class ClienteRestController {
     //@PostMapping("cliente/rest/show")
     //public ProductoBancarioCliente getCliente(@RequestBody ClienteRequest clienteRequest){
     //@CrossOrigin
-    @GetMapping(value = "cliente/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "cliente/N/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductoBancarioCliente getCliente(@PathVariable String id){
        return clienteRestService.getClienteByClienteId(Long.valueOf(id));
+    }
+
+    /**
+     * Mostrar la informacion de un cliente - persona juridica en formato json
+     */
+    //@PostMapping("cliente/rest/show")
+    //public ProductoBancarioCliente getCliente(@RequestBody ClienteRequest clienteRequest){
+    //@CrossOrigin
+    @GetMapping(value = "cliente/J/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProductoBancarioClientePJ getClientePerJ(@PathVariable String id){
+        return clienteRestService.getClienteJuridicoByClienteId(Long.valueOf(id));
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

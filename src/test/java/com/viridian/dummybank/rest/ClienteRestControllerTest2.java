@@ -1,30 +1,18 @@
 package com.viridian.dummybank.rest;
 
-import com.viridian.dummybank.dao.CuentaRepository;
 import com.viridian.dummybank.error.NoEncontradoRestException;
-import com.viridian.dummybank.model.Cliente;
-import com.viridian.dummybank.model.persona.Persona;
-import com.viridian.dummybank.model.persona.PersonaNatural;
 import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
-import com.viridian.dummybank.rest.request.ClienteRequest;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.service.ClienteRestService;
-import com.viridian.dummybank.service.ClienteService;
-import com.viridian.dummybank.service.persona.PersonaJuridicaService;
-import com.viridian.dummybank.service.persona.PersonaNaturalService;
-import com.viridian.dummybank.service.persona.PersonaService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.times;
 
@@ -56,15 +44,37 @@ public class ClienteRestControllerTest2 {
         // given
         ProductoBancarioCliente prod = new ProductoBancarioCliente();
         prod.setIdCliente(1L);
+        prod.setEstado("successful");
 
         // when
         when(clienteRestService.getClienteByClienteId(1L)).thenReturn(prod);
         // then
-        mockMvc.perform(get("/cliente/rest/show/1"))
+        mockMvc.perform(get("/cliente/N/rest/show/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.idCliente",is(1)))
+                .andExpect(jsonPath("$.estado",is("successful")));
 
         verify(clienteRestService, times(1)).getClienteByClienteId(anyLong());
+    }
+
+    @Test
+    public void getClienteJuridicoTest() throws Exception{
+        // given
+        ProductoBancarioClientePJ prod = new ProductoBancarioClientePJ();
+        prod.setIdCliente(1L);
+        prod.setEstado("successful");
+
+        // when
+        when(clienteRestService.getClienteJuridicoByClienteId(1L)).thenReturn(prod);
+        // then
+        mockMvc.perform(get("/cliente/J/rest/show/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.idCliente",is(1)))
+                .andExpect(jsonPath("$.estado",is("successful")));
+
+        verify(clienteRestService, times(1)).getClienteJuridicoByClienteId(anyLong());
     }
 
      @Test
@@ -72,6 +82,14 @@ public class ClienteRestControllerTest2 {
         when(clienteRestService.getClienteByClienteId(20l)).thenThrow(NoEncontradoRestException.class);
 
         mockMvc.perform(get("/cliente/rest/show/20"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void clienteJuridicoNotFoundTest() throws Exception{
+        when(clienteRestService.getClienteJuridicoByClienteId(20l)).thenThrow(NoEncontradoRestException.class);
+
+        mockMvc.perform(get("/cliente/J/rest/show/20"))
                 .andExpect(status().isNotFound());
     }
 }

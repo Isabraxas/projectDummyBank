@@ -3,7 +3,9 @@ package com.viridian.dummybank.rest.service;
 import com.viridian.dummybank.dao.CuentaRepository;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.persona.Persona;
+import com.viridian.dummybank.model.persona.PersonaJuridica;
 import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
 import com.viridian.dummybank.service.persona.PersonaNaturalService;
@@ -77,6 +79,54 @@ public class ClienteRestServiceImpl implements ClienteRestService{
         obj.setNombreMadre (persona.getNombreMadre());
         obj.setNombreConyuge (persona.getNombreConyuge());
         log.info("retornando informacion");
+        return obj;
+    }
+
+    @Override
+    public ProductoBancarioClientePJ getClienteJuridicoByClienteId(Long id) {
+        ProductoBancarioClientePJ obj = new ProductoBancarioClientePJ();
+
+        log.info("request informacion Cliente id: ");
+        log.info("buscando al cliente en BD");
+        //Cliente cliente = clienteService.findOneById(clienteRequest.getIdCliente());
+        Cliente cliente = clienteService.findOneById(id);
+        log.info("cliente encontrado");
+        obj.setIdCliente(cliente.getId());
+        obj.setCuentas(cliente.getCuentas());
+        log.info("buscando informacion de Persona Asociada");
+        PersonaJuridica personaJuridica = personaJuridicaService.findOneById(cliente.getId());
+        Persona persona = personaJuridica.getRepresentanteLegal();
+
+        log.info("persona encontrada");
+
+        obj.setNombreRazon(personaJuridica.getNombreRazon());
+        obj.setNit(personaJuridica.getNit());
+        obj.setRegistroFundaempresa(personaJuridica.getRegistroFundaempresa());
+
+        obj.setEstado("successful");
+
+        obj.setIdPersona (persona.getId());
+        obj.setApellidoPaterno (persona.getApellidoPaterno());
+        obj.setApellidoMaterno (persona.getApellidoMaterno());
+        obj.setApellidoCasado (persona.getApellidoCasado());
+        obj.setNombres (persona.getNombres());
+        obj.setDocumentoIdentidad (persona.getDocumentoIdentidad());
+        obj.setNumeroDocumento (persona.getNumeroDocumento());
+        obj.setFechaNacimiento (persona.getFechaNacimiento());
+        obj.setLugarNacimiento (persona.getLugarNacimiento());
+        obj.setNacionalidad (persona.getNacionalidad());
+        obj.setDomicilio (persona.getDomicilio());
+        obj.setDomicilioTrabajo (persona.getDomicilioTrabajo());
+        obj.setTelefono (persona.getTelefono());
+        obj.setEmail (persona.getEmail());
+        obj.setEstadoCivil (persona.getEstadoCivil());
+        obj.setProfesion (persona.getProfesion());
+        obj.setCaracterLegal (persona.getCaracterLegal());
+        obj.setNombrePadre (persona.getNombrePadre());
+        obj.setNombreMadre (persona.getNombreMadre());
+        obj.setNombreConyuge (persona.getNombreConyuge());
+        log.info("retornando informacion");
+
         return obj;
     }
 }
