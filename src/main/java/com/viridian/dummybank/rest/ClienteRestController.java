@@ -7,7 +7,7 @@ import com.viridian.dummybank.error.NoEncontradoRestException;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.persona.Persona;
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.request.ClienteRequest;
@@ -49,7 +49,7 @@ public class ClienteRestController {
     //public ProductoBancarioCliente getCliente(@RequestBody ClienteRequest clienteRequest){
     //@CrossOrigin
     @GetMapping(value = "cliente/N/rest/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductoBancarioCliente getCliente(@PathVariable String id){
+    public ProductoBancarioClientePN getCliente(@PathVariable String id){
        return clienteRestService.getClienteByClienteId(Long.valueOf(id));
     }
 

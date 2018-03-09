@@ -1,7 +1,7 @@
 package com.viridian.dummybank.rest;
 
 import com.viridian.dummybank.error.NoEncontradoRestException;
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.service.ClienteRestService;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class ClienteRestControllerTest2 {
     @Test
     public void getClienteTest() throws Exception{
         // given
-        ProductoBancarioCliente prod = new ProductoBancarioCliente();
+        ProductoBancarioClientePN prod = new ProductoBancarioClientePN();
         prod.setIdCliente(1L);
         prod.setEstado("successful");
 

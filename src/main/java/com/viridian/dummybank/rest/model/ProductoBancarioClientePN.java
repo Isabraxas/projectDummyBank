@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by marcelo on 07-03-18
  */
-public class ProductoBancarioCliente {
+public class ProductoBancarioClientePN {
 
     // cliente
     private Long idCliente;
@@ -40,10 +40,10 @@ public class ProductoBancarioCliente {
 
     private List<Cuenta> cuentas;
 
-    public ProductoBancarioCliente() {
+    public ProductoBancarioClientePN() {
     }
 
-    public ProductoBancarioCliente(Long idCliente, String estado,List<Cuenta> cuentas, Long idPersona, String apellidoPaterno, String apellidoMaterno, String apellidoCasado, String nombres, String documentoIdentidad, Long numeroDocumento, Date fechaNacimiento, String lugarNacimiento, String nacionalidad, String domicilio, String domicilioTrabajo, String telefono, String email, String estadoCivil, String profesion, String caracterLegal, String nombrePadre, String nombreMadre, String nombreConyuge) {
+    public ProductoBancarioClientePN(Long idCliente, String estado,List<Cuenta> cuentas, Long idPersona, String apellidoPaterno, String apellidoMaterno, String apellidoCasado, String nombres, String documentoIdentidad, Long numeroDocumento, Date fechaNacimiento, String lugarNacimiento, String nacionalidad, String domicilio, String domicilioTrabajo, String telefono, String email, String estadoCivil, String profesion, String caracterLegal, String nombrePadre, String nombreMadre, String nombreConyuge) {
         this.idCliente = idCliente;
         this.estado = estado;
         this.cuentas = cuentas;

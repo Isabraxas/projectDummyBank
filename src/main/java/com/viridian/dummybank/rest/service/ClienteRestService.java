@@ -1,6 +1,6 @@
 package com.viridian.dummybank.rest.service;
 
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 
 /**
@@ -8,7 +8,7 @@ import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
  */
 public interface ClienteRestService {
 
-    ProductoBancarioCliente getClienteByClienteId(Long id);
+    ProductoBancarioClientePN getClienteByClienteId(Long id);
 
     ProductoBancarioClientePJ getClienteJuridicoByClienteId(Long id);
 }

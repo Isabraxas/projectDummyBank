@@ -11,7 +11,7 @@ import com.jayway.restassured.response.ValidatableResponse;
 import com.viridian.dummybank.DummybankApplication;
 import com.viridian.dummybank.error.ErrorNoEncontrado;
 import com.viridian.dummybank.model.Cuenta;
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -59,7 +59,7 @@ public class ClienteRestControllerIT {
         JsonPath jp = new JsonPath(response.extract().asString());
         String outputInJson = response.extract().asString();
         log.info("Response: "+response.extract().asString());
-        ProductoBancarioCliente productoBancarioCliente =this.createMockPBC();
+        ProductoBancarioClientePN productoBancarioCliente =this.createMockPBC();
         String expectedJson = this.mapToJson(productoBancarioCliente);
         log.info("ExpectedJson: "+expectedJson);
         assertThat(outputInJson).isEqualTo(expectedJson);
@@ -98,9 +98,9 @@ public class ClienteRestControllerIT {
         return mockProductoBancarioClienteError;
     }
 
-    private ProductoBancarioCliente createMockPBC(){
+    private ProductoBancarioClientePN createMockPBC(){
 
-        ProductoBancarioCliente mockProductoBancarioCliente = new ProductoBancarioCliente();
+        ProductoBancarioClientePN mockProductoBancarioCliente = new ProductoBancarioClientePN();
 
         mockProductoBancarioCliente.setIdCliente(6L);
         mockProductoBancarioCliente.setEstado("successful");

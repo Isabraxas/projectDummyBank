@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.repository.ClienteRepository;
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.service.ClienteService;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -95,7 +95,7 @@ public class ClienteRestControllerTest {
 
     @Test
     public void testGetCliente() throws Exception {
-        ProductoBancarioCliente mockProductoBancarioCliente = new ProductoBancarioCliente();
+        ProductoBancarioClientePN mockProductoBancarioCliente = new ProductoBancarioClientePN();
 
         mockProductoBancarioCliente.setIdCliente(6L);
         mockProductoBancarioCliente.setEstado("successful");

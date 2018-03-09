@@ -4,7 +4,7 @@ import com.viridian.dummybank.dao.CuentaRepository;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.persona.Persona;
 import com.viridian.dummybank.model.persona.PersonaJuridica;
-import com.viridian.dummybank.rest.model.ProductoBancarioCliente;
+import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.service.ClienteService;
 import com.viridian.dummybank.service.persona.PersonaJuridicaService;
@@ -43,8 +43,8 @@ public class ClienteRestServiceImpl implements ClienteRestService{
     }
 
     @Override
-    public ProductoBancarioCliente getClienteByClienteId(Long id) {
-        ProductoBancarioCliente obj = new ProductoBancarioCliente();
+    public ProductoBancarioClientePN getClienteByClienteId(Long id) {
+        ProductoBancarioClientePN obj = new ProductoBancarioClientePN();
         log.info("request informacion Cliente id: ");
         log.info("buscando al cliente en BD");
         //Cliente cliente = clienteService.findOneById(clienteRequest.getIdCliente());
