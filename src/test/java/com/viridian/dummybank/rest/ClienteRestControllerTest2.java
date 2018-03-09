@@ -40,7 +40,7 @@ public class ClienteRestControllerTest2 {
     }
 
     @Test
-    public void getClienteTest() throws Exception{
+    public void getClienteNaturalTest() throws Exception{
         // given
         ProductoBancarioClientePN prod = new ProductoBancarioClientePN();
         prod.setIdCliente(1L);
@@ -78,7 +78,7 @@ public class ClienteRestControllerTest2 {
     }
 
      @Test
-    public void clienteNotFoundTest() throws Exception{
+    public void clienteNaturalNotFoundTest() throws Exception{
         when(clienteRestService.getClienteByClienteId(20l)).thenThrow(NoEncontradoRestException.class);
 
         mockMvc.perform(get("/cliente/rest/show/20"))

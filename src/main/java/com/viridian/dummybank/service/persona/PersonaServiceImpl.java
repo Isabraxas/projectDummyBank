@@ -37,9 +37,15 @@ public class PersonaServiceImpl implements PersonaService {
     public Persona findPersonaById(Long id) {
         Persona persona = personaRepository.findOne(id);
         if(persona == null){
+            // error
             String errorMsg ="Persona Id: "+ id + " no encontrada";
             log.error(errorMsg);
-            throw new NoEncontradoException(errorMsg);
+            /*ERROR REDIRECCIONANDO A PAGINA DE ERROR*/
+            //throw new NoEncontradoException(errorMsg);
+            //log.error("cliente: "+id +" no encontradp en BD");
+
+            /*ERROR REDIRECCIONANDO UNA CLASE ERROR*/
+            throw new NoEncontradoRestException(errorMsg, new ErrorNoEncontrado(id,"001","no se encontro al Cliente en la BD","Hemos encontrado un error intentelo mas tarde"));
         }
         return persona;
     }
