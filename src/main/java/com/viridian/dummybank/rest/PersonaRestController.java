@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by marcelo on 09-03-18
  */
@@ -28,8 +30,12 @@ public class PersonaRestController {
         this.personaService = personaService;
     }
 
+    @GetMapping("/persona/rest/all")
+    public List<Persona> getAllPersona(){
+        return personaService.getAllPersonas();
+    }
 
-    @GetMapping("/persona/rest/{idPersona}")
+    @GetMapping("/persona/rest/show/{idPersona}")
     public Persona getPersona(@PathVariable String idPersona){
         return personaService.findPersonaById(Long.valueOf(idPersona));
     }
