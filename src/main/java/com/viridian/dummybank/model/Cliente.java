@@ -1,5 +1,8 @@
 package com.viridian.dummybank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Cliente")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente {
 
     @Id
@@ -15,10 +19,11 @@ public class Cliente {
     @Column(name = "id_cliente")
     private Long id;
 
+    private String tipo;    // para diferenciar a que tabla buscar subsecuente (J juridica, N natural)
+
     @OneToMany(mappedBy = "cliente")    // private Cliente cliente, de la clase Cuenta, es quien es "dueño" de este campo(posee las clavs foraneas)
     private List<Cuenta> cuentas;
 
-    private String tipo;    // para diferenciar a que tabla buscar subsecuente (J juridica, N natural)
 
     @ManyToMany
     @JoinTable(
@@ -26,6 +31,10 @@ public class Cliente {
             joinColumns = @JoinColumn(name="cliente_id"),
             inverseJoinColumns =  @JoinColumn(name="beneficiario_id"))
     private List<Beneficiario> beneficiarios;
+
+    @OneToMany(mappedBy = "cliente")
+    @JsonBackReference
+    private List<Transaccion> transaccions;
 
     public Cliente() {
     }
@@ -65,5 +74,13 @@ public class Cliente {
 
     public void setBeneficiarios(List<Beneficiario> beneficiarios) {
         this.beneficiarios = beneficiarios;
+    }
+
+    public List<Transaccion> getTransaccions() {
+        return transaccions;
+    }
+
+    public void setTransaccions(List<Transaccion> transaccions) {
+        this.transaccions = transaccions;
     }
 }
