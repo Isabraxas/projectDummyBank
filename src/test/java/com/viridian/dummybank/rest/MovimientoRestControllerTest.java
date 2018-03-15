@@ -34,7 +34,7 @@ public class MovimientoRestControllerTest {
         movimientoRestController = new MovimientoRestController(movimientoRestService);
         mockMvc = MockMvcBuilders.standaloneSetup(movimientoRestController).build();
     }
-
+/*
     @Test
     public void getClienteTest() throws Exception{
         // given
@@ -62,5 +62,5 @@ public class MovimientoRestControllerTest {
         mockMvc.perform(get("/cliente/rest/show/20"))
                 .andExpect(status().isNotFound());
     }
-
+*/
 }

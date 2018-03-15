@@ -96,7 +96,7 @@ public class CuentaController {
         return "redirect:/cuenta/getAll";
     }
 
-
+    @GetMapping("/listaCuentas")
     public @ResponseBody List<Cuenta> getAllREST(){
         return this.cuentaService.getAll();
     }
