@@ -2,6 +2,9 @@ package com.viridian.dummybank.util;
 
 import java.sql.Timestamp;
 
+/**
+ * create by isvar
+ */
 public class Movimiento {
     private Long numeroCuenta;
     private int opcion;
