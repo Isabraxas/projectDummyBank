@@ -1,4 +1,4 @@
-package com.viridian.dummybank.repository;
+package com.viridian.dummybank.jooq.repository;
 
 import com.viridian.dummybank.error.ErrorNoEncontrado;
 import com.viridian.dummybank.error.NoEncontradoRestException;

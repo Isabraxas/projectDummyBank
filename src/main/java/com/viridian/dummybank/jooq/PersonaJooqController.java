@@ -1,12 +1,11 @@
-package com.viridian.dummybank.controller.persona;
+package com.viridian.dummybank.jooq;
 
 import com.viridian.dummybank.model.persona.Persona;
-import com.viridian.dummybank.service.persona.PersonaJooqService;
+import com.viridian.dummybank.jooq.service.PersonaJooqService;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,7 +1,6 @@
-package com.viridian.dummybank.service;
+package com.viridian.dummybank.jooq.service;
 
-import com.viridian.dummybank.model.Cliente;
-import com.viridian.dummybank.repository.ClienteJooqRepository;
+import com.viridian.dummybank.jooq.repository.ClienteJooqRepository;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import org.slf4j.Logger;

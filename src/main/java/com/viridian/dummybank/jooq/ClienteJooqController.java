@@ -1,11 +1,10 @@
-package com.viridian.dummybank.controller.persona;
+package com.viridian.dummybank.jooq;
 
 import com.viridian.dummybank.error.NoEncontradoRestException;
-import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
-import com.viridian.dummybank.service.ClienteJooqService;
+import com.viridian.dummybank.jooq.service.ClienteJooqService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

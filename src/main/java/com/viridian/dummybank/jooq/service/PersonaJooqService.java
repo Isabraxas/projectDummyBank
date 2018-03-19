@@ -1,4 +1,4 @@
-package com.viridian.dummybank.service.persona;
+package com.viridian.dummybank.jooq.service;
 
 import com.viridian.dummybank.gensrc.jooq.tables.Persona;
 import org.jooq.DSLContext;

@@ -1,4 +1,4 @@
-package com.viridian.dummybank.service;
+package com.viridian.dummybank.jooq.service;
 
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
