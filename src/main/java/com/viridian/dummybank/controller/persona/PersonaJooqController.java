@@ -25,7 +25,7 @@ public class PersonaJooqController {
 
     @GetMapping("/jooq/persona/all")
     public List<Persona> getAllPersona(){
-
+        log.info("Mostrando personas");
         return personaJooqService.getAllPersonas();
     }
 }

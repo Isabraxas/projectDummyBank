@@ -40,7 +40,7 @@ public class PersonaJooqService {
         catch (Exception e) {
             e.printStackTrace();
         }*/
-        System.out.println("HOLA");
+        //System.out.println("HOLA");
     }
 
     public List<com.viridian.dummybank.model.persona.Persona> getAllPersonas(){
@@ -60,6 +60,7 @@ public class PersonaJooqService {
                 personas.add(persona);
 
                 Long id = r.getValue(PERSONA.ID_PERSONA);
+                        //.getValue(PERSONA.ID_PERSONA);
                 String firstName = r.getValue(PERSONA.NOMBRE);
                 String lastName = r.getValue(PERSONA.APELLIDO_PATERNO) + " " + r.getValue(PERSONA.APELLIDO_MATERNO);
 
