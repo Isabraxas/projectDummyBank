@@ -4,7 +4,6 @@ package com.viridian.dummybank.rest;
 import com.viridian.dummybank.rest.model.CuentaRestModel;
 import com.viridian.dummybank.rest.repository.CuentaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,10 +28,15 @@ public class CuentaRestController {
         return cuentaRepository.findCuentaById(id);
     }
 
+    @PostMapping("/id")
+    public List<CuentaRestModel> getCuentaBySP(@RequestBody CuentaRestModel cuenta){
+        return cuentaRepository.findCuentaByIdCuenta(cuenta);
+    }
+
     @PutMapping
     public CuentaRestModel updateCuenta(@RequestBody CuentaRestModel cuenta){
         cuentaRepository.updateCuenta(cuenta);
-        return cuentaRepository.findCuentaById(cuenta.getId_cuenta());
+        return cuentaRepository.findCuentaById(cuenta.getIdCuenta());
     }
 
     @PostMapping

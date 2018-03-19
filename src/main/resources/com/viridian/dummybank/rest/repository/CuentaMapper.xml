@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.viridian.dummybank.rest.repository.CuentaMapper">
+
+    <resultMap id="CuentaResultMap" type="CuentaRestModel" >
+        <id property="idCuenta" column="id_cuenta"/>
+        <result property="numeroCuenta" column="numero_cuenta"/>
+        <result property="tipo" column="tipo"/>
+        <result property="saldo" column="saldo"/>
+        <result property="clienteId" column="cliente_id"/>
+        <result property="moneda" column="moneda"/>
+    </resultMap>
+<!--
+    <resultMap id="CuentaResultMapWithCliente" type="CuentaRestModel" >
+        <id property="idCuenta" column="id_cuenta"/>
+        <result property="numeroCuenta" column="numero_cuenta"/>
+        <result property="tipo" column="tipo"/>
+        <result property="saldo" column="saldo"/>
+        <association property="clienteId" column="cliente_id"
+                     resultMap="com.viridian.dummybank.rest.repository.ClienteMapper.ClienteResultMap"/>
+        <result property="moneda" column="moneda"/>
+    </resultMap>
+-->
+    <select id="findAllCuentas" resultMap="CuentaResultMap">
+        SELECT * FROM cuenta;
+    </select>
+
+    <select id="findCuentaById" resultMap="CuentaResultMap" parameterType="Long">
+        SELECT * FROM cuenta WHERE id_cuenta =#{idCuenta};
+    </select>
+
+    <insert id="insertCuenta" parameterType="CuentaRestModel" keyProperty="idCuenta" useGeneratedKeys="true">
+        Insert into cuenta values(null, #{numeroCuenta}, #{tipo}, #{saldo}, #{clienteId},#{moneda})
+    </insert>
+    
+    <update id="updateCuenta" parameterType="CuentaRestModel" >
+        Update cuenta set id_cuenta=#{idCuenta}, numero_cuenta=#{numeroCuenta}, tipo=#{tipo},
+                          saldo=#{saldo}, cliente_id=#{clienteId}, moneda=#{moneda}
+        where id_cuenta=#{idCuenta}
+    </update>
+
+    <delete id="deleteCuenta" parameterType="CuentaRestModel" >
+        Delete from cuenta where id_cuenta=#{idCuenta}
+    </delete>
+
+    <!--Proceso Almacenado -->
+    <select id="findCuentaByIdCuenta" parameterType="CuentaRestModel" resultMap="CuentaResultMap">
+        call _findCuentaByIdCuenta(#{idCuenta})
+    </select>
+
+</mapper>

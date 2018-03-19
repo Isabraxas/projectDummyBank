@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.viridian.dummybank.rest.repository.ClienteMapper">
+
+    <resultMap id="ClienteResultMap" type="ClienteRestModel" >
+        <id property="idCliente" column="id_cliente"/>
+        <result property="tipo" column="tipo"/>
+    </resultMap>
+
+    <select id="findAllClientes" resultMap="ClienteResultMap">
+        SELECT * FROM cliente;
+    </select>
+
+    <select id="findClienteById" resultMap="ClienteResultMap" parameterType="Long">
+        SELECT * FROM cliente WHERE id_cliente =#{idCliente};
+    </select>
+
+</mapper>

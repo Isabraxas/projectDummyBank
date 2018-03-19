@@ -4,36 +4,46 @@ import java.math.BigDecimal;
 
 public class CuentaRestModel{
 
-    private Long id_cuenta;
+    private Long idCuenta;
 
-    private Long numero_cuenta;
+    private Long numeroCuenta;
 
     private String tipo;
 
     private BigDecimal saldo ;
 
-    private Long cliente_id;
+    private Long clienteId;
 
     private String moneda;
 
-
-    //Getters and Setters
-
-
-    public Long getId_cuenta() {
-        return id_cuenta;
+    public CuentaRestModel(){}
+    public CuentaRestModel(Long idCuenta, Long numeroCuenta, String tipo, BigDecimal saldo, Long clienteId, String moneda) {
+        this.idCuenta = idCuenta;
+        this.numeroCuenta = numeroCuenta;
+        this.tipo = tipo;
+        this.saldo = saldo;
+        this.clienteId = clienteId;
+        this.moneda = moneda;
     }
 
-    public void setId_cuenta(Long id_cuenta) {
-        this.id_cuenta = id_cuenta;
+
+//Getters and Setters
+
+
+    public Long getIdCuenta() {
+        return idCuenta;
     }
 
-    public Long getNumero_cuenta() {
-        return numero_cuenta;
+    public void setIdCuenta(Long idCuenta) {
+        this.idCuenta = idCuenta;
     }
 
-    public void setNumero_cuenta(Long numero_cuenta) {
-        this.numero_cuenta = numero_cuenta;
+    public Long getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(Long numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 
     public String getTipo() {
@@ -52,12 +62,12 @@ public class CuentaRestModel{
         this.saldo = saldo;
     }
 
-    public Long getCliente_id() {
-        return cliente_id;
+    public Long getClienteId() {
+        return clienteId;
     }
 
-    public void setCliente_id(Long cliente_id) {
-        this.cliente_id = cliente_id;
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
     public String getMoneda() {
@@ -67,5 +77,4 @@ public class CuentaRestModel{
     public void setMoneda(String moneda) {
         this.moneda = moneda;
     }
-
 }
