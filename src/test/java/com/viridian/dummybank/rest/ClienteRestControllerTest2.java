@@ -35,7 +35,7 @@ public class ClienteRestControllerTest2 {
     public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
 
-        clienteRestController = new ClienteRestController(clienteRestService);
+        //clienteRestController = new ClienteRestController(clienteRestService);
         mockMvc = MockMvcBuilders.standaloneSetup(clienteRestController).build();
     }
 

@@ -13,17 +13,18 @@
         <result property="clienteId" column="cliente_id"/>
         <result property="moneda" column="moneda"/>
     </resultMap>
-<!--
-    <resultMap id="CuentaResultMapWithCliente" type="CuentaRestModel" >
+
+    <resultMap id="CuentaResultMapWithCliente" type="com.viridian.dummybank.rest.model.CuentaRestModel" >
         <id property="idCuenta" column="id_cuenta"/>
         <result property="numeroCuenta" column="numero_cuenta"/>
         <result property="tipo" column="tipo"/>
         <result property="saldo" column="saldo"/>
-        <association property="clienteId" column="cliente_id"
-                     resultMap="com.viridian.dummybank.rest.repository.ClienteMapper.ClienteResultMap"/>
+        <result property="clienteId" column="cliente_id"/>
         <result property="moneda" column="moneda"/>
+        <association property="cliente" column="cliente_id"
+                     resultMap="com.viridian.dummybank.rest.repository.ClienteMapper.ClienteResultMap"/>
     </resultMap>
--->
+
     <select id="findAllCuentas" resultMap="CuentaResultMap">
         SELECT * FROM cuenta;
     </select>
@@ -49,6 +50,12 @@
     <!--Proceso Almacenado -->
     <select id="findCuentaByIdCuenta" parameterType="CuentaRestModel" resultMap="CuentaResultMap">
         call _findCuentaByIdCuenta(#{idCuenta})
+    </select>
+
+    <!-- Join tabla cuenta y cliente -->
+    <select id="findCuentaWithCliente" parameterType="Long" resultMap="CuentaResultMapWithCliente">
+        SELECT c.*, cl.* FROM viridianbank.cuenta as c left join viridianbank.Cliente as cl on c.cliente_id = cl.id_cliente
+        WHERE c.id_cuenta = #{idCuenta}
     </select>
 
 </mapper>

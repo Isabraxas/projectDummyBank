@@ -2,14 +2,17 @@ package com.viridian.dummybank.rest;
 
 import com.viridian.dummybank.controller.ClienteController;
 import com.viridian.dummybank.dao.CuentaRepository;
+import com.viridian.dummybank.error.ErrorNoEncontrado;
 import com.viridian.dummybank.error.NoEncontradoException;
 import com.viridian.dummybank.error.NoEncontradoRestException;
 import com.viridian.dummybank.model.Cliente;
 import com.viridian.dummybank.model.Cuenta;
 import com.viridian.dummybank.model.persona.Persona;
+import com.viridian.dummybank.rest.model.ClienteRestModel;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePN;
 import com.viridian.dummybank.rest.model.ProductoBancarioClienteError;
 import com.viridian.dummybank.rest.model.ProductoBancarioClientePJ;
+import com.viridian.dummybank.rest.repository.ClienteMapper;
 import com.viridian.dummybank.rest.request.ClienteRequest;
 import com.viridian.dummybank.rest.service.ClienteRestService;
 import com.viridian.dummybank.service.ClienteService;
@@ -24,22 +27,54 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by marcelo on 07-03-18
  */
 @RestController
+@RequestMapping("/api")
 public class ClienteRestController {
 
-    // logger
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ClienteController.class);
+    // loggerger
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ClienteController.class);
 
     // servicios
     private final ClienteRestService clienteRestService;
-
+    private final ClienteMapper clienteMapper;
 
     @Autowired
-    public ClienteRestController(ClienteRestService clienteRestService) {
+    public ClienteRestController(ClienteRestService clienteRestService, ClienteMapper clienteMapper) {
         this.clienteRestService = clienteRestService;
+        this.clienteMapper = clienteMapper;
+    }
+
+    @GetMapping("/clientes")
+    public List<ClienteRestModel> getClientes(){
+        return clienteMapper.findAllClientes();
+    }
+
+    @GetMapping("/clientes/{id}")
+    public ClienteRestModel getClientes(@PathVariable Long id){
+        return clienteMapper.findClienteById(id);
+    }
+
+    @GetMapping("/clientes/{id}/cuentas")
+    public ClienteRestModel getClienteWithCuentas(@PathVariable Long id){
+        return clienteMapper.findClienteWithCuentas(id);
+    }
+
+    @GetMapping("/clientes/{id}/productos")
+    public ProductoBancarioClientePJ getClienteWithProductos(@PathVariable Long id){
+        ProductoBancarioClientePJ productoBancarioClientePJ = clienteMapper.findClienteWithDataAndCuentas(id);
+        if(productoBancarioClientePJ == null){
+            logger.info("El cliente no fue encotrado");
+            String errorMsg = "Cliente ID: "+ id +" no encontrado";
+            throw new NoEncontradoRestException(errorMsg, new ErrorNoEncontrado(id,"001","no se encontro al Cliente en la BD","Hemos encontrado un error intentelo mas tarde"));
+        }
+        logger.info("El cliente fue encotrado");
+        productoBancarioClientePJ.setEstado("successful");
+        return productoBancarioClientePJ;
     }
 
     /**
@@ -73,4 +108,6 @@ public class ClienteRestController {
         error.setError(exception.getErrorNoEncontrado());
         return error;
     }
+
+
 }

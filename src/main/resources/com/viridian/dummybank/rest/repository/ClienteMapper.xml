@@ -10,12 +10,89 @@
         <result property="tipo" column="tipo"/>
     </resultMap>
 
+    <resultMap id="ClienteResultMapWithCuentas" type="ClienteRestModel" autoMapping="false">
+        <id property="idCliente" column="id_cliente"/>
+        <result property="tipo" column="tipo_cli" />
+       <!-- <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"
+                    column="cliente_id" resultMap="com.viridian.dummybank.rest.repository.CuentaMapper.CuentaResultMap"/>
+        -->
+        <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"  column="cliente_id" >
+            <id property="idCuenta" column="id_cuenta"/>
+            <result property="numeroCuenta" column="numero_cuenta"/>
+            <result property="tipo" column="tipo"/>
+            <result property="saldo" column="saldo"/>
+            <result property="moneda" column="moneda"/>
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="ClienteResultMapWithDataAndCuentas" type="com.viridian.dummybank.rest.model.ProductoBancarioClientePJ" autoMapping="false">
+        <id property="idCliente" column="id_cliente"/>
+
+        <result property="nombreRazon" column="nombre_razon"/>
+        <result property="nit" column="nit"/>
+        <result property="registroFundaempresa" column="registro_fundaempresa"/>
+
+        <result property="idPersona" column="id_persona"/>
+        <result property="apellidoPaterno" column="apellido_paterno"/>
+        <result property="apellidoMaterno" column="apellido_materno"/>
+        <result property="apellidoCasado" column="apellido_casado"/>
+        <result property="nombres" column="nombre"/>
+        <result property="documentoIdentidad" column="documento_identidad"/>
+        <result property="numeroDocumento" column="numero_documento"/>
+        <result property="fechaNacimiento" column="fecha_nacimiento"/>
+        <result property="lugarNacimiento" column="lugar_nacimiento"/>
+        <result property="nacionalidad" column="nacionalidad"/>
+        <result property="domicilio" column="domicilio"/>
+        <result property="domicilioTrabajo" column="domicilio_trabajo"/>
+        <result property="telefono" column="telefono"/>
+        <result property="email" column="email"/>
+        <result property="estadoCivil" column="estado_civil"/>
+        <result property="profesion" column="profesion"/>
+        <result property="caracterLegal" column="caracter_legal"/>
+        <result property="nombrePadre" column="nombre_padre"/>
+        <result property="nombreMadre" column="nombre_madre"/>
+        <result property="nombreConyuge" column="nombre_conyuge"/>
+
+        <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"  column="cliente_id" >
+            <id property="idCuenta" column="id_cuenta"/>
+            <result property="numeroCuenta" column="numero_cuenta"/>
+            <result property="tipo" column="tipo"/>
+            <result property="saldo" column="saldo"/>
+            <result property="moneda" column="moneda"/>
+        </collection>
+
+    </resultMap>
+
     <select id="findAllClientes" resultMap="ClienteResultMap">
-        SELECT * FROM cliente;
+        SELECT * FROM Cliente;
     </select>
 
     <select id="findClienteById" resultMap="ClienteResultMap" parameterType="Long">
-        SELECT * FROM cliente WHERE id_cliente =#{idCliente};
+        SELECT * FROM Cliente WHERE id_cliente =#{idCliente};
+    </select>
+
+    <!-- Join tabla cliente y cuenta-->
+    <select id="findClienteWithCuentas" parameterType="Long" resultMap="ClienteResultMapWithCuentas">
+        SELECT cl.id_cliente ,cl.tipo as tipo_cli , c.* FROM viridianbank.Cliente as cl left join viridianbank.cuenta as c on c.cliente_id = cl.id_cliente
+        WHERE cl.id_cliente = #{idCliente}
+    </select>
+
+    <!-- Join tabla cliente , persona y cuenta-->
+    <select id="findClienteWithDataAndCuentas" parameterType="Long" resultMap="ClienteResultMapWithDataAndCuentas">
+        <!-- Solo Para persona natural
+        SELECT cl.id_cliente ,cl.tipo as tipo_cli , c.* , p.*
+          FROM viridianbank.Cliente as cl
+            inner join viridianbank.cuenta as c
+              on c.cliente_id = cl.id_cliente
+            inner join viridianbank.Persona_Natural as pn
+		      on cl.id_cliente = pn.id_cliente
+	        inner join viridianbank.Persona as p
+		      on pn.persona_id = p.id_persona
+        WHERE cl.id_cliente = #{idCliente}
+        -->
+        <!-- El procedimiento almacenado encuentra tanto persona juridica como natural -->
+        call _findProductoBancario(#{idCliente})
     </select>
 
 </mapper>

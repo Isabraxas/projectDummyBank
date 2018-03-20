@@ -14,9 +14,12 @@ public class CuentaRestModel{
 
     private Long clienteId;
 
+    private ClienteRestModel cliente;
+
     private String moneda;
 
     public CuentaRestModel(){}
+
     public CuentaRestModel(Long idCuenta, Long numeroCuenta, String tipo, BigDecimal saldo, Long clienteId, String moneda) {
         this.idCuenta = idCuenta;
         this.numeroCuenta = numeroCuenta;
@@ -26,8 +29,7 @@ public class CuentaRestModel{
         this.moneda = moneda;
     }
 
-
-//Getters and Setters
+    //Getters and Setters
 
 
     public Long getIdCuenta() {
@@ -68,6 +70,14 @@ public class CuentaRestModel{
 
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
+    }
+
+    public ClienteRestModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteRestModel cliente) {
+        this.cliente = cliente;
     }
 
     public String getMoneda() {

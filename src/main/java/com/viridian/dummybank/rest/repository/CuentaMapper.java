@@ -14,7 +14,11 @@ public interface CuentaMapper {
 
     CuentaRestModel findCuentaById(Long id);
 
+    // Procedimiento almacenado
     List<CuentaRestModel> findCuentaByIdCuenta(CuentaRestModel cuentaRestModel);
+
+    //Join tablas cuenta y cliente
+    CuentaRestModel findCuentaWithCliente(Long idCuenta);
 
     int updateCuenta(CuentaRestModel cuenta);
 

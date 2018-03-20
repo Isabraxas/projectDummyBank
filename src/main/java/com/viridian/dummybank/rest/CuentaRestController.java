@@ -33,6 +33,11 @@ public class CuentaRestController {
         return cuentaRepository.findCuentaByIdCuenta(cuenta);
     }
 
+    @GetMapping("/{id}/cliente")
+    public CuentaRestModel getCuentaWithCliente(@PathVariable Long id){
+        return cuentaRepository.findCuentaWithCliente(id);
+    }
+
     @PutMapping
     public CuentaRestModel updateCuenta(@RequestBody CuentaRestModel cuenta){
         cuentaRepository.updateCuenta(cuenta);
