@@ -77,6 +77,13 @@ public class ClienteRestController {
         return productoBancarioClientePJ;
     }
 
+    @GetMapping("/clientes/{id}/productosService")
+    public ProductoBancarioClientePJ getClienteWithProductosService(@PathVariable Long id){
+        ProductoBancarioClientePJ productoBancarioClientePJ = clienteRestService.getClienteWithDataAndCuentas(id);
+
+        return productoBancarioClientePJ;
+    }
+
     /**
      * Mostrar la informacion de un cliente - person natural en formato json
      */

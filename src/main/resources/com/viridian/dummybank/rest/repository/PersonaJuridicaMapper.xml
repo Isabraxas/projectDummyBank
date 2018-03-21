@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.viridian.dummybank.rest.repository.PersonaJuridicaMapper">
+
+    <resultMap id="PersonaJuridicaResultMap" type="PersonaJuridicaRestModel" >
+        <id property="idCliente" column="id_cliente"/>
+        <result property="nombreRazon" column="nombre_razon"/>
+        <result property="nit" column="nit"/>
+        <result property="registroFundaempresa" column="registro_fundaempresa"/>
+        <result property="representanteLegal" column="representante_legal"/>
+    </resultMap>
+
+
+    <select id="findPersonaJuridicaById" resultMap="PersonaJuridicaResultMap" parameterType="Long">
+        SELECT * FROM Persona_Juridica WHERE id_cliente =#{idCliente};
+    </select>
+
+
+</mapper>

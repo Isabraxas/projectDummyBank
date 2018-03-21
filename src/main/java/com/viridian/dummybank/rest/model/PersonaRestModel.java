@@ -1,26 +1,8 @@
 package com.viridian.dummybank.rest.model;
 
-import com.viridian.dummybank.model.Cuenta;
-
 import java.sql.Date;
-import java.util.List;
 
-/**
- * Created by marcelo on 08-03-18
- */
-public class ProductoBancarioClientePJ {
-    // cliente
-    private Long idCliente;            // clave para Cliente y para Persona_Natural
-    //private String tipo;
-
-    private String estado;
-
-    // persona juridica
-    private String nombreRazon;
-    private Long nit;
-    private String registroFundaempresa;
-
-    // persona
+public class PersonaRestModel {
     private Long idPersona;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -42,89 +24,6 @@ public class ProductoBancarioClientePJ {
     private String nombreMadre;
     private String nombreConyuge;
 
-    private List<CuentaRestModel> cuentas;
-
-    public ProductoBancarioClientePJ() {
-    }
-
-    public ProductoBancarioClientePJ(Long idCliente, /*String tipo,*/String estado, String nombreRazon, Long nit, String registroFundaempresa, Long idPersona, String apellidoPaterno, String apellidoMaterno, String apellidoCasado, String nombres, String documentoIdentidad, Long numeroDocumento, Date fechaNacimiento, String lugarNacimiento, String nacionalidad, String domicilio, String domicilioTrabajo, String telefono, String email, String estadoCivil, String profesion, String caracterLegal, String nombrePadre, String nombreMadre, String nombreConyuge, List<CuentaRestModel> cuentas) {
-        this.idCliente = idCliente;
-        //this.tipo = tipo;
-        this.estado = estado;
-        this.nombreRazon = nombreRazon;
-        this.nit = nit;
-        this.registroFundaempresa = registroFundaempresa;
-        this.idPersona = idPersona;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.apellidoCasado = apellidoCasado;
-        this.nombres = nombres;
-        this.documentoIdentidad = documentoIdentidad;
-        this.numeroDocumento = numeroDocumento;
-        this.fechaNacimiento = fechaNacimiento;
-        this.lugarNacimiento = lugarNacimiento;
-        this.nacionalidad = nacionalidad;
-        this.domicilio = domicilio;
-        this.domicilioTrabajo = domicilioTrabajo;
-        this.telefono = telefono;
-        this.email = email;
-        this.estadoCivil = estadoCivil;
-        this.profesion = profesion;
-        this.caracterLegal = caracterLegal;
-        this.nombrePadre = nombrePadre;
-        this.nombreMadre = nombreMadre;
-        this.nombreConyuge = nombreConyuge;
-        this.cuentas = cuentas;
-    }
-
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
-/*
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-*/
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado= estado;
-    }
-
-    public String getNombreRazon() {
-        return nombreRazon;
-    }
-
-    public void setNombreRazon(String nombreRazon) {
-        this.nombreRazon = nombreRazon;
-    }
-
-    public Long getNit() {
-        return nit;
-    }
-
-    public void setNit(Long nit) {
-        this.nit = nit;
-    }
-
-    public String getRegistroFundaempresa() {
-        return registroFundaempresa;
-    }
-
-    public void setRegistroFundaempresa(String registroFundaempresa) {
-        this.registroFundaempresa = registroFundaempresa;
-    }
 
     public Long getIdPersona() {
         return idPersona;
@@ -284,13 +183,5 @@ public class ProductoBancarioClientePJ {
 
     public void setNombreConyuge(String nombreConyuge) {
         this.nombreConyuge = nombreConyuge;
-    }
-
-    public List<CuentaRestModel> getCuentas() {
-        return cuentas;
-    }
-
-    public void setCuentas(List<CuentaRestModel> cuentas) {
-        this.cuentas = cuentas;
     }
 }

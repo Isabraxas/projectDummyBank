@@ -21,8 +21,11 @@
         <result property="saldo" column="saldo"/>
         <result property="clienteId" column="cliente_id"/>
         <result property="moneda" column="moneda"/>
-        <association property="cliente" column="cliente_id"
-                     resultMap="com.viridian.dummybank.rest.repository.ClienteMapper.ClienteResultMap"/>
+
+        <association property="cliente" javaType="ClienteRestModel" column="cliente_id">
+            <id property="idCliente" column="id_cliente"/>
+            <result property="tipo" column="tipo_cli"/>
+        </association>
     </resultMap>
 
     <select id="findAllCuentas" resultMap="CuentaResultMap">
@@ -54,7 +57,7 @@
 
     <!-- Join tabla cuenta y cliente -->
     <select id="findCuentaWithCliente" parameterType="Long" resultMap="CuentaResultMapWithCliente">
-        SELECT c.*, cl.* FROM viridianbank.cuenta as c left join viridianbank.Cliente as cl on c.cliente_id = cl.id_cliente
+        SELECT c.*, cl.id_cliente ,cl.tipo as tipo_cli FROM viridianbank.cuenta as c left join viridianbank.Cliente as cl on c.cliente_id = cl.id_cliente
         WHERE c.id_cuenta = #{idCuenta}
     </select>
 

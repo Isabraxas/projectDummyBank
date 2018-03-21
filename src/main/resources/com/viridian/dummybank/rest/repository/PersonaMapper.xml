@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.viridian.dummybank.rest.repository.PersonaMapper">
+
+    <resultMap id="PersonaResultMap" type="PersonaRestModel" >
+        <id property="idPersona" column="id_persona"/>
+        <result property="tipo" column="tipo"/>
+        <result property="apellidoPaterno" column="apellido_paterno"/>
+        <result property="apellidoMaterno" column="apellido_materno"/>
+        <result property="apellidoCasado" column="apellido_casado"/>
+        <result property="nombres" column="nombre"/>
+        <result property="documentoIdentidad" column="documento_identidad"/>
+        <result property="numeroDocumento" column="numero_documento"/>
+        <result property="fechaNacimiento" column="fecha_nacimiento"/>
+        <result property="lugarNacimiento" column="lugar_nacimiento"/>
+        <result property="nacionalidad" column="nacionalidad"/>
+        <result property="domicilio" column="domicilio"/>
+        <result property="domicilioTrabajo" column="domicilio_trabajo"/>
+        <result property="telefono" column="telefono"/>
+        <result property="email" column="email"/>
+        <result property="estadoCivil" column="estado_civil"/>
+        <result property="profesion" column="profesion"/>
+        <result property="caracterLegal" column="caracter_legal"/>
+        <result property="nombrePadre" column="nombre_padre"/>
+        <result property="nombreMadre" column="nombre_madre"/>
+        <result property="nombreConyuge" column="nombre_conyuge"/>
+    </resultMap>
+
+
+    <select id="findPersonaById" resultMap="PersonaResultMap" parameterType="Long">
+        SELECT * FROM Persona WHERE id_persona =#{idPersona};
+    </select>
+
+
+</mapper>

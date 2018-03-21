@@ -1,5 +1,7 @@
 package com.viridian.dummybank.rest.model;
 
+import com.viridian.dummybank.model.Cuenta;
+
 import java.util.List;
 
 public class ClienteRestModel {

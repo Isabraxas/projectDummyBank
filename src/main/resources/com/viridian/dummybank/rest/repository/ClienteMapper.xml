@@ -13,16 +13,16 @@
     <resultMap id="ClienteResultMapWithCuentas" type="ClienteRestModel" autoMapping="false">
         <id property="idCliente" column="id_cliente"/>
         <result property="tipo" column="tipo_cli" />
-       <!-- <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"
+        <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"
                     column="cliente_id" resultMap="com.viridian.dummybank.rest.repository.CuentaMapper.CuentaResultMap"/>
-        -->
-        <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"  column="cliente_id" >
-            <id property="idCuenta" column="id_cuenta"/>
-            <result property="numeroCuenta" column="numero_cuenta"/>
-            <result property="tipo" column="tipo"/>
-            <result property="saldo" column="saldo"/>
-            <result property="moneda" column="moneda"/>
-        </collection>
+        <!--
+         <collection property="cuentas" javaType="ArrayList" ofType="CuentaRestModel"  column="cliente_id" >
+             <id property="idCuenta" column="id_cuenta"/>
+             <result property="numeroCuenta" column="numero_cuenta"/>
+             <result property="tipo" column="tipo"/>
+             <result property="saldo" column="saldo"/>
+             <result property="moneda" column="moneda"/>
+         </collection>-->
 
     </resultMap>
 

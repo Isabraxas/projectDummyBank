@@ -11,4 +11,6 @@ public interface ClienteRestService {
     ProductoBancarioClientePN getClienteByClienteId(Long id);
 
     ProductoBancarioClientePJ getClienteJuridicoByClienteId(Long id);
+
+    ProductoBancarioClientePJ getClienteWithDataAndCuentas(Long id);
 }

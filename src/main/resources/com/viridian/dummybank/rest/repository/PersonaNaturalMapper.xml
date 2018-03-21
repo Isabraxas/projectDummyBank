@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.viridian.dummybank.rest.repository.PersonaNaturalMapper">
+
+    <resultMap id="PersonaNaturalResultMap" type="PersonaNaturalRestModel" >
+        <id property="idCliente" column="id_cliente"/>
+        <result property="personaId" column="persona_id"/>
+    </resultMap>
+    <resultMap id="PersonaNaturalResultWithData" type="PersonaNaturalRestModel" >
+        <id property="idCliente" column="id_cliente"/>
+        <result property="personaId" column="persona_id"/>
+        <association property="persona" column="persona_id" resultMap="com.viridian.dummybank.rest.repository.PersonaMapper.PersonaResultMap"/>
+    </resultMap>
+
+    <!-- select que no rescata el objeto persona
+    <select id="findPersonaNaturalByIdX" resultMap="PersonaNaturalResultMap" parameterType="Long">
+        SELECT * FROM Persona_Natural WHERE id_cliente =#{idCliente};
+    </select>
+    -->
+
+    <select id="findPersonaNaturalById" resultMap="PersonaNaturalResultWithData" parameterType="Long">
+        SELECT pn.* , p.* FROM Persona_Natural as pn
+          INNER JOIN Persona as p on pn.persona_id = p.id_persona
+        WHERE id_cliente =#{idCliente};
+    </select>
+
+
+</mapper>
