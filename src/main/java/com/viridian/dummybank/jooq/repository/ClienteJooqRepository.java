@@ -39,7 +39,7 @@ import static com.viridian.dummybank.gensrc.jooq.tables.PersonaNatural.PERSONA_N
 @Repository
 public class ClienteJooqRepository {
     String user = "root";
-    String pass = "password";
+    String pass = "12345678";
     String url = "jdbc:mysql://localhost:3306/viridianbank";
 
     DSLContext dslContext;
@@ -61,7 +61,10 @@ public class ClienteJooqRepository {
                             .where(CLIENTE.ID_CLIENTE.equal(id)).fetchOne();
             ClienteRecord clienteRecord = record.into(CLIENTE);
             PersonaRecord personaRecord = record.into(PERSONA);
-
+             if(personaRecord.getIdPersona() == null){
+                 String mensaje = "";
+                 throw new NoEncontradoRestException(mensaje,new ErrorNoEncontrado(id,"001","no se encontro al cliente en la bd", "Hemos encontrado un error intentelo mas tarde"));
+             }
             // cliente
             prod.setIdCliente(clienteRecord.getIdCliente());
             //cliente.setTipo(clienteRecord.getTipo());
@@ -84,7 +87,7 @@ public class ClienteJooqRepository {
             prod.setNacionalidad(personaRecord.getNacionalidad());
             prod.setLugarNacimiento(personaRecord.getLugarNacimiento());
             prod.setFechaNacimiento(Date.valueOf(personaRecord.getFechaNacimiento()));
-            prod.setNumeroDocumento(personaRecord.getIdPersona());
+            prod.setNumeroDocumento(Long.valueOf(personaRecord.getNumeroDocumento()));
             prod.setDocumentoIdentidad(personaRecord.getDocumentoIdentidad());
             prod.setCaracterLegal(personaRecord.getCaracterLegal());
 
@@ -111,8 +114,11 @@ public class ClienteJooqRepository {
 
             // ESTADO
             prod.setEstado("successful");
-        }catch (Exception e){
+        }catch (SQLException e){
+            //System.out.println(e.getClass().getName());
             System.out.println(e.getMessage());
+        }catch (NullPointerException e){
+            throw new NoEncontradoRestException(e.getMessage(),new ErrorNoEncontrado(id,"001","no se encontro al cliente en la bd", "Hemos encontrado un error intentelo mas tarde"));
         }
         return prod;
     }
