@@ -168,7 +168,7 @@ public class ClienteRestServiceImpl implements ClienteRestService{
             obj.setNit(personaJuridica.getNit());
             obj.setRegistroFundaempresa(personaJuridica.getRegistroFundaempresa());
         }else {
-            PersonaNaturalRestModel personaNatural = personaNaturalRepository.findPersonaNaturalById(cliente.getIdCliente());
+            PersonaNaturalRestModel personaNatural = this.getPersonaNaturalById(cliente.getIdCliente());
             persona = personaNatural.getPersona();
             //En el caso de querer hacer la busqueda sin relaciones
             // persona = personaRepository.findPersonaById(personaNatural.getPersonaId());
@@ -206,13 +206,25 @@ public class ClienteRestServiceImpl implements ClienteRestService{
     public ClienteRestModel getClienteById(Long id){
         ClienteRestModel cliente = clienteRepository.findClienteWithCuentas(id);
         if(cliente == null){
-            log.error("cliente: "+id +" no encontradp en BD");
+            log.error("cliente: "+id +" no encontrada en BD");
             String errorMsg = "Cliente ID: "+ id +" no encontrado";
             // ERROR REDIRECCIONANDO UNA CLASE ERROR
             throw new NoEncontradoRestException(errorMsg, new ErrorNoEncontrado(id,"001","no se encontro al Cliente en la BD","Hemos encontrado un error intentelo mas tarde"));
         }
 
         return cliente;
+    }
+
+    public PersonaNaturalRestModel getPersonaNaturalById(Long id){
+        PersonaNaturalRestModel personaNatural = personaNaturalRepository.findPersonaNaturalById(id);
+        if(personaNatural == null){
+            log.error("Persona: "+id +" no encontrada en BD");
+            String errorMsg = "Persona ID: "+ id +" no encontrada";
+            // ERROR REDIRECCIONANDO UNA CLASE ERROR
+            throw new NoEncontradoRestException(errorMsg, new ErrorNoEncontrado(id,"001","no se encontro a la lod datos de la Persona relacionada en la BD","Hemos encontrado un error intentelo mas tarde"));
+        }
+
+        return personaNatural;
     }
 
 }
